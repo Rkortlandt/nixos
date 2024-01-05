@@ -1,0 +1,135 @@
+format = """
+[](#3B4252)\
+$python\
+$username\
+[](fg:#3B4252 bg:#00a5b9)\
+$nix_shell\
+[](fg:#00a5b9 bg:#434C5E)\
+$directory\
+[](fg:#434C5E bg:#4C566A)\
+$git_branch\
+[](fg:#4C566A bg:#3F7723)\
+$c\
+$elixir\
+$elm\
+$golang\
+$haskell\
+$java\
+$julia\
+$nodejs\
+$nim\
+$rust\
+[](fg:#3F7723 bg:#58A631)\
+$docker_context\
+[](fg:#58A631 bg:#65BE38)\
+$time\
+[ ](fg:#65BE38)\
+"""
+command_timeout = 5000
+# Disable the blank line at the start of the prompt
+# add_newline = false
+
+# You can also replace your username with a neat symbol like  to save some space
+[username]
+show_always = true
+style_user = "bg:#3B4252"
+style_root = "bg:#DF2500"
+format = '[   ]($style)'
+
+[nix_shell]
+disabled = false
+impure_msg = '[impure](red bold bg:#00a5b9)'
+pure_msg = '[pure](green bold bg:#00a5b9)'
+unknown_msg = '[unknown shell](bold yellow bg:#00a5b9)'
+format = '[ $state( \($name\))](white bg:#00a5b9)'
+
+[directory]
+style = "bg:#434C5E"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+# Here is how you can shorten some long paths by text replacement
+# similar to mapped_locations in Oh My Posh:
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"codeProjects-Git" = " "
+"codeProjects-Local" = " "
+# Keep in mind that the order matters. For example:
+# "Important Documents" = "  "
+# will not be replaced, because "Documents" was already substituted before.
+# So either put "Important Documents" before "Documents" or use the substituted version:
+# "Important  " = "  "
+
+[c]
+symbol = " "
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:#58A631"
+format = '[ $symbol $context ]($style) $path'
+
+[elixir]
+symbol = " "
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[elm]
+symbol = " "
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[git_branch]
+symbol = ""
+style = "bg:#4C566A"
+format = '[ $symbol $branch ]($style)'
+
+[golang]
+symbol = "Go"
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = " "
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = " "
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[julia]
+symbol = "󰰇 "
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = "󰎙 "
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[nim]
+symbol = " "
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+style = "bg:#3B4252"
+format = '[(\($virtualenv\) )]($style)'
+
+[rust]
+symbol = "󱘗"
+style = "bg:#3F7723"
+format = '[ $symbol ($version) ]($style)'
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#65BE38"
+format = '[ $time ]($style)'

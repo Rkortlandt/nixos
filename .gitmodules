@@ -1,0 +1,3 @@
+[submodule "home-manager/nvim"]
+	path = home-manager/nvim
+	url = https://github.com/Rkortlandt/nvim.git
