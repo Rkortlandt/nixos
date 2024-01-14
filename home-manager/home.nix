@@ -18,11 +18,18 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    inputs.nixneovim.nixosModules.homeManager-22-11
+    # You can also split up your configuration and import pieces of it here:
+    # ./nvim.nix
+    ./nvim
+    ./bash
   ];
 
   nixpkgs = {
     # You can add overlays here
     overlays = [
+      inputs.nixneovimplugins.overlays.default
+      inputs.nixneovim.overlays.default
       # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
@@ -56,11 +63,11 @@
   };
 
   home.file = {
-      ".config/nvim".source = ./nvim;
       ".config/hypr".source = ./hyprland/hypr;
       ".config/waybar".source = ./hyprland/waybar;
       ".config/kitty".source = ./kitty;
       ".config/starship.toml".source = ./starship.toml;
+      ".config/tofi".source = ./tofi;
   };
 
   home.pointerCursor = {
@@ -90,7 +97,6 @@
   programs = {
     btop.enable = true;
     waybar.enable = true;
-    neovim.enable = true;
     starship.enable = true;
     kitty.enable = true;
     ripgrep.enable = true;
@@ -140,6 +146,8 @@
     vivaldi
     btop
     jdk21
+    gcc
+    gradle
   ];
   
   # Enable home-manager and git

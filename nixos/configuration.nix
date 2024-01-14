@@ -12,11 +12,9 @@
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
     # outputs.nixosModules.example
-
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
     # inputs.hardware.nixosModules.common-ssd
-
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
 
@@ -155,6 +153,17 @@
   fonts.packages = with pkgs; [
     font-awesome
       (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+  ];
+
+  environment.systemPackages = with pkgs; [
+     neovim 
+     ripgrep
+     dunst
+     jetbrains.idea-ultimate
+     xdg-desktop-portal-hyprland
+     pipewire
+     wireplumber
+     udiskie
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.
