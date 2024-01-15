@@ -75,7 +75,7 @@
         modules = [
           # > Our main nixos configuration file <
           ./nixos/configuration.nix
-	  nixos-hardware.framework-11th-gen-intel
+	  nixos-hardware.nixosModules.framework-11th-gen-intel
         ];
       };
     };
