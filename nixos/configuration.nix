@@ -20,6 +20,7 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+    ./fw-ectool/default.nix
   ];
 
   nixpkgs = {
@@ -145,7 +146,7 @@
       default_session = initial_session;
     };
   };
-
+  services.fwupd.enable = true;
 #Enable virtualization
   virtualisation.libvirtd.enable = true;
 
