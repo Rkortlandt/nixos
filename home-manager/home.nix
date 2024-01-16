@@ -148,6 +148,7 @@
     jdk21
     gcc
     gradle
+    zoom
   ];
   
   # Enable home-manager and git
