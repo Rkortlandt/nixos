@@ -1,3 +1,0 @@
-[submodule "nixos/fw-ectool"]
-	path = nixos/fw-ectool
-	url = https://github.com/ssddq/fw-ectool.git

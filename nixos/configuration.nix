@@ -20,7 +20,6 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
-    ./fw-ectool/default.nix
   ];
 
   nixpkgs = {
