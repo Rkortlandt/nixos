@@ -66,7 +66,7 @@
       ".config/hypr".source = ./hyprland/hypr;
       ".config/waybar".source = ./hyprland/waybar;
       ".config/kitty".source = ./kitty;
-      ".config/bash/starship.toml".source = ./starship.toml;
+      ".config/starship.toml".source = ./bash/starship.toml;
       ".config/tofi".source = ./tofi;
   };
 
@@ -133,7 +133,9 @@
     }; 
   };
 
+
 home.packages = with pkgs; [
+  #Stable 
   tofi 
   swaybg
   jetbrains.idea-ultimate
@@ -148,10 +150,10 @@ home.packages = with pkgs; [
   jdk21
   gcc
   gradle
-  zoom
-] ++ [ 
-  inputs.nixpkgs-unstable 
-];
+] ++ (with inputs.nixpkgs-unstable.legacyPackages.x86_64-linux; [
+  #Unstable
+  cosmic-term 
+]);
 
   
   # Enable home-manager and git
