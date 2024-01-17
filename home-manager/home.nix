@@ -66,7 +66,7 @@
       ".config/hypr".source = ./hyprland/hypr;
       ".config/waybar".source = ./hyprland/waybar;
       ".config/kitty".source = ./kitty;
-      ".config/starship.toml".source = ./starship.toml;
+      ".config/bash/starship.toml".source = ./starship.toml;
       ".config/tofi".source = ./tofi;
   };
 
@@ -133,23 +133,26 @@
     }; 
   };
 
-  home.packages = with pkgs; [
-    tofi 
-    swaybg
-    jetbrains.idea-ultimate
-    obsidian
-    grim
-    slurp
-    qemu
-    bridge-utils
-    discord
-    vivaldi
-    btop
-    jdk21
-    gcc
-    gradle
-    zoom
-  ];
+home.packages = with pkgs; [
+  tofi 
+  swaybg
+  jetbrains.idea-ultimate
+  obsidian
+  grim
+  slurp
+  qemu
+  bridge-utils
+  discord
+  vivaldi
+  btop
+  jdk21
+  gcc
+  gradle
+  zoom
+] ++ [ 
+  inputs.nixpkgs-unstable 
+];
+
   
   # Enable home-manager and git
   programs.home-manager.enable = true;
