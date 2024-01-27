@@ -16,7 +16,6 @@
           hls.enable = true;
           rust-analyzer.enable = true;
 	  rnix-lsp.enable = true;
-	  lua-language-server.enable = true;
 	  bashls.enable = true;
 	  cssls.enable = true;
 	  gopls.enable = true;

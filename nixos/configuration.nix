@@ -68,7 +68,7 @@
     # Deduplicate and optimize nix store
     auto-optimise-store = true;
   };
-  
+  security.polkit.enable = true;
   #Networking
   networking.networkmanager.enable = true;
 
@@ -80,6 +80,7 @@
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
+  
 
   #TPM
   security.tpm2 = {
@@ -146,6 +147,8 @@
     };
   };
   services.fwupd.enable = true;
+  services.printing.enable = true;
+
 #Enable virtualization
   virtualisation.libvirtd.enable = true;
 
@@ -164,6 +167,8 @@
      pipewire
      wireplumber
      udiskie
+     chromium
+     efibootmgr
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.

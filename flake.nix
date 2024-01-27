@@ -13,7 +13,9 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     
-
+    split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces";
+    };
     nixneovim.url = "github:nixneovim/nixneovim";
 
     nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
@@ -33,8 +35,10 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-unstable,
     home-manager,
     nixos-hardware,
+    split-monitor-workspaces,
     ...
   } @ inputs: let
     inherit (self) outputs;

@@ -1,4 +1,4 @@
-# This is your home-manager configuration file
+#This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   inputs,
@@ -30,6 +30,7 @@
     overlays = [
       inputs.nixneovimplugins.overlays.default
       inputs.nixneovim.overlays.default
+      
       # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
@@ -43,13 +44,13 @@
       #   hi = final.hello.overrideAttrs (oldAttrs: {
       #     patches = [ ./change-hello-to-hi.patch ];
       #   });
-      # })
+      # }) 
     ];
     # Configure your nixpkgs instance
     config = {
       # Disable if you don't want unfree packages
-      allowUnfree = true;
-      permittedInsecurePackages = [
+        allowUnfree = true;
+        permittedInsecurePackages = [
         "electron-25.9.0"
       ];
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
@@ -133,12 +134,17 @@
     }; 
   };
 
+  wayland.windowManager.hyprland = {
+    enable = true;
+    plugins = [
+      inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+    ];
+  };
 
 home.packages = with pkgs; [
   #Stable 
   tofi 
   swaybg
-  jetbrains.idea-ultimate
   obsidian
   grim
   slurp
@@ -150,6 +156,7 @@ home.packages = with pkgs; [
   jdk21
   gcc
   gradle
+  jetbrains.idea-ultimate
 ] ++ (with inputs.nixpkgs-unstable.legacyPackages.x86_64-linux; [
   #Unstable
   cosmic-term 

@@ -9,6 +9,7 @@
   smarttab = true;
   autoindent = true;
   smartindent = true;
+  shiftwidth = "2";
   # Search path
   path = ".,/usr/include,**";
   wildmenu = true;
