@@ -38,10 +38,10 @@ format = '[   ]($style)'
 
 [nix_shell]
 disabled = false
-impure_msg = '[impure](red bold bg:#00a5b9)'
-pure_msg = '[pure](green bold bg:#00a5b9)'
+impure_msg = '[ ](bg:#b91400)'
+pure_msg = '[#00b971 ](green bold bg:#00b971)'
 unknown_msg = '[unknown shell](bold yellow bg:#00a5b9)'
-format = '[ $state( \($name\))](white bg:#00a5b9)'
+format = '[$state shell ](white bg:#00a5b9)'
 
 [directory]
 style = "bg:#434C5E"
@@ -132,4 +132,4 @@ format = '[ $symbol ($version) ]($style)'
 disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#65BE38"
-format = '[ $time ]($style)'
+format = '[ ]($style)'

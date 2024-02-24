@@ -134,13 +134,6 @@
     }; 
   };
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    plugins = [
-      inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-    ];
-  };
-
 home.packages = with pkgs; [
   #Stable 
   tofi 
@@ -157,11 +150,13 @@ home.packages = with pkgs; [
   gcc
   gradle
   jetbrains.idea-ultimate
+  libreoffice-qt
+  yuzu-mainline
+  eww-wayland
 ] ++ (with inputs.nixpkgs-unstable.legacyPackages.x86_64-linux; [
   #Unstable
-  cosmic-term 
+  cosmic-term
 ]);
-
   
   # Enable home-manager and git
   programs.home-manager.enable = true;

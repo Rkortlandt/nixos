@@ -9,7 +9,6 @@
     options = import ./options.nix;
 
     plugins = {
-      indent-blankline.enable = true;
       lspconfig = {
         enable = true;
         servers = {
@@ -21,6 +20,7 @@
 	  gopls.enable = true;
 	  html.enable = true;
 	  eslint.enable = true;
+	  clangd.enable = true;
         };
       };
       fugitive.enable = true;

@@ -81,7 +81,6 @@
 
 	# Input text theme
 	# input-color = #FFFFFF
---enable-features=UseOzonePlatform --ozone-platform=wayland
 	input-background = #00000000
 	input-background-padding = 0
 	input-background-corner-radius = 0
