@@ -11,6 +11,7 @@
 3. Tofi App launcher
 4. Intellij Install
 5. Thunar File Manager
+6. Neovim with Nixvim
 
 ## Apps
 1. Vivaldi, Firefox, and Chromium because why not.
@@ -19,6 +20,7 @@
 4. Kitty Terminal
 5. Obsidian
 6. Grim for screenshots (MainMod + g)
+7. Neovim
 
 ## Missing Features
 1. Secret Manager
