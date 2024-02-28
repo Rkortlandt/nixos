@@ -15,14 +15,14 @@
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
-
+      inputs.nixvim.homeManagerModules.nixvim
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
     inputs.nixneovim.nixosModules.homeManager-22-11
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
-    ./nvim
     ./bash
+    ./nvim/config
   ];
 
   nixpkgs = {
@@ -93,7 +93,7 @@
 
   services = {
     dunst.enable = true;
-  };
+  };  
 
   programs = {
     btop.enable = true;

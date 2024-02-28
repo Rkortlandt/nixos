@@ -1,7 +1,7 @@
 { pkgs, lib, ...}:
 
 {
-  programs.nixneovim = {
+  programs.nixvim = {
     defaultEditor = true;
     enable = true;
     colorschemes.onedark.enable = true;
@@ -27,9 +27,10 @@
 
       treesitter = {
         enable = true;
-	indent = true;
+	installAllGrammars = true;
+	
       };
-
+      indent-blankline.enable = true;
       which-key.enable = true;
       gitsigns.enable = true;
       lualine = {

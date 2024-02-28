@@ -6,10 +6,8 @@
   wrap = true;
   splitright = true;
   # Tabs & indentation
-  smarttab = true;
-  autoindent = true;
-  smartindent = true;
-  shiftwidth = "2";
+  shiftwidth= 2;
+  tabwidth=2;
   # Search path
   path = ".,/usr/include,**";
   wildmenu = true;
