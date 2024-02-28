@@ -2,6 +2,9 @@
 
 ![20240228_10h45m48s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/66522e1b-b390-4a8a-8e2a-66fe41b2209c)
 
+# DISCLAMER
+### !-This desktop is NOT user friendly if you don't know what your doing I recomend useing Gnome or KDE or starting your own Hyprland install yourself-!
+
 ## Features
 1. Wayland Desktop Compositor with Hyprland Install
 2. Custom Waybar
