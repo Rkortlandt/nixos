@@ -25,6 +25,7 @@
 ## Missing Features
 1. Secret Manager
 2. Gui elements wifi, bluetooth (With EWW)
+3. Transparent Nvim
 
 ## KeyBinds 
 1. MainMod + v = vivaldi
