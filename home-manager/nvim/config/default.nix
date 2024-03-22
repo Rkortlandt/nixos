@@ -70,7 +70,11 @@
 
     servers = {
       tsserver.enable = true;
-
+      clangd.enable = true;
+      cmake.enable = true;
+      rnix-lsp.enable = true;
+      tailwindcss.enable = true;
+      gopls.enable = true;
       lua-ls = {
         enable = true;
         settings.telemetry.enable = false;

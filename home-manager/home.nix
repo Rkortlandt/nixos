@@ -153,6 +153,7 @@ home.packages = with pkgs; [
   libreoffice-qt
   yuzu-mainline
   eww-wayland
+  unzip
 ] ++ (with inputs.nixpkgs-unstable.legacyPackages.x86_64-linux; [
   #Unstable
   cosmic-term

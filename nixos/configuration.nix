@@ -80,7 +80,7 @@
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
-  
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
   #TPM
   security.tpm2 = {
@@ -125,7 +125,7 @@
         openssh.authorizedKeys.keys = [
 # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
         ];
-      extraGroups = ["wheel" "networkmanager" "audio" "input" "libvirtd" "tss"];
+      extraGroups = ["wheel" "networkmanager" "audio" "input" "libvirtd" "tss" "docker" "qemu-libvirtd"];
     };
   };
 #Essential Packages
@@ -134,6 +134,8 @@
     virt-manager.enable = true;
     hyprland.enable = true;
   };
+
+  virtualisation.docker.enable = true;
 
 #Auto login
   services.greetd = {
