@@ -150,6 +150,7 @@ home.packages = with pkgs; [
   gcc
   gradle
   jetbrains.idea-ultimate
+  python39
   libreoffice-qt
   yuzu-mainline
   eww-wayland
