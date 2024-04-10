@@ -22,7 +22,6 @@
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
     ./bash
-    ./nvim/config
   ];
 
   nixpkgs = {
@@ -69,6 +68,7 @@
       ".config/kitty".source = ./kitty;
       ".config/starship.toml".source = ./bash/starship.toml;
       ".config/tofi".source = ./tofi;
+      ".config/nvim".source = ./nvim;
   };
 
   home.pointerCursor = {
@@ -154,6 +154,7 @@ home.packages = with pkgs; [
   libreoffice-qt
   yuzu-mainline
   eww-wayland
+  cargo
   unzip
 ] ++ (with inputs.nixpkgs-unstable.legacyPackages.x86_64-linux; [
   #Unstable
