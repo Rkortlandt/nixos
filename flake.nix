@@ -4,10 +4,9 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    # You can access packages and modules from different nixpkgs revs
-    # at the same time. Here's an working example:
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
+    templ.url = "github:a-h/templ";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-23.11";
@@ -16,7 +15,6 @@
     nixvim = {
       url = "github:nix-community/nixvim/nixos-23.11";
     # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-    # url = "github:nix-community/nixvim/nixos-23.05";
 
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -96,7 +94,9 @@
     homeConfigurations = {
       "ss-rowan@rowan-nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs;};
+        extraSpecialArgs = {
+          inherit inputs outputs; 
+        };
         modules = [
           # > Our main home-manager configuration file <
           ./home-manager/home.nix

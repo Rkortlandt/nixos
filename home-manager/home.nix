@@ -23,7 +23,7 @@
     # ./nvim.nix
     ./bash
   ];
-
+  
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -51,6 +51,7 @@
         allowUnfree = true;
         permittedInsecurePackages = [
         "electron-25.9.0"
+        "electron-13.6.9"
       ];
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = _: true;
@@ -68,7 +69,6 @@
       ".config/kitty".source = ./kitty;
       ".config/starship.toml".source = ./bash/starship.toml;
       ".config/tofi".source = ./tofi;
-      ".config/nvim".source = ./nvim;
   };
 
   home.pointerCursor = {
@@ -108,12 +108,20 @@
       userEmail = "rowankortlandt@otsegops.org";
     }; 
 
+    gh = {
+      enable = true;
+      settings = {
+        git_protocol = "ssh";
+        editor = "nvim";
+      };
+    };
+
     firefox.enable = true;
     firefox.profiles.rowan = {
       search = {
         default = "Bing";
         force = true;
-        engines."Nix-Packages" = {
+       engines."Nix-Packages" = {
           urls = [{
             template = "https://search.nixos.org/packages";
             params = [
@@ -144,20 +152,24 @@ home.packages = with pkgs; [
   qemu
   bridge-utils
   discord
-  vivaldi
   btop
   jdk21
   gcc
+  obinskit
   gradle
   jetbrains.idea-ultimate
   python39
+  go
+  nodejs
+  air
   libreoffice-qt
   yuzu-mainline
   eww-wayland
   cargo
   unzip
-] ++ (with inputs.nixpkgs-unstable.legacyPackages.x86_64-linux; [
+] ++ (with pkgs.unstable; [
   #Unstable
+  vivaldi
   cosmic-term
 ]);
   

@@ -26,9 +26,11 @@
     # You can add overlays here
     overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
+      inputs.templ.overlays.default
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
+      inputs.templ.overlays.default
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -150,7 +152,6 @@
   };
   services.printing.enable = true;
   services.fwupd.enable = true;
-  services.printing.enable = true;
 
   services.avahi = {
     enable = true;
@@ -178,6 +179,7 @@
      udiskie
      chromium
      efibootmgr
+     templ
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.
