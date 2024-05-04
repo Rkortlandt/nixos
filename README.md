@@ -11,7 +11,8 @@
 3. Tofi App launcher
 4. Intellij Install
 5. Thunar File Manager
-6. Neovim with Nixvim
+6. Neovim
+7. Greetd and Tuigreet
 
 ## Apps
 1. Vivaldi, Firefox, and Chromium because why not.
@@ -20,12 +21,15 @@
 4. Kitty Terminal
 5. Obsidian
 6. Grim for screenshots (MainMod + g)
-7. Neovim
+7. Neovim,
 
 ## Missing Features
 1. Secret Manager
 2. Gui elements wifi, bluetooth (With EWW)
-3. Transparent Nvim
+4. nh
+5. iso
+6. clipboard manager
+7. manage vivaldi with nix
 
 ## KeyBinds 
 1. MainMod + v = vivaldi
