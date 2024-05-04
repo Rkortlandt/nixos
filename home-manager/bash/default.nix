@@ -21,6 +21,7 @@
       cls = "clear";
       apt-get = "suto apt-get";
       vi = "nvim";
+      vim = "nvim";
       home = "cd ~";
       "cd.." = "cd ..";
       la = "ls -ALh";
@@ -37,6 +38,7 @@
       ungz = "tar -xvzf";
       quit = "exit";
       whatismyip = "whatsmyip";
+      nix = "nom";
       rnix = "sudo nixos-rebuild switch --flake ~/nixos/#rowan-nixos";
       rhome = "home-manager switch --flake ~/nixos/#ss-rowan@rowan-nixos";
     };

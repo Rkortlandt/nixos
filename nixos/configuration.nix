@@ -20,6 +20,7 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+    <nixos-hardware/framework/13-inch/11th-gen-intel>
   ];
 
   nixpkgs = {
@@ -138,20 +139,21 @@
   };
 
   virtualisation.docker.enable = true;
-
+  services.fwupd.enable = true;
 #Auto login
   services.greetd = {
     enable = true;
+    restart = true;
+    vt = 2;
     settings = rec {
       initial_session = {
-        command = "${pkgs.hyprland}/bin/Hyprland";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --time --remember --cmd Hyprland";
         user = "ss-rowan";
       };
       default_session = initial_session;
     };
   };
   services.printing.enable = true;
-  services.fwupd.enable = true;
 
   services.avahi = {
     enable = true;
@@ -172,7 +174,6 @@
      neovim 
      ripgrep
      dunst
-     jetbrains.idea-ultimate
      xdg-desktop-portal-hyprland
      pipewire
      wireplumber
@@ -180,6 +181,7 @@
      chromium
      efibootmgr
      templ
+     nix-output-monitor
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.

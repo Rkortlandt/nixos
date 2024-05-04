@@ -157,7 +157,6 @@ home.packages = with pkgs; [
   gcc
   obinskit
   gradle
-  jetbrains.idea-ultimate
   python39
   go
   nodejs
@@ -170,6 +169,7 @@ home.packages = with pkgs; [
 ] ++ (with pkgs.unstable; [
   #Unstable
   vivaldi
+  jetbrains.idea-ultimate
   cosmic-term
 ]);
   
