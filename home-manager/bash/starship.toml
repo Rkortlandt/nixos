@@ -8,7 +8,7 @@ $nix_shell\
 $directory\
 [](fg:#434C5E bg:#4C566A)\
 $git_branch\
-[](fg:#4C566A bg:#3F7723)\
+[](fg:#4C566A bg:#CECECE)\
 $c\
 $elixir\
 $elm\
@@ -19,11 +19,12 @@ $julia\
 $nodejs\
 $nim\
 $rust\
-[](fg:#3F7723 bg:#58A631)\
+[](fg:#CECECE bg:#E8E8E8)\
 $docker_context\
-[](fg:#58A631 bg:#65BE38)\
+[](fg:#E8E8E8 bg:#FFFFFF)\
 $time\
-[ ](fg:#65BE38)\
+[ ](fg:#FFFFFF)\
+\n[  󱞩 ](fg:#FFFFFF)\
 """
 command_timeout = 5000
 # Disable the blank line at the start of the prompt
@@ -131,5 +132,5 @@ format = '[ $symbol ($version) ]($style)'
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-style = "bg:#65BE38"
-format = '[ ]($style)'
+style = "bg:#FFFFFF fg:#3B4252"
+format = '[$time]($style)'
