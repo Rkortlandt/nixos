@@ -166,6 +166,7 @@ home.packages = with pkgs; [
   eww-wayland
   cargo
   unzip
+  rclone
 ] ++ (with pkgs.unstable; [
   #Unstable
   vivaldi
