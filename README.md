@@ -1,7 +1,7 @@
 # Rowan Kortlandts Nixos Desktop
 
 ## V2
-![Uploading 20240506_19h29m43s_grim.png…]()
+![20240506_19h29m43s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/3798fbb0-feb4-47b4-bba2-377bed9cd670)
 ## V1
 ![20240228_10h45m48s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/66522e1b-b390-4a8a-8e2a-66fe41b2209c)
 
