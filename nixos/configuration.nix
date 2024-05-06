@@ -23,7 +23,7 @@
     <nixos-hardware/framework/13-inch/11th-gen-intel>
     ../modules/nixos/gnome.nix
     ../modules/nixos/hyprland.nix
-
+    ../modules/nixos/boot.nix
   ];
 
   nixpkgs = {
@@ -83,26 +83,7 @@
 
 # Bootloader 
 
-  boot.loader = {
-    grub2-theme = {
-      enable = true;
-      theme = "vimix";
-      footer = true;
-    };
-
-    systemd-boot.enable = false;
-    efi = {
-      canTouchEfiVariables = false;
-    };
-    grub = {
-      enable = true;
-      efiSupport = true;
-      efiInstallAsRemovable = true;
-      devices = ["nodev"];
-      useOSProber = true;
-    };
-  };
-  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
   #TPM
   security.tpm2 = {
@@ -162,9 +143,6 @@
   modules.hyprland.enable = lib.mkDefault true;
   modules.gnome.enable = lib.mkDefault false;
 
-
-
-
   programs.virt-manager.enable = true;
  
 
@@ -189,15 +167,21 @@
   ];
 
   environment.systemPackages = with pkgs; [
-     neovim 
-     ripgrep
-     pipewire
-     wireplumber
-     udiskie
-     chromium
-     efibootmgr
-     templ
-     nix-output-monitor
+    gh
+    git
+    firefox
+    tofi
+    swaybg
+    unzip
+    neovim 
+    ripgrep
+    pipewire
+    wireplumber
+    udiskie
+    chromium
+    efibootmgr
+    templ
+    nix-output-monitor
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.
