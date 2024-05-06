@@ -1,8 +1,8 @@
 # Rowan Kortlandts Nixos Desktop
 
-## V2
+### V2
 ![20240506_19h29m43s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/3798fbb0-feb4-47b4-bba2-377bed9cd670)
-## V1
+### V1
 ![20240228_10h45m48s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/66522e1b-b390-4a8a-8e2a-66fe41b2209c)
 
 # DISCLAMER
@@ -50,8 +50,14 @@
 13. MainMod + g = Screenshot Grim
     
 ## Terminal
+### V2
+![20240506_19h32m05s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/869c504f-7c87-4c2f-bebf-56f8034156a0)
+### V1
 ![20240228_10h49m24s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/3c755dbb-2109-4acc-b3ed-6f07de0c9066)
 
 ## Neovim
+### V2
+![20240506_19h32m40s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/314cfc46-344f-40c1-98c6-c62984ec7015)
+### V1
 ![20240228_10h50m11s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/d31ba80b-3d50-44dd-8cd5-db08a6cafba4)
 
