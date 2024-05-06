@@ -9,7 +9,7 @@
 ### !-This desktop is NOT user friendly if you don't know what your doing I recomend useing Gnome or KDE or starting your own Hyprland install yourself-!
 
 ## Features
-1. Wayland Desktop Compositor with Hyprland Install
+1. Wayland Desktop Compositor with Hyprland Install and Additional specilization for simple gnome setup
 2. Custom Waybar
 3. Tofi App launcher
 4. Intellij Install
