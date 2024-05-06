@@ -46,7 +46,7 @@
     home-manager,
     nixos-hardware,
     split-monitor-workspaces,
-    grub2-theams,
+    grub2-themes,
     ...
   } @ inputs: let
     inherit (self) outputs;

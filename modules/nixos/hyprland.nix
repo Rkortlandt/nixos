@@ -1,18 +1,13 @@
-{ config, pkgs, ...} : {
+{ lib, config, pkgs, ...}: with lib; let cfg = config.modules.hyprland; in {
   imports = [
 # Paths to other modules.
 # Compose this module out of smaller ones.
     ./common.nix
   ];
 
-  options = {
-# Option declarations.
-# Declare what settings a user of this module module can set.
-# Usually this includes a global "enable" option which defaults to false.
+  options.modules.hyprland.enable = mkEnableOption "Enable Hyprland"; 
 
-  };
-
-  config = {
+  config = mkIf cfg.enable {
     programs = {
       thunar.enable = true;
       hyprland.enable = true;

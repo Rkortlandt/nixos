@@ -21,6 +21,9 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
     <nixos-hardware/framework/13-inch/11th-gen-intel>
+    ../modules/nixos/gnome.nix
+    ../modules/nixos/hyprland.nix
+
   ];
 
   nixpkgs = {
@@ -81,6 +84,12 @@
 # Bootloader 
 
   boot.loader = {
+    grub2-theme = {
+      enable = true;
+      theme = "vimix";
+      footer = true;
+    };
+
     systemd-boot.enable = false;
     efi = {
       canTouchEfiVariables = false;
@@ -93,12 +102,6 @@
       useOSProber = true;
     };
   };
-  boot.grub2-theme = {
-    enable = true;
-    theme = "vimix";
-    footer = true;
-  };
-
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
   #TPM
@@ -151,38 +154,23 @@
 
   specialisation = {
     gnome.configuration = {
-      services.xserver = {
-        enable = true;
-        displayManager.gdm.enable = true;
-        desktopManager.gnome.enable = true;
-      };
-
-      programs.hyprland.enable = false;
-      services.greetd.enable = false;
+      modules.hyprland.enable = false;
+      modules.gnome.enable = true;
     };
   };
+  
+  modules.hyprland.enable = lib.mkDefault true;
+  modules.gnome.enable = lib.mkDefault false;
 
-  programs = {
-    thunar.enable = true;
-    virt-manager.enable = true;
-    hyprland.enable = lib.mkDefault true;
-  };
+
+
+
+  programs.virt-manager.enable = true;
+ 
 
   virtualisation.docker.enable = true;
   services.fwupd.enable = true;
-#Auto login
-  services.greetd = {
-    enable = lib.mkDefault true;
-    restart = true;
-    vt = 2;
-    settings = rec {
-      initial_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --time --remember --cmd Hyprland";
-        user = "ss-rowan";
-      };
-      default_session = initial_session;
-    };
-  };
+
   services.printing.enable = true;
 
   services.avahi = {
@@ -203,8 +191,6 @@
   environment.systemPackages = with pkgs; [
      neovim 
      ripgrep
-     dunst
-     xdg-desktop-portal-hyprland
      pipewire
      wireplumber
      udiskie
@@ -212,7 +198,6 @@
      efibootmgr
      templ
      nix-output-monitor
-     gnomeExtensions.pop-shell
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.
