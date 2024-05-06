@@ -75,14 +75,30 @@
   #Networking
   networking.networkmanager.enable = true;
 
-  # Hostname
+# Hostname
   networking.hostName = "rowan-nixos";
 
-  # Bootloader 
+# Bootloader 
+
   boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+    systemd-boot.enable = false;
+    efi = {
+      canTouchEfiVariables = false;
+    };
+    grub = {
+      enable = true;
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+      devices = ["nodev"];
+      useOSProber = true;
+    };
   };
+  boot.grub2-theme = {
+    enable = true;
+    theme = "vimix";
+    footer = true;
+  };
+
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
   #TPM
@@ -132,17 +148,31 @@
     };
   };
 #Essential Packages
+
+  specialisation = {
+    gnome.configuration = {
+      services.xserver = {
+        enable = true;
+        displayManager.gdm.enable = true;
+        desktopManager.gnome.enable = true;
+      };
+
+      programs.hyprland.enable = false;
+      services.greetd.enable = false;
+    };
+  };
+
   programs = {
     thunar.enable = true;
     virt-manager.enable = true;
-    hyprland.enable = true;
+    hyprland.enable = lib.mkDefault true;
   };
 
   virtualisation.docker.enable = true;
   services.fwupd.enable = true;
 #Auto login
   services.greetd = {
-    enable = true;
+    enable = lib.mkDefault true;
     restart = true;
     vt = 2;
     settings = rec {
@@ -182,6 +212,7 @@
      efibootmgr
      templ
      nix-output-monitor
+     gnomeExtensions.pop-shell
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.

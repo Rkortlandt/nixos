@@ -6,6 +6,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     templ.url = "github:a-h/templ";
+
+    grub2-themes = {
+      url = "github:vinceliuice/grub2-themes";
+    };
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -42,6 +46,7 @@
     home-manager,
     nixos-hardware,
     split-monitor-workspaces,
+    grub2-theams,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -80,6 +85,7 @@
       rowan-nixos = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
+          grub2-themes.nixosModules.default
           # > Our main nixos configuration file <
           ./nixos/configuration.nix
         ];

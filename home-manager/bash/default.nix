@@ -41,6 +41,7 @@
       nix = "nom";
       rnix = "sudo nixos-rebuild switch --flake ~/nixos/#rowan-nixos";
       rhome = "home-manager switch --flake ~/nixos/#ss-rowan@rowan-nixos";
+      rnixboot = "sudo nixos-rebuild boot --install-bootloader --flake ~/nixos/#rowan-nixos";
     };
 
     initExtra = ''
