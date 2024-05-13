@@ -24,6 +24,7 @@
     ../modules/nixos/gnome.nix
     ../modules/nixos/hyprland.nix
     ../modules/nixos/boot.nix
+    ../modules/nixos/performance.nix
   ];
 
   nixpkgs = {
@@ -128,7 +129,7 @@
         openssh.authorizedKeys.keys = [
 # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
         ];
-      extraGroups = ["wheel" "networkmanager" "audio" "input" "libvirtd" "tss" "docker" "qemu-libvirtd"];
+      extraGroups = ["wheel" "networkmanager" "audio" "input" "libvirtd" "tss" "docker" "qemu-libvirtd" "dialout"];
     };
   };
 #Essential Packages
@@ -180,6 +181,7 @@
     udiskie
     chromium
     efibootmgr
+    floorp
     templ
     nix-output-monitor
   ];
