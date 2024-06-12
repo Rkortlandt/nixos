@@ -181,7 +181,6 @@ home.packages = with pkgs; [
   nodejs
   air
   libreoffice-qt
-  eww-wayland
   cargo
   unzip
   rclone
