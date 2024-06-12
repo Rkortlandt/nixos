@@ -5,7 +5,7 @@
 }
 
 *:not(button):not(workspaces) {
-    padding: 3px 3px 0px 3px;
+    padding: 4px 4px 0px 3px;
 }
 
 window#waybar {
@@ -82,7 +82,17 @@ button {
 }
 
 #battery {
-    background-color: rgba(0, 0, 0, .5);
+    background: #239A20;
+    border-radius: 7px;
+}
+
+#battery.mid:not(.charging) {
+    background-color: #6FAB40;
+    border-radius: 7px;
+}
+
+#battery.warning:not(.charging) {
+    background-color: #BB712C;
     border-radius: 7px;
 }
 
@@ -91,21 +101,11 @@ button {
     border-radius: 7px;
 }
 
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: #000000;
-    }
-}
+
 
 #battery.critical:not(.charging) {
     background-color: #f53c3c;
     color: #ffffff;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
 }
 
 label:focus {

@@ -1,4 +1,4 @@
-# This is your system's configuration file.
+#This is your system's configuration file.
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
 {
   inputs,
@@ -6,6 +6,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: {
   # You can import other NixOS modules here
@@ -20,11 +21,10 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
-    <nixos-hardware/framework/13-inch/11th-gen-intel>
     ../modules/nixos/gnome.nix
     ../modules/nixos/hyprland.nix
+    ../modules/nixos/i3.nix
     ../modules/nixos/boot.nix
-    ../modules/nixos/performance.nix
   ];
 
   nixpkgs = {
@@ -133,16 +133,21 @@
     };
   };
 #Essential Packages
-
   specialisation = {
     gnome.configuration = {
       modules.hyprland.enable = false;
       modules.gnome.enable = true;
     };
+
+    i3.configuration = {
+      modules.hyprland.enable = false;
+      modules.i3.enable = true;
+    };
   };
   
   modules.hyprland.enable = lib.mkDefault true;
   modules.gnome.enable = lib.mkDefault false;
+  moduels.i3.enable = lib.mkDefault false;
 
   programs.virt-manager.enable = true;
  

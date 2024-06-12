@@ -10,25 +10,13 @@
 }: {
   # You can import other home-manager modules here
   imports = [
-    # If you want to use modules your own flake exports (from modules/home-manager):
-    # outputs.homeManagerModules.example
-
-    # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
-      inputs.nixvim.homeManagerModules.nixvim
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-    inputs.nixneovim.nixosModules.homeManager-22-11
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
+    inputs.ags.homeManagerModules.default
     ./bash
   ];
   
   nixpkgs = {
     # You can add overlays here
     overlays = [
-      inputs.nixneovimplugins.overlays.default
-      inputs.nixneovim.overlays.default
       
       # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
@@ -65,10 +53,14 @@
 
   home.file = {
       ".config/hypr/NixWallpaper.jpg".source = ./hyprland/hypr/NixWallpaper.jpg;
+      ".config/hypr/hypridle.conf".source = ./hyprland/hypr/hypridle.conf;
+      ".config/hypr/hyprlock.conf".source = ./hyprland/hypr/hyprlock.conf;
+      ".config/hypr/hyprpaper.conf".source = ./hyprland/hypr/hyprpaper.conf;
       ".config/waybar".source = ./hyprland/waybar;
       ".config/kitty".source = ./kitty;
       ".config/starship.toml".source = ./bash/starship.toml;
       ".config/tofi".source = ./tofi;
+      ".lib/jdk11".source = pkgs.jdk11;
   };
 
   home.pointerCursor = {
@@ -114,6 +106,16 @@
   };
 
   programs = {
+    ags = {
+      enable = true;
+      configDir = ./ags;
+      extraPackages = with pkgs; [
+        gtksourceview
+        webkitgtk
+        accountsservice
+      ];
+    };
+
     btop.enable = true;
     waybar.enable = true;
     starship.enable = true;
@@ -173,14 +175,12 @@ home.packages = with pkgs; [
   btop
   jdk21
   gcc
-  obinskit
   gradle
   python39
   go
   nodejs
   air
   libreoffice-qt
-  yuzu-mainline
   eww-wayland
   cargo
   unzip
@@ -191,6 +191,7 @@ home.packages = with pkgs; [
   jetbrains.idea-ultimate
   cosmic-term
   arduino
+  zig
 ]);
   
   # Enable home-manager and git

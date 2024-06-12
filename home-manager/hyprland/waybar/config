@@ -107,7 +107,8 @@
     },
     "battery": {
         "states": {
-            // "good": 95,
+            "good": 100,
+	    "mid": 70,
             "warning": 30,
             "critical": 15
         },
@@ -158,6 +159,11 @@
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 0
     }
 }
 

@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ...}: with lib; let cfg = config.modules.hyprland; in {
+{ lib, config, pkgs, inputs, ...}: with lib; let cfg = config.modules.hyprland; in {
   imports = [
 # Paths to other modules.
 # Compose this module out of smaller ones.
@@ -19,7 +19,7 @@
       vt = 2;
       settings = rec {
         initial_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --time --remember --cmd Hyprland";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --user-menu --time --r --cmd Hyprland";
           user = "ss-rowan";
         };
         default_session = initial_session;
@@ -29,6 +29,10 @@
     environment.systemPackages = with pkgs; [
       dunst
       xdg-desktop-portal-hyprland
-    ];
+      brightnessctl
+    ] ++ (with pkgs.unstable; [
+      hypridle
+      hyprlock
+    ]);
   };
 }
