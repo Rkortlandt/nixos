@@ -147,7 +147,7 @@
   
   modules.hyprland.enable = lib.mkDefault true;
   modules.gnome.enable = lib.mkDefault false;
-  moduels.i3.enable = lib.mkDefault false;
+  modules.i3.enable = lib.mkDefault false;
 
   programs.virt-manager.enable = true;
  
@@ -189,6 +189,8 @@
     floorp
     templ
     nix-output-monitor
+    bottles
+    inkscape
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.
