@@ -1,0 +1,54 @@
+window {
+	background-color: transparent;
+}
+
+.bg {
+	margin: 2px 4px;
+	background-color: rgba(10,10,10,.64);
+	border-radius: 10px;
+}
+
+.bar {
+	margin: 4px;
+}
+
+* {
+    font-size: 12px;   
+}
+
+.brightness {
+    background-color: black;
+}
+
+button {
+    min-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 15px;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+}
+
+
+button:active {
+    background-color: @theme_selected_bg_color;
+}
+
+button:hover {
+    border: 1px solid grey;
+}
+
+
+.workspaces button.focused {
+    border-bottom: 1px solid @theme_selected_bg_color;
+}
+
+.client-title {
+    color: @theme_selected_bg_color;
+}
+
+.notification {
+    color: yellow;
+}
+
+
