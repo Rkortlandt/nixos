@@ -1,4 +1,4 @@
-# Rowan Kortlandts Nixos Desktop
+# Rowan's Nixos Desktop
 ### V3
 ![20240629_23h44m03s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/83e93df1-c254-47ec-9e9c-8ebce447035c)
 ### V2
