@@ -4,30 +4,24 @@ const audio = await Service.import('audio')
 const battery = await Service.import('battery')
 const mpris = await Service.import('mpris')
 const network = await Service.import('network')
-import brightness from './brightness.js';
-
-const time = Variable("", {
-    poll: [1000, 'date "+%H:%M"'],
-})
-
-const date = Variable("", {
-    poll: [1000, 'date "+%e %B (%m)"'],
-})
+import brightness from './services/brightness.js';
+import { setupQuickSettings } from './quicksettings/quicksettings.js';
 
 function Clock() {
-    var status = 0;
-    return Widget.Button({
-        child: Widget.Label({ label: time.bind() }),
-       /* onClicked: (self) => {
-            if (status == 0) {
-                self.child = Widget.Label({ label: date.bind() });
-                status = 1;
-            } else {
-                self.child = Widget.Label({ label: time.bind() });
-                status = 0;
-            }
-        } */
+    const time = Variable("", {
+        poll: [1000, 'date "+%H:%M"'],
     })
+
+    const date = Variable("", {
+        poll: [1000, 'date "+%e %B (%m)"'],
+    })
+
+    return Widget.Button({
+        on_clicked: () => App.toggleWindow("quicksettings"),
+        label: time.bind(),
+       
+    })
+
 }
 
 const brightnessLabel = () => {
@@ -47,45 +41,52 @@ const brightnessLabel = () => {
     })
 }
 
-const wifiIndicator = () => Widget.Button({
-    child: Widget.Icon({
-        icon: network.wifi.bind('state').as(
-            state => {
-                if (state === "disconnected") {
-                    return "no-wifi"
-                } else {
-                    return "wifi"
+const wifiIndicator = () => {
+    /** @param strength {number} */
+    let getColorByStrength = (strength) => {
+        switch (true) {
+            case strength >= 75:
+                return '#127CF0'; // Strong signal: Blue
+            case strength >= 50:
+                return '#2AA028'; // Good signal: Green
+            case strength >= 25:
+                return '#6EBD30'; // Fair signal: YGreen
+            default:
+                return '#D17C2E'; // Weak signal: Orange
+        }
+    } 
+
+    return Widget.Button({
+        className: "wifi",
+        child: Widget.Icon({
+            icon: network.wifi.bind('state').as(
+                state => {
+                    if (state === "disconnected") {
+                        return "no-wifi"
+                    } else {
+                        return "wifi"
+                    }
                 }
+            ),
+            css: "font-size: 15px; padding: 0px 3px;",
+            setup: (self) => {
+                self.hook(network.wifi, () => {
+                    self.icon = (network.wifi.state === "disconnected")? 
+                        "no-wifi": "wifi";
+                })
             }
+        }),
+        css: network.bind('wifi').as(wifi => 
+            `background-color: ${getColorByStrength(wifi.strength)};`
         ),
-        css: "font-size: 15px; padding: 0px 3px;",
         setup: (self) => {
             self.hook(network.wifi, () => {
-                self.icon = (network.wifi.state === "disconnected")? 
-                    "no-wifi": "wifi";
+                self.css = `background-color: ${(network.wifi.state === "disconnected")? "#BD3030" : getColorByStrength(network.wifi.strength)}`;
             })
         }
-    }),
-    css: network.wifi.bind('strength').as(strength => 
-        `background-color: ${getColorByStrength(strength)};`
-    )
-})
-
-/**
- * @param strength {number}
- */
-const getColorByStrength = (strength) => {
-    switch (true) {
-        case strength >= 75:
-            return '#127CF0'; // Strong signal: Blue
-        case strength >= 50:
-            return '#2AA028'; // Good signal: Green
-        case strength >= 25:
-            return '#6EBD30'; // Fair signal: YGreen
-        default:
-            return '#D17C2E'; // Weak signal: Orange
-    }
+    })
 }
+
 
 const wiredIndicator = () => Widget.Icon({
     icon: network.wired.bind('icon_name'),
@@ -218,12 +219,12 @@ const mic = () => Widget.Button({
     setup: self => {
         let icon;
         self.child = Widget.Box({
-            children: [ icon = Widget.Icon({icon: 'mic-unmuted', css: "font-size: 15px; padding: 0px 0px;"})]
+            children: [ icon = Widget.Icon({icon: 'mic-unmuted', css: "font-size: 17px; padding: 0px 0px;"})]
         }),
 
         self.hook(audio.microphone, () => { 
            icon.icon = (audio.microphone.is_muted)? 'mic-muted': 'mic-unmuted',
-            self.css = (audio.microphone.is_muted)? 'background-color: #BD3030': 'background-color: gray'
+            self.css = (audio.microphone.is_muted)? 'background-color: #BD3030': 'background-color: transparent'
         });
     }
 });
@@ -232,6 +233,7 @@ const dispatch = ws => hyprland.messageAsync(`dispatch workspace ${ws}`);
 const Workspaces = () => Widget.EventBox({
     child: Widget.Box({
         children: Array.from({ length: 10 }, (_, i) => i + 1).map(i => Widget.Button({
+            className: 'workspace-button',
             attribute: i,
             label: `${i}`,
             onClicked: () => dispatch(i),
@@ -240,7 +242,9 @@ const Workspaces = () => Widget.EventBox({
         setup: self => {
             self.hook(hyprland.active.workspace, () => self.children.forEach(btn => {
                 btn.visible = hyprland.workspaces.some(ws => ws.id === btn.attribute);
-                
+                if (hyprland.workspaces[0].id === btn.attribute) btn.class_name = 'workspace-button-start';
+                if (hyprland.workspaces[hyprland.workspaces.length - 1].id === btn.attribute) btn.class_name = 'workspace-button-end';
+
                 if (btn.attribute == hyprland.active.workspace.id) {
                     btn.css = "color: #0EA16F";
                 } else if (hyprland.workspaces.find(({ id }) => id == btn.attribute)?.monitor != 'eDP-1') {
@@ -264,7 +268,7 @@ function Bar (window = 0) {
             className: 'bg',
             child: Widget.Box({
                 className: 'bar',
-                spacing: 8,
+                spacing: 4,
                 homogeneous: false,
                 vertical: false,
                 children: [
@@ -274,7 +278,6 @@ function Bar (window = 0) {
                     batteryIndicator,
                     Widget.Box({ hexpand: true }),
                     players,
-                    Widget.Box({ hexpand: true }),
                     networkIndicator(),
                     brightnessLabel(),
                     Clock(),
@@ -284,7 +287,7 @@ function Bar (window = 0) {
     });
 }
 
-
+setupQuickSettings();
 
 App.config({
     windows: [

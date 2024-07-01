@@ -4,8 +4,18 @@ window {
 
 .bg {
 	margin: 2px 4px;
-	background-color: rgba(10,10,10,.64);
+	background-color: rgba(10,10,10,.50);
 	border-radius: 10px;
+}
+
+.bg-black {
+	margin: 2px 4px;
+	background-color: rgba(0,0,0, .80);
+	border-radius: 10px;
+}
+
+.padding {
+    padding: 4px;
 }
 
 .bar {
@@ -21,6 +31,7 @@ window {
 }
 
 button {
+    background-clip: padding-box;
     min-width: 0;
     padding-top: 0;
     padding-bottom: 0;
@@ -29,6 +40,40 @@ button {
     border-bottom: 1px solid transparent;
 }
 
+.mic {
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 12px;
+}
+.wifi {
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 12px;
+}
+
+.workspace-button {
+   padding-left: 10px;
+   padding-right: 10px;
+   border-radius: 0px;
+}
+
+.workspace-button-start {
+   padding-left: 10px;
+   padding-right: 10px;
+   border-top-left-radius: 15px;
+   border-top-right-radius: 0px;
+   border-bottom-left-radius: 15px;
+   border-bottom-right-radius: 0px;
+}
+
+.workspace-button-end {
+   padding-left: 10px;
+   padding-right: 10px;
+   border-top-left-radius: 0px;
+   border-top-right-radius: 15px;
+   border-bottom-left-radius: 0px;
+   border-bottom-right-radius: 15px;
+}
 
 button:active {
     background-color: @theme_selected_bg_color;
@@ -51,4 +96,12 @@ button:hover {
     color: yellow;
 }
 
+.top {
+	background-color: white;
+}
 
+slider {
+	min-height: 5px;
+	min-width: 5px;
+	margin: -7px;
+}
