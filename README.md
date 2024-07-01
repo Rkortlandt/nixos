@@ -1,6 +1,6 @@
 # Rowan's Nixos Desktop
 ### V3
-![20240629_23h44m03s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/83e93df1-c254-47ec-9e9c-8ebce447035c)
+![20240701_12h05m26s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/12d34cc5-8af7-4eb5-98f0-17785d8c6406)
 ### V2
 ![20240506_19h29m43s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/3798fbb0-feb4-47b4-bba2-377bed9cd670)
 ### V1
