@@ -1,4 +1,4 @@
-import brightness from "../../services/brightness.js"
+import brightness from "../../bar/services/brightness.js"
 
 const BrightnessSlider = () => Widget.Slider({
     draw_value: false,

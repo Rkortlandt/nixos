@@ -4,8 +4,9 @@ const audio = await Service.import('audio')
 const battery = await Service.import('battery')
 const mpris = await Service.import('mpris')
 const network = await Service.import('network')
-import brightness from './services/brightness.js';
+import { setupBar } from './bar/bar.js';
 import { setupQuickSettings } from './quicksettings/quicksettings.js';
+
 
 function Clock() {
     const time = Variable("", {
@@ -22,23 +23,6 @@ function Clock() {
        
     })
 
-}
-
-const brightnessLabel = () => {
-    return Widget.Button({
-        onScrollUp: () => brightness.value += .01,
-        onScrollDown: () => brightness.value -= .01,
-        className: "brightness",
-        child: Widget.Box({children: [
-            Widget.Icon({
-                icon: "brightness",                 
-                css: "font-size: 15px; padding: 0px 3px;",
-            }),
-            Widget.Label({
-                label: brightness.bind('value').as((v) => Math.floor(v * 100).toString().concat('%')), 
-            }), 
-        ]})
-    })
 }
 
 const wifiIndicator = () => {
@@ -257,7 +241,7 @@ const Workspaces = () => Widget.EventBox({
     }),
 })
 
-
+/*
 function Bar (window = 0) {
     return Widget.Window({
         exclusivity: 'exclusive',
@@ -286,12 +270,12 @@ function Bar (window = 0) {
         }), 
     });
 }
+*/
 
 setupQuickSettings();
-
+setupBar();
 App.config({
     windows: [
-        Bar(0),
         // this is where window definitions will go
     ],
     style: './style.css',

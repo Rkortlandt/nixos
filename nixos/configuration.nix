@@ -163,6 +163,8 @@
     openFirewall = true;
   };
 
+#Bluetooth
+hardware.bluetooth.enable = true;
 #Enable virtualization
   virtualisation.libvirtd.enable = true;
 
@@ -173,6 +175,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    gnome.gnome-bluetooth_1_0
     gh
     git
     firefox
