@@ -86,10 +86,6 @@ export const Menu = ({ name, icon, title, content }) => Widget.Revealer({
             Widget.Box({
                 class_name: "title-box",
                 children: [
-                    Widget.Icon({
-                        class_name: "icon",
-                        icon,
-                    }),
                     Widget.Label({
                         class_name: "title",
                         truncate: "end",

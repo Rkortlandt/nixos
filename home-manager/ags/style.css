@@ -105,3 +105,13 @@ slider {
 	min-width: 5px;
 	margin: -7px;
 }
+
+.menu {
+	background-color: black;
+	border: none;
+	border-radius: 10px;
+}
+
+.title {
+	padding: 2px 2px 0px 8px;	
+}
