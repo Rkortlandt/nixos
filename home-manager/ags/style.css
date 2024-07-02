@@ -3,7 +3,6 @@ window {
 }
 
 .bg {
-	margin: 2px 4px;
 	background-color: rgba(10,10,10,.50);
 	border-radius: 10px;
 }
@@ -55,24 +54,6 @@ button {
    padding-left: 10px;
    padding-right: 10px;
    border-radius: 0px;
-}
-
-.workspace-button-start {
-   padding-left: 10px;
-   padding-right: 10px;
-   border-top-left-radius: 15px;
-   border-top-right-radius: 0px;
-   border-bottom-left-radius: 15px;
-   border-bottom-right-radius: 0px;
-}
-
-.workspace-button-end {
-   padding-left: 10px;
-   padding-right: 10px;
-   border-top-left-radius: 0px;
-   border-top-right-radius: 15px;
-   border-bottom-left-radius: 0px;
-   border-bottom-right-radius: 15px;
 }
 
 button:active {
