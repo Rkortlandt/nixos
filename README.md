@@ -16,7 +16,7 @@
 7. Greetd and Tuigreet
 
 ## Apps
-1. Vivaldi, Firefox, and Chromium because why not.
+1. Vivaldi, Firefox, Floorp, and Chromium because why not.
 2. Discord
 3. Libre Office
 4. Kitty Terminal
