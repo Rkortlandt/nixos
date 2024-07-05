@@ -12,7 +12,7 @@ function Bar (window = 0) {
         monitor: window,
         anchor: ['top', 'left', 'right'],
         child: Widget.Box({
-            className: 'bg',
+            className: '',
             child: Widget.Box({
                 className: 'bar',
                 spacing: 4,

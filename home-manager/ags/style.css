@@ -3,18 +3,26 @@ window {
 }
 
 .bg {
-	background-color: rgba(10,10,10,.50);
+	background-color: rgba(20,20,20,.90);
 	border-radius: 10px;
 }
 
 .bg-black {
-	margin: 2px 4px;
 	background-color: rgba(0,0,0, .80);
 	border-radius: 10px;
 }
 
+.bg-blue {
+	background-color: #102D3F;
+	border-radius: 10px;
+}
+
 .padding {
-    padding: 4px;
+    padding: 8px;
+}
+
+.margin {
+    margin: 4px;
 }
 
 .bar {
@@ -48,6 +56,12 @@ button {
     padding-left: 3px;
     padding-right: 3px;
     border-radius: 12px;
+}
+
+.square-button {
+    padding-left: 0px;
+    padding-right: 0px;
+    border-radius: 9px;
 }
 
 .workspace-button {
@@ -85,6 +99,11 @@ slider {
 	min-height: 5px;
 	min-width: 5px;
 	margin: -7px;
+}
+
+
+progress {
+	background-color: white
 }
 
 .menu {

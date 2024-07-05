@@ -194,6 +194,7 @@ hardware.bluetooth.enable = true;
     nix-output-monitor
     bottles
     inkscape
+    lm_sensors
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.

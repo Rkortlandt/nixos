@@ -1,7 +1,9 @@
 import { Brightness } from "./widgets/brightness.js"
 import { NetworkToggle, WifiSelection } from "./widgets/network.js"
 import { BluetoothToggle, BluetoothDevices } from "./widgets/bluetooth.js"
+import { Info } from "./widgets/info.js"
 import PopupWindow from "../widgets/popupwindow.js"
+import { CpuUsageSlider, HeatSlider, RamUsageSlider } from "./widgets/system.js"
 const media = (await Service.import("mpris")).bind("players")
 
 /** 
@@ -21,13 +23,16 @@ const Row = (
         }),
         ...menus.map(w => w()),
     ],
-})
+    })
 
 const Settings = () => Widget.Box({
     vertical: true,
     class_name: "bg padding",
     css: "min-width: 70px;",
+    homogeneous: false,
+    spacing: 8,
     children: [
+        Info(),
         Widget.Box({
             class_name: "bg-black padding",
             vertical: true,
@@ -39,6 +44,15 @@ const Settings = () => Widget.Box({
             [NetworkToggle, BluetoothToggle],
             [WifiSelection, BluetoothDevices],
         ),
+        Widget.Box({
+            class_name: "bg-black padding",
+            vertical: true,
+            children: [
+                CpuUsageSlider(),
+                HeatSlider(),
+                RamUsageSlider(),
+            ],
+        }),
     ],
 })
 
