@@ -133,17 +133,17 @@
     };
   };
 #Essential Packages
-  specialisation = {
-    gnome.configuration = {
-      modules.hyprland.enable = false;
-      modules.gnome.enable = true;
-    };
-
-    i3.configuration = {
-      modules.hyprland.enable = false;
-      modules.i3.enable = true;
-    };
-  };
+  #specialisation = {
+  #  gnome.configuration = {
+  #    modules.hyprland.enable = false;
+  #    modules.gnome.enable = true;
+  #  };
+#
+#    i3.configuration = {
+#      modules.hyprland.enable = false;
+#      modules.i3.enable = true;
+#    };
+#  };
   
   modules.hyprland.enable = lib.mkDefault true;
   modules.gnome.enable = lib.mkDefault false;
@@ -159,7 +159,7 @@
   services.upower.enable = true;
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     openFirewall = true;
   };
 

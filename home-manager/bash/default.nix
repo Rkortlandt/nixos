@@ -38,6 +38,7 @@
       ungz = "tar -xvzf";
       quit = "exit";
       whatismyip = "whatsmyip";
+      exec = "hyprctl dispatch exec";
       nix = "nom";
       rnix = "sudo nixos-rebuild switch --flake ~/nixos/#rowan-nixos";
       rhome = "home-manager switch --flake ~/nixos/#ss-rowan@rowan-nixos";

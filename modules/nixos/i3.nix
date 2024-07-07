@@ -8,11 +8,12 @@
   options.modules.i3.enable = mkEnableOption "Enable i3"; 
 
   config = mkIf cfg.enable {
+    services.displayManager = {
+        defaultSession = "none+i3";
+    };
     services.xserver = {
       enable = true;
-      displayManager = {
-        defaultSession = "none+i3";
-      };
+    
 
       desktopManager = {
         xterm.enable = false;
