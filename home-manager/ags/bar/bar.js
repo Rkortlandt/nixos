@@ -4,9 +4,30 @@ import { Battery } from './widgets/battery.js'
 import { Network } from './widgets/network.js'
 import { Brightness } from './widgets/brightness.js';
 import { Clock } from './widgets/clock.js';
+import { settingsVisible } from '../config.js';
+import { CpuUsage, Heat, RamUsage } from './widgets/system.js';
+
+const visibleItems = Variable({
+    Workspaces: true,
+    Volume: true,
+    Mic: true,
+    Battery: true,
+    Media: true,
+    Network: true,
+    Brightness: true,
+    Clock: true,
+    CpuUsage: false,
+    RamUsage: false,
+    Heat: false,
+});
+
+const leftItems = ["Workspaces", "Volume", "Mic", "Battery"]
+const rightItems = ["Media", "Network", "Brightness", "CpuUsage", "RamUsage", "Heat", "Clock"]
+const barItems = { Workspaces, Volume, Mic, Battery, Media, Network, Brightness, Clock, CpuUsage, RamUsage, Heat};
 
 function Bar (window = 0) {
     return Widget.Window({
+        class_name: settingsVisible.bind().as((o) => (o)? "bg-norad": ""),
         exclusivity: 'exclusive',
         name: `bar-${window}`,
         monitor: window,
@@ -14,21 +35,15 @@ function Bar (window = 0) {
         child: Widget.Box({
             className: '',
             child: Widget.Box({
-                className: 'bar',
+                className: 'margin',
                 spacing: 4,
                 homogeneous: false,
                 vertical: false,
-                children: [
-                    Workspaces(),
-                    Volume(),
-                    Mic(),
-                    Battery(),
+                children: visibleItems.bind().as(visible => [
+                    ...leftItems.filter(item => visible[item]).map(item => barItems[item]()),
                     Widget.Box({ hexpand: true }),
-                    Media(),
-                    Network(),
-                    Brightness(),
-                    Clock(),
-                ]
+                    ...rightItems.filter(item => visible[item]).map(item => barItems[item]())
+                ])
             }), 
         }), 
     });
@@ -36,4 +51,12 @@ function Bar (window = 0) {
 
 export function setupBar() {
     App.addWindow(Bar())
+}
+
+
+export function toggleBarItemVisibility(itemName) {
+    visibleItems.value = {
+        ...visibleItems.value,
+        [itemName]: !visibleItems.value[itemName]
+    };
 }

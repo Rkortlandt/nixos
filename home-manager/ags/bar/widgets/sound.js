@@ -3,19 +3,23 @@ const mpris = await Service.import('mpris')
 
 /** @param {import('types/service/mpris').MprisPlayer} player */
 const Player = (player) => Widget.Box({
+    className: "bg-player",
     children: [
         Widget.Label().hook(player, label => {
             const { track_artists, track_title } = player;
-            label.label = `${track_artists[0] } - ${track_title}`.slice(0, 25).concat('...');
+            label.css = "padding: 0px 6px"
+            label.label = `${track_title} - ${track_artists[0]}`.slice(0, 25).concat('...');
         }),
         Widget.Button({ 
+            className: "mic",
             onClicked: () => player.playPause(),
             child: Widget.Icon({
                 icon: "pause",
                 css: "font-size: 15px; "
             })
         }),
-        Widget.Button({ 
+        Widget.Button({
+            className: "mic",
             onClicked: () => player.next(),
             child: Widget.Icon({
                 icon: "skip-forward",
@@ -27,7 +31,8 @@ const Player = (player) => Widget.Box({
 
 export function Media() {
     return Widget.Box({
-        children: mpris.bind('players').as(p => p.map(Player))
+        className: "round",
+        children: mpris.bind('players').as(p => p.map(Player)),
     })
 }
 

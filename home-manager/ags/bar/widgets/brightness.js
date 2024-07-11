@@ -4,7 +4,7 @@ export function Brightness () {
     return Widget.Button({
         onScrollUp: () => brightness.value += .01,
         onScrollDown: () => brightness.value -= .01,
-        className: "brightness",
+        className: "bg-black",
         child: Widget.Box({children: [
             Widget.Icon({
                 icon: "brightness",                 

@@ -24,6 +24,7 @@ export const WifiSelection = () => Menu({
                 wifi.access_points
                     .sort((a, b) => b.strength - a.strength)
                     .slice(0, 10)
+                    .filter((ap) => ap.ssid?.toLowerCase() != "unknown")
                     .map(ap => Widget.Button({
                         on_clicked: () => {
                             Utils.execAsync(`nmcli device wifi connect ${ap.bssid}`)
@@ -31,7 +32,7 @@ export const WifiSelection = () => Menu({
                         child: Widget.Box({
                             children: [
                                 Widget.Icon(ap.iconName),
-                                Widget.Label(ap.ssid || ""),
+                                Widget.Label({label: ap.ssid || "", css: "font-size: 8px; padding: 0px"}),
                                 Widget.Icon({
                                     hexpand: true,
                                     hpack: "end",
@@ -46,13 +47,5 @@ export const WifiSelection = () => Menu({
             ),
         }),
         Widget.Separator(),
-        Widget.Button({
-            child: Widget.Box({
-                children: [
-                    Widget.Icon("wifi"),
-                    Widget.Label("Network"),
-                ],
-            }),
-        }),
     ],
 })

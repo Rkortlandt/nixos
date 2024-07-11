@@ -1,3 +1,5 @@
+import { settingsVisible } from "../../config.js"
+
 export function Clock() {
     const time = Variable("", {
         poll: [1000, 'date "+%H:%M"'],
@@ -8,9 +10,9 @@ export function Clock() {
     })
 
     return Widget.Button({
-        on_clicked: () => App.toggleWindow("quicksettings"),
+        on_clicked: () => { settingsVisible.value = !settingsVisible.value;},
         label: time.bind(),
     })
 }
 
-
+//App.toggleWindow("quicksettings");

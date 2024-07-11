@@ -1,40 +1,5 @@
-window {
-	background-color: transparent;
-}
-
-.bg {
-	background-color: rgba(20,20,20,.90);
-	border-radius: 10px;
-}
-
-.bg-black {
-	background-color: rgba(0,0,0, .80);
-	border-radius: 10px;
-}
-
-.bg-blue {
-	background-color: #102D3F;
-	border-radius: 10px;
-}
-
-.padding {
-    padding: 8px;
-}
-
-.margin {
-    margin: 4px;
-}
-
-.bar {
-	margin: 4px;
-}
-
 * {
     font-size: 12px;   
-}
-
-.brightness {
-    background-color: black;
 }
 
 button {
@@ -45,6 +10,71 @@ button {
     border-radius: 15px;
     background-color: transparent;
     border-bottom: 1px solid transparent;
+}
+
+button:active {
+    background-color: @theme_selected_bg_color;
+}
+
+button:hover{
+    border: 1px solid grey;
+}
+
+window {
+    background-color: transparent;
+}
+
+.bg-player {
+    border-radius: 15px;
+    background-image: linear-gradient(45deg, #1C8CFB, #854FB9);
+}
+
+.bg-norad {
+    background-color: rgba(0,0,0, .80);
+}
+
+.bg-light {
+    background-color: rgba(50,50,50, .5)
+}
+
+.bg {
+    background-color: rgba(0,0,0, .80);
+    border-radius: 15px;
+}
+
+.bg-blue {
+    background-color: #0F5880;
+    border-radius: 15px;
+}
+
+.bg-black {
+    background-color: black;
+}
+
+.round {
+    border-radius: 15px;
+}
+
+.padding {
+    padding: 8px;
+}
+
+.margin {
+    margin: 4px;
+}
+
+.invis-btn {
+    background-color: transparent;
+    border: transparent;
+}
+.invis-btn:active {
+    background-color: transparent;
+    border: transparent;
+}
+
+.invis-btn:hover {
+    background-color: transparent;
+    border: transparent;
 }
 
 .mic {
@@ -65,19 +95,10 @@ button {
 }
 
 .workspace-button {
-   padding-left: 10px;
-   padding-right: 10px;
-   border-radius: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 0px;
 }
-
-button:active {
-    background-color: @theme_selected_bg_color;
-}
-
-button:hover {
-    border: 1px solid grey;
-}
-
 
 .workspaces button.focused {
     border-bottom: 1px solid @theme_selected_bg_color;
@@ -92,26 +113,93 @@ button:hover {
 }
 
 .top {
-	background-color: white;
+    background-color: white;
 }
 
 slider {
-	min-height: 5px;
-	min-width: 5px;
-	margin: -7px;
+    min-height: 5px;
+    min-width: 5px;
+    margin: 0px;
+    box-shadow: none;	
+    background-color: white;
+}
+
+highlight {
+    border-radius: 10px 0px 0px 10px;
 }
 
 
 progress {
-	background-color: white
+    background-color: white
 }
 
 .menu {
-	background-color: black;
-	border: none;
-	border-radius: 10px;
+    background-color: black;
+    border: none;
+    border-radius: 10px;
 }
 
 .title {
-	padding: 2px 2px 0px 8px;	
+    padding: 2px 2px 0px 8px;	
+}
+
+.calender {
+    background-color: transparent;
+    border-width: 0px;
+}
+.highlight {
+    background-color: transparent;
+    border-width: 0px;
+}
+.header {
+    background-color: transparent;
+    border-width: 0px;
+}
+
+.player {
+    min-width: 250px;
+    padding-top: 10px;
+}
+
+.player .img {
+    min-width: 80px;
+    min-height: 80px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    margin-right: 1em;
+}
+
+.player .title {
+    font-size: 1em;
+    padding: 0px;
+}
+
+.player .artist {
+    font-size: .9em;
+    color: @insensitive_fg_color;
+}
+
+.position {
+    font-size: .9em;
+    padding-left: 0px;
+    padding-right: 0px; 
+    color: @insensitive_fg_color;
+
+}
+.length {
+    font-size: .9em;
+    color: @insensitive_fg_color;
+}
+
+
+
+.player button {
+    min-height: 1em;
+    min-width: 1em;
+    padding: .3em;
+}
+
+.player button.play-pause {
+    margin: 0 .3em;
 }
