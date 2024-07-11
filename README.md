@@ -50,6 +50,8 @@
 ## Terminal
 ### V3
 ![20240629_23h50m13s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/68e5e790-8249-4eb3-8bc2-6208c7e96fdc)
+![20240710_19h59m24s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/1d3b9b2b-06a1-440b-9996-739c4cc4cee0)
+
 ### V2
 ![20240506_19h32m05s_grim](https://github.com/Rkortlandt/nixos/assets/93385295/869c504f-7c87-4c2f-bebf-56f8034156a0)
 ### V1
