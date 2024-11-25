@@ -3,11 +3,22 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Home Manager
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     ags.url = "github:Aylur/ags";
+
+    astal = {
+      url = "github:aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     templ.url = "github:a-h/templ";
     grub2-themes.url = "github:vinceliuice/grub2-themes";
     split-monitor-workspaces.url = "github:Duckonaut/split-monitor-workspaces";
@@ -27,6 +38,8 @@
     nixos-hardware,
     split-monitor-workspaces,
     grub2-themes,
+    nixos-cosmic,
+    astal,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -42,8 +55,7 @@
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
-
-    # Your custom packages
+  # Your custom packages
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
@@ -55,6 +67,13 @@
       rowan-nixos = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
+          {
+            nix.settings = {
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+          }
+          nixos-cosmic.nixosModules.default
           grub2-themes.nixosModules.default
           ./nixos/configuration.nix
         ];

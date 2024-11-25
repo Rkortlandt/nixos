@@ -19,7 +19,7 @@ const Row = (
     vertical: true,
     children: [
         Widget.Box({
-            class_name: "bg-black padding",
+            class_name: " padding",
             homogeneous: true,
             children: toggles.map(w => w()),
         }),
@@ -36,7 +36,7 @@ const TopLeft = () => Widget.Box({
     spacing: 8,
     children: [
         Widget.Box({
-            class_name: "bg-black padding",
+            class_name: " padding",
             vertical: true,
             children: [
                 Audio(),
@@ -57,7 +57,7 @@ const TopRight = () => Widget.Box({
     children: [
         Info(),
         Widget.Box({
-            class_name: "bg-black padding",
+            class_name: " padding",
             vertical: true,
             children: [
                 Brightness(),
@@ -79,7 +79,7 @@ const BottomLeft = () => Widget.Box({
     spacing: 8,
     children: [
         Widget.Box({
-            class_name: "bg-black padding",
+            class_name: " padding",
             vertical: true,
             children: [
                 CpuUsageSlider(),
@@ -99,14 +99,14 @@ const BottomRight = () => Widget.Box({
     spacing: 8,
     children: [
         Widget.Box({
-            class_name: "bg-black padding",
+            class_name: " padding",
             vertical: true,
             children: [
                 Widget.Calendar({
                     showDayNames: true,
                     showDetails: true,
                     showHeading: true,
-                    class_name: "calender bg-black",
+                    class_name: "calender",
                     //detail: (self, y, m, d) => {
                     //    return `<span color="white">${y}. ${m}. ${d}.</span>`
                     //},
@@ -118,17 +118,16 @@ const BottomRight = () => Widget.Box({
         }),
     ],
 })
-const Settings = () => SettingsWindow({
-    name: "quicksettings",
-    exclusivity: "exclusive",
-    transition: "slide_down",
-    layout: "top-right",
-    child1: TopLeft(),
-    child2: BottomLeft(),
-    child3: TopRight(),
-    child4: BottomRight(),
-})
-
-export function setupSettings() {
-    App.addWindow(Settings())
+export function Settings (window = 0) {
+    return SettingsWindow({
+        name: `quicksettings-${window}`,
+        monitor: window,
+        exclusivity: "exclusive",
+        transition: "slide_down",
+        layout: "top-right",
+        child1: TopLeft(),
+        child2: BottomLeft(),
+        child3: TopRight(),
+        child4: BottomRight(),
+    })
 }

@@ -25,14 +25,13 @@ const weekday = Variable("", {
 
 export function Info() {
     return Widget.Box({
-        class_name: "bg-black padding",
+        class_name: " padding",
         vertical: true,
         children : [
             Widget.Box({
                 children: [
                     Widget.Label({
-                        class_name: "padding",
-                        css: "font-size: 16px; font-weight: bold",
+                        class_name: "padding title",
                         label: date.bind()
                     }),
                     Widget.Box({ hexpand: true }),

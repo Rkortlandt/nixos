@@ -184,6 +184,7 @@ home.packages = with pkgs; [
   cargo
   unzip
   rclone
+  musescore
 ] ++ (with pkgs.unstable; [
   #Unstable
   vivaldi

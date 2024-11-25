@@ -32,14 +32,14 @@ function Player(player) {
         class_name: "title",
         wrap: true,
         hpack: "start",
-        label: player.bind("track_title"),
+        label: player.bind("track_title").transform(a => a.slice(0, 40)),
     })
 
     const artist = Widget.Label({
         class_name: "artist",
         wrap: true,
         hpack: "start",
-        label: player.bind("track_artists").transform(a => a.join(", ")),
+        label: player.bind("track_artists").transform(a => a.join(", ").slice(0, 40)),
     })
 
     const positionSlider = Widget.Slider({
@@ -107,7 +107,7 @@ function Player(player) {
     })
 
     return Widget.Box(
-        { class_name: "player" },
+        { class_name: "player", visible: player.bind('track_title').as(t => t.length > 0)},
         img,
         Widget.Box(
             {

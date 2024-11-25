@@ -5,6 +5,7 @@ import { Network } from './widgets/network.js'
 import { Brightness } from './widgets/brightness.js';
 import { Clock } from './widgets/clock.js';
 import { settingsVisible } from '../config.js';
+//import { Calculator } from './widgets/calculator.js';
 import { CpuUsage, Heat, RamUsage } from './widgets/system.js';
 
 const visibleItems = Variable({
@@ -13,6 +14,7 @@ const visibleItems = Variable({
     Mic: true,
     Battery: true,
     Media: true,
+    Calculator: false,
     Network: true,
     Brightness: true,
     Clock: true,
@@ -25,7 +27,7 @@ const leftItems = ["Workspaces", "Volume", "Mic", "Battery"]
 const rightItems = ["Media", "Network", "Brightness", "CpuUsage", "RamUsage", "Heat", "Clock"]
 const barItems = { Workspaces, Volume, Mic, Battery, Media, Network, Brightness, Clock, CpuUsage, RamUsage, Heat};
 
-function Bar (window = 0) {
+export function Bar (window = 0) {
     return Widget.Window({
         class_name: settingsVisible.bind().as((o) => (o)? "bg-norad": ""),
         exclusivity: 'exclusive',
@@ -49,9 +51,7 @@ function Bar (window = 0) {
     });
 }
 
-export function setupBar() {
-    App.addWindow(Bar())
-}
+
 
 
 export function toggleBarItemVisibility(itemName) {

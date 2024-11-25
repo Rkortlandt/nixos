@@ -35,7 +35,7 @@ export function RamUsageSlider () {
 export function HeatSlider () {
     return Widget.Box({
         children: [
-            Widget.Button({ label: temp.bind().as((u) => `Temp: ${Math.round(u * 10) / 10}f`), css: "padding: 0px 3px; margin-right: 5px;", class_name: "square-button", onClicked: () => toggleBarItemVisibility('Heat')}),
+            Widget.Button({ label: temp.bind().as((u) => `Temp: ${Math.round(u * 10) / 10}°`), css: "padding: 0px 3px; margin-right: 5px;", class_name: "square-button", onClicked: () => toggleBarItemVisibility('Heat')}),
             Widget.ProgressBar({
                 vpack: 'center',
                 hexpand: true,

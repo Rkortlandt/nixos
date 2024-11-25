@@ -15,7 +15,7 @@
     boot.loader = {
       grub2-theme = {
         enable = true;
-        theme = "vimix";
+        theme = "whitesur";
         footer = true;
       };
 

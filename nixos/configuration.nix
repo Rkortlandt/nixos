@@ -94,14 +94,15 @@
   };
 
 #Audio
-
+  
   sound.enable = true;
 
   hardware.pulseaudio = {
-    enable = true;
-    support32Bit = true;
+    enable = lib.mkDefault true;
+    support32Bit = lib.mkDefault true;
   };
 
+ 
 # Set your time zone.
   time.timeZone = "America/Detroit";
 
@@ -133,7 +134,7 @@
     };
   };
 #Essential Packages
-  #specialisation = {
+  specialisation = {
   #  gnome.configuration = {
   #    modules.hyprland.enable = false;
   #    modules.gnome.enable = true;
@@ -143,12 +144,24 @@
 #      modules.hyprland.enable = false;
 #      modules.i3.enable = true;
 #    };
-#  };
-  
+    cosmic.configuration = {
+      services.desktopManager.cosmic.enable = false;
+      services.displayManager.cosmic-greeter.enable = false;
+
+      hardware.pulseaudio = {
+        enable = false;
+        support32Bit = false;
+      };
+
+      modules.hyprland.enable = false;
+    };
+  };
+
+  services.desktopManager.cosmic.enable = lib.mkDefault false;
+  services.displayManager.cosmic-greeter.enable = lib.mkDefault false;
   modules.hyprland.enable = lib.mkDefault true;
   modules.gnome.enable = lib.mkDefault false;
   modules.i3.enable = lib.mkDefault false;
-
   programs.virt-manager.enable = true;
  
 
@@ -178,6 +191,7 @@ hardware.bluetooth.powerOnBoot = true;
   environment.systemPackages = with pkgs; [
     gnome.gnome-bluetooth_1_0
     gh
+    kicad-small
     git
     firefox
     tofi
@@ -190,12 +204,10 @@ hardware.bluetooth.powerOnBoot = true;
     udiskie
     chromium
     efibootmgr
-    floorp
     templ
-    nix-output-monitor
-    bottles
     inkscape
     lm_sensors
+    wl-clipboard
   ];
 
 # This setups a SSH server. Very important if you're setting up a headless system.

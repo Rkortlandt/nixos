@@ -1,5 +1,5 @@
 * {
-    font-size: 12px;   
+    font-size: 12px; 
 }
 
 button {
@@ -10,6 +10,7 @@ button {
     border-radius: 15px;
     background-color: transparent;
     border-bottom: 1px solid transparent;
+    color: white;
 }
 
 button:active {
@@ -95,6 +96,9 @@ window {
 }
 
 .workspace-button {
+    background-color: black;
+    border-left-color: black;
+    border-right-color: black;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 0px;
@@ -106,10 +110,6 @@ window {
 
 .client-title {
     color: @theme_selected_bg_color;
-}
-
-.notification {
-    color: yellow;
 }
 
 .top {
@@ -140,7 +140,8 @@ progress {
 }
 
 .title {
-    padding: 2px 2px 0px 8px;	
+    font-size: 16px; 
+    font-weight: bold;
 }
 
 .calender {

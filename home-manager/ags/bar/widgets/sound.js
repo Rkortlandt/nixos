@@ -4,6 +4,7 @@ const mpris = await Service.import('mpris')
 /** @param {import('types/service/mpris').MprisPlayer} player */
 const Player = (player) => Widget.Box({
     className: "bg-player",
+    visible: player.bind('track_title').as(t => t.length > 0),
     children: [
         Widget.Label().hook(player, label => {
             const { track_artists, track_title } = player;
@@ -41,6 +42,7 @@ export const Volume = () => {
     return Widget.Button({
         on_scroll_up: () => audio.speaker.volume += .01,
         on_scroll_down: () => audio.speaker.volume -= .01,
+        className: "bg-black",
         setup: self => {
             let volumeLabel;
             let icon;
@@ -76,7 +78,7 @@ export const Mic = () => Widget.Button({
 
         self.hook(audio.microphone, () => { 
            icon.icon = (audio.microphone.is_muted)? 'mic-muted': 'mic-unmuted',
-            self.css = (audio.microphone.is_muted)? 'background-color: #BD3030': 'background-color: transparent'
+            self.css = (audio.microphone.is_muted)? 'background-color: #BD3030': 'background-color: black'
         });
     }
 });
