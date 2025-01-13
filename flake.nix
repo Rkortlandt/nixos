@@ -3,8 +3,9 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
     
+    zen-browser.url = "github:0xc000022070/zen-browser-flake"; 
+
     nixos-cosmic = {
       url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs";

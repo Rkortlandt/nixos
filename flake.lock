@@ -427,6 +427,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1735471104,
+        "narHash": "sha256-0q9NGQySwDQc7RhAV2ukfnu7Gxa5/ybJ2ANT8DQrQrs=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "88195a94f390381c6afcdaa933c2f6ff93959cb4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ags": "ags",
@@ -439,7 +455,8 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "split-monitor-workspaces": "split-monitor-workspaces",
-        "templ": "templ"
+        "templ": "templ",
+        "zen-browser": "zen-browser"
       }
     },
     "rust-overlay": {
@@ -603,6 +620,24 @@
       "original": {
         "owner": "hyprwm",
         "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1735881391,
+        "narHash": "sha256-T9N1q8YWn9MnIqUpm0+p/kAqktfSoeKfyOTZiXQoNPU=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "4a48a5c007863df58d1586f96010a6d4bde99f69",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

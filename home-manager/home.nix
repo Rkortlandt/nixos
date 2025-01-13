@@ -79,6 +79,12 @@
     iconTheme.name = "Adwaita";
   };
 
+  qt = {
+    enable = true;
+    style.name = "adwaita-dark";
+    style.package = pkgs.adwaita-qt6;
+  };
+
   home.sessionVariables = {
      EDITOR = "nvim";
   };
@@ -94,6 +100,7 @@
         "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
+        "QT_SCALE_FACTOR,1.5"
         # misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
@@ -111,8 +118,7 @@
       configDir = ./ags;
 
       extraPackages = with pkgs; [
-        #inputs.ags.packages.${pkgs.system}.battery
-          fzf
+        fzf
       ] ++ (with inputs.ags.packages.${pkgs.system}; [
         battery
         hyprland
@@ -195,6 +201,7 @@ home.packages = with pkgs; [
   rclone
   musescore
   clipse
+  blender
 ] ++ (with pkgs.unstable; [
   #Unstable
   vivaldi
@@ -202,6 +209,8 @@ home.packages = with pkgs; [
   cosmic-term
   arduino
   zig
+]) ++ (with inputs; [
+  zen-browser.packages."${system}".beta
 ]);
   
   # Enable home-manager and git

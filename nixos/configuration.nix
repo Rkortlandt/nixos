@@ -178,6 +178,14 @@
 
   virtualisation.docker.enable = true;
   services.fwupd.enable = true;
+  
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    lidSwitchDocked = "hybrid-sleep";
+    lidSwitchExternalPower = "hybrid-sleep";
+    powerKey = "hibernate";
+    powerKeyLongPress = "poweroff";
+  };
 
   services.printing.enable = true;
   services.upower.enable = true;
@@ -219,6 +227,10 @@ hardware.bluetooth.powerOnBoot = true;
     wl-clipboard
   ];
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    selenium-manager
+  ];
 # This setups a SSH server. Very important if you're setting up a headless system.
 # Feel free to remove if you don't need it.
 services.openssh = {
