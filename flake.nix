@@ -13,12 +13,17 @@
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    ags.url = "github:Aylur/ags";
 
     astal = {
       url = "github:aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    ags = {
+      url = "github:aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     templ.url = "github:a-h/templ";
     grub2-themes.url = "github:vinceliuice/grub2-themes";
     split-monitor-workspaces.url = "github:Duckonaut/split-monitor-workspaces";
@@ -39,10 +44,12 @@
     split-monitor-workspaces,
     grub2-themes,
     nixos-cosmic,
-    astal,
+    ags,
     ...
   } @ inputs: let
     inherit (self) outputs;
+
+    #pkgs = nixpkgs.legacyPackages.${system};
     # Supported systems for your flake packages, shell, etc.
     systems = [
       "aarch64-linux"
@@ -58,7 +65,7 @@
   # Your custom packages
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
-
+    
     overlays = import ./overlays {inherit inputs;};
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;

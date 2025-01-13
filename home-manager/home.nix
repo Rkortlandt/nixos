@@ -109,11 +109,20 @@
     ags = {
       enable = true;
       configDir = ./ags;
+
       extraPackages = with pkgs; [
-        gtksourceview
-        webkitgtk
-        accountsservice
-      ];
+        #inputs.ags.packages.${pkgs.system}.battery
+          fzf
+      ] ++ (with inputs.ags.packages.${pkgs.system}; [
+        battery
+        hyprland
+        network
+        wireplumber
+        mpris
+        tray
+        greet
+        bluetooth
+      ]);
     };
 
     btop.enable = true;
@@ -185,6 +194,7 @@ home.packages = with pkgs; [
   unzip
   rclone
   musescore
+  clipse
 ] ++ (with pkgs.unstable; [
   #Unstable
   vivaldi
