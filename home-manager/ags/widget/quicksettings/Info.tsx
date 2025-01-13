@@ -29,9 +29,9 @@ function getDaySuffix(day : string) {
 function formatWifiAps(Aps : AstalNetwork.AccessPoint[]) {
     return Aps
         .sort((a, b) => (a.get_strength() < b.get_strength())? 1 : 0)
+        .sort((a, b) => (a.get_frequency() < b.get_frequency())? 1 : 0)
         .filter((ap) => ap.get_ssid() != null)
         .map((ap) => { 
-            print(ap.get_flags())
             return ( 
                 <button
                     className={bind(network.wifi, 'ssid').as((ssid) => (ssid == ap.ssid)? 'bg-selected': '')}

@@ -2,6 +2,7 @@ import { SpeakerSlider, MicSlider, Output} from "./Audio"
 import { Info } from "./Info"
 import MprisPlayers from "./Media"
 import AstalTray from "gi://AstalTray?version=0.1"
+import { System } from "./System"
 export function TopLeft () {
     const tray = AstalTray.get_default()
     for (const item of tray.get_items()) {
@@ -24,9 +25,8 @@ export function TopRight () {
 
 export function BottomLeft () {
 
-    return <box>
-
-	<label label="bottomleft"/>	
+    return <box className="bg-black menu" vertical={true}>
+	<System/>
     </box>
 }
 
