@@ -8,9 +8,8 @@ import { NetworkIndicator } from "./bar/Network"
 import { Variable } from "../../../../.local/share/ags"
 
 
-export default function Bar(gdkmonitor: Gdk.Monitor, enableBg: Variable<boolean>) {
+export default function Bar(gdkmonitor: Gdk.Monitor) {
     return <window
-        setup={(self) => enableBg().subscribe((enabled) => self.toggleClassName("bg", enabled))}
         gdkmonitor={gdkmonitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         anchor={Astal.WindowAnchor.TOP
@@ -26,7 +25,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, enableBg: Variable<boolean>
             <box expand={true}/>
             <NetworkIndicator />
             <Brightness />
-            <Clock monitor={gdkmonitor.get_model()} enablebg={enableBg}/>
+            <Clock monitor={gdkmonitor.get_model()}/>
         </box>
     </window>
 }

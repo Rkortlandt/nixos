@@ -2,10 +2,11 @@ import { Variable, bind, exec, execAsync } from "astal";
 import AstalNetwork from "gi://AstalNetwork";
 import AstalBluetooth from "gi://AstalBluetooth";
 import Gtk from "gi://Gtk?version=3.0";
-var network = AstalNetwork.get_default();
+import { Wifi } from "./Wifi";
+import { Bluetooth } from "./Bluetooth";
 var bluetooth = AstalBluetooth.get_default();
 
-enum Settings {
+export enum Settings {
     NONE,
     WIFI,
     BLUETOOTH,
@@ -26,28 +27,7 @@ function getDaySuffix(day : string) {
     }
 }
 
-function formatWifiAps(Aps : AstalNetwork.AccessPoint[]) {
-    return Aps
-        .sort((a, b) => (a.get_strength() < b.get_strength())? 1 : 0)
-        .sort((a, b) => (a.get_frequency() < b.get_frequency())? 1 : 0)
-        .filter((ap) => ap.get_ssid() != null)
-        .map((ap) => { 
-            return ( 
-                <button
-                    className={bind(network.wifi, 'ssid').as((ssid) => (ssid == ap.ssid)? 'bg-selected': '')}
-                    onClick={() => execAsync(`nmcli device wifi connect ${ap.bssid}`).catch((err) => 
-                    print(err))}
-                >
-                    <box>
-                        <label label={ap.get_ssid()?.toString() ?? "unknown"}/>
-                        <box hexpand={true}/>
-                        <label label={`${(Math.floor((ap.get_frequency() / 100)) / 10).toString()} `}/>
-                        <icon icon={ap.get_icon_name()}/>
-                    </box>
-                </button>
-            );
-        })
-}
+
 
 const date = Variable("").poll(10000, `date "+%B %e, %Y"`, (out) => {
     return `${out.slice(0, out.search(' '))} ${out.slice(out.search(' '), out.search(',')).trim()}${getDaySuffix(out.slice(out.search(' '), out.search(',').valueOf()))}${out.slice(out.search(','), out.length)}`;
@@ -73,7 +53,7 @@ export function Info() {
             <button onClick={() => exec("reboot") } className="square-button margin bg-blue">
                 <icon icon="Reboot" css="font-size: 23px;"/>
             </button> 
-            <button onClick={() => exec("shutdown") } className="square-button margin bg-blue">
+            <button onClick={() => exec("shutdown 0") } className="square-button margin bg-blue">
                 <icon icon="Shutdown" css="font-size: 23px;"/>
             </button>
         </box>
@@ -105,19 +85,7 @@ export function Info() {
                 </button>
             </box>
         </box>
-        <box vertical={true} visible={VisibleSetting().as((vs) => vs == Settings.WIFI)}>
-            {bind(network.wifi, "accessPoints").as((aps) => formatWifiAps(aps))} 
-        </box> 
-        <box vertical={true} visible={VisibleSetting().as((vs) => vs == Settings.BLUETOOTH)}>
-            {bind(bluetooth, "devices").as((devs) => devs.filter((dev) => (dev.get_name() != null) && (dev.get_paired() == true)).map((dev) => {
-                return <button className={bind(dev, "connected").as((c) => c? 'bg-selected': '')} onClick={() => 
-                    dev.get_connected()? 
-                        dev.disconnect_device((dev) => {print(dev?.get_connected())}) 
-                        : 
-                        dev.connect_device((dev) => {print(dev?.get_connected())})
-                }
-                >{`${dev.get_name()}`}</button>
-            }))}
-        </box> 
+        <Wifi visibleSetting={VisibleSetting} />
+        <Bluetooth visibleSetting={VisibleSetting} /> 
     </box>
 }

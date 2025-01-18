@@ -207,6 +207,13 @@ progress {
 }
 
 .media-player {
+    margin: 4px;
     padding: 8px;
     border-radius: 15px;
+}
+
+circular-progress {
+    font-size: 2px;
+    margin: 10px;
+    color: white;
 }

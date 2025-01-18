@@ -1,7 +1,6 @@
-import { App } from "astal/gtk3"
 import style from "./style.scss"
 import Bar from "./widget/Bar"
-import { Gdk, Gtk } from "astal/gtk3"
+import { Gdk, Gtk, App } from "astal/gtk3"
 import QuickSettings from "./widget/QuickSettings"
 import { Variable, bind } from "astal"
 
@@ -14,15 +13,13 @@ App.start({
 
         // initialize
         for (const gdkmonitor of App.get_monitors()) {
-            let enableBg = Variable(false);
-            bars.set(gdkmonitor, Bar(gdkmonitor, enableBg))
+            bars.set(gdkmonitor, Bar(gdkmonitor))
             quickSettings.set(gdkmonitor, QuickSettings(gdkmonitor))
             App.toggle_window(`quicksettings-${gdkmonitor.get_model()}`)
         }
 
         App.connect("monitor-added", (_, gdkmonitor) => {
-            let enableBg = Variable(false);
-            bars.set(gdkmonitor, Bar(gdkmonitor, enableBg))
+            bars.set(gdkmonitor, Bar(gdkmonitor))
             quickSettings.set(gdkmonitor, QuickSettings(gdkmonitor))
             App.toggle_window(`quicksettings-${gdkmonitor.get_model()}`)
         })

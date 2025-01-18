@@ -88,7 +88,7 @@ function MediaPlayer({ player }: { player: Mpris.Player }) {
 export default function MprisPlayers() {
     const mpris = Mpris.get_default()
     print("Players", mpris.players.length);
-    return <box vertical>
+    return <box>
         {bind(mpris, "players").as(arr => arr.map(player => {
             return <MediaPlayer player={player} />
         }))}
