@@ -1,4 +1,4 @@
-#This is your home-manager configuration file
+#this is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   inputs,
@@ -61,6 +61,7 @@
       ".config/starship.toml".source = ./bash/starship.toml;
       ".config/tofi".source = ./tofi;
       ".lib/jdk11".source = pkgs.jdk11;
+      ".lib/jdk17".source = pkgs.jdk17;
   };
 
   home.pointerCursor = {
@@ -202,15 +203,19 @@ home.packages = with pkgs; [
   musescore
   clipse
   blender
+  vivaldi
+  spotify
+  jetbrains.idea-ultimate
 ] ++ (with pkgs.unstable; [
   #Unstable
-  vivaldi
-  jetbrains.idea-ultimate
+  chromium
   cosmic-term
   arduino
   zig
+  android-studio
+  zed-editor
 ]) ++ (with inputs; [
-  zen-browser.packages."${system}".beta
+  #zen-browser.packages."${system}".beta
 ]);
   
   # Enable home-manager and git

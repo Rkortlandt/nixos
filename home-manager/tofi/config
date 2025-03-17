@@ -64,7 +64,7 @@
 	#     Background padding in pixels (comma-delimited, CSS-style list).
 	#     See "DIRECTIONAL VALUES" under `man 5 tofi` for more info.
 	#
-	# *-background-corner-radius
+	#background-corner-radius = 10;
 	#     Radius of background box corners in pixels
 
 	# Prompt text theme
@@ -137,7 +137,6 @@
 	# If unspecified, defaults to a font-dependent value when
 	# text-cursor-style = underscore, or to 2 otherwise.
 	# text-cursor-thickness = 2
-
 #
 ### Text layout
 #
@@ -168,10 +167,10 @@
 #
 	# Width and height of the window. Can be pixels or a percentage.
 	width = 50%
-	height = 25
+	height = 27
 
 	# Window background color
-	background-color = #00000080
+	background-color = #000000
 
 	# Width of the border outlines in pixels.
 	outline-width = 0
@@ -186,7 +185,7 @@
 	border-color = #00890fd9
 
 	# Radius of window corners in pixels.
-	corner-radius = 10
+	corner-radius = 13
 
 	# Padding between borders and text. Can be pixels or a percentage.
 	padding-top = 2
@@ -213,7 +212,7 @@
 	#
 	# Supported values: top-left, top, top-right, right, bottom-right,
 	# bottom, bottom-left, left, center.
-	anchor = top
+	anchor = top-left
 
 	# Set the size of the exclusive zone.
 	#
@@ -229,7 +228,7 @@
 	# to the relevant edge. Can be pixels or a percentage.
 	margin-top = 2
 	margin-bottom = 0
-	margin-left = 0
+	margin-left = 3
 	margin-right = 0
 
 #

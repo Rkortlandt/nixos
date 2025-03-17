@@ -1,8 +1,12 @@
 // https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
 $theme_fg_color: "@theme_fg_color";
 $theme_bg_color: "@theme_bg_color";
+
+//Terqoise
 $selected_btn_color: #0EA16F;
+//Dark-blue
 $secondary_btn_color: #172A7D;
+//Blue
 $primary_btn_color: #0F5880;
  
 
@@ -18,6 +22,18 @@ $primary_btn_color: #0F5880;
 }
 
 button {
+    background-clip: padding-box;
+    min-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 15px;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+    color: white;
+}
+
+eventbox {
+    font-weight: bold;
     background-clip: padding-box;
     min-width: 0;
     padding-top: 0;
@@ -121,6 +137,12 @@ window {
     border-radius: 9px;
 }
 
+.square-button-no-rad {
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-left: 1px;
+}
+
 .thick-button-left {
     padding-top: 2px;
     padding-bottom: 2px;
@@ -217,3 +239,9 @@ circular-progress {
     margin: 10px;
     color: white;
 }
+
+calendar {
+	border: none;
+}
+
+

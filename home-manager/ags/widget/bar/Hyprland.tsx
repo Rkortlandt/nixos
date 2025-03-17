@@ -33,11 +33,12 @@ export function Workspaces() {
 
     return <box className="Workspaces">
         {bind(hyprland, "workspaces").as(wss => wss
+	    .filter((a) => a.get_id() > 0)
             .sort((a, b) => a.get_id() - b.get_id())
-            .map((ws, index) => (
+            .map((ws, index, workspaces) => (
                 <button
                     className="workspace-button"
-		    css={bind(hyprland, "focusedWorkspace").as(() => `${getColor(index, wss)} ${getBorderRadius(index, wss.length)}`)}
+		    css={bind(hyprland, "focusedWorkspace").as(() => `${getColor(index, workspaces)} ${getBorderRadius(index, workspaces.length)}`)}
                     onClicked={() => ws.focus()}>
                     {ws.get_id()}
                 </button>

@@ -6,10 +6,6 @@
     
     zen-browser.url = "github:0xc000022070/zen-browser-flake"; 
 
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     # Home Manager
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +20,10 @@
       url = "github:aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+#    nixos-cosmic = {
+#     url = "github:lilyinstarlight/nixos-cosmic";
+#  };
 
     templ.url = "github:a-h/templ";
     grub2-themes.url = "github:vinceliuice/grub2-themes";
@@ -81,7 +81,7 @@
               trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
             };
           }
-          nixos-cosmic.nixosModules.default
+#          nixos-cosmic.nixosModules.default
           grub2-themes.nixosModules.default
           ./nixos/configuration.nix
         ];

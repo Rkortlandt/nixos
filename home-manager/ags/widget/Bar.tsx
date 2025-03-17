@@ -6,6 +6,7 @@ import { Mic, Speaker } from "./bar/Audio"
 import { Brightness } from "./bar/Brightness"
 import { NetworkIndicator } from "./bar/Network"
 import { Variable } from "../../../../.local/share/ags"
+import { BarMediaPlayer, BarMprisPlayer } from "./quicksettings/Media"
 
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
@@ -23,6 +24,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
             <Mic />
             <Battery />
             <box expand={true}/>
+            <BarMprisPlayer/>
             <NetworkIndicator />
             <Brightness />
             <Clock monitor={gdkmonitor.get_model()}/>

@@ -4,12 +4,14 @@ import AstalBluetooth from "gi://AstalBluetooth";
 import Gtk from "gi://Gtk?version=3.0";
 import { Wifi } from "./Wifi";
 import { Bluetooth } from "./Bluetooth";
+import { Timer } from "./Timer";
 var bluetooth = AstalBluetooth.get_default();
 
 export enum Settings {
     NONE,
     WIFI,
     BLUETOOTH,
+    TIMER,
 }
 
 var VisibleSetting = Variable(Settings.NONE);
@@ -57,6 +59,7 @@ export function Info() {
                 <icon icon="Shutdown" css="font-size: 23px;"/>
             </button>
         </box>
+        {/*<icon icon="clear-day" css="font-size: 23px;"/>*/}
         <box homogeneous={true} spacing={4}>
             <box>
                 <button className="thick-button-left bg-blue">
@@ -87,5 +90,21 @@ export function Info() {
         </box>
         <Wifi visibleSetting={VisibleSetting} />
         <Bluetooth visibleSetting={VisibleSetting} /> 
+        {/*
+        <box>
+            <button className="thick-button-left bg-blue">
+                <label label="Timer"hexpand={true} />
+            </button>
+            <button className="thick-button-right bg-blue"
+                onClick={() => (VisibleSetting.get() == Settings.TIMER)? VisibleSetting.set(Settings.NONE) : VisibleSetting.set(Settings.TIMER)}
+            >
+                <icon 
+                    icon={VisibleSetting().as((vs) => vs == Settings.TIMER? "Arrow-Down" : "Arrow-Right")} 
+                    css="font-size: 23px;"
+                />
+            </button>
+        </box>
+        <Timer visibleSetting={VisibleSetting}/>
+        */}
     </box>
 }
