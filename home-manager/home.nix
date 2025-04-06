@@ -1,4 +1,4 @@
-#This is your home-manager configuration file
+#this is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   inputs,
@@ -61,6 +61,7 @@
       ".config/starship.toml".source = ./bash/starship.toml;
       ".config/tofi".source = ./tofi;
       ".lib/jdk11".source = pkgs.jdk11;
+      ".lib/jdk17".source = pkgs.jdk17;
   };
 
   home.pointerCursor = {
@@ -79,6 +80,12 @@
     iconTheme.name = "Adwaita";
   };
 
+  qt = {
+    enable = true;
+    style.name = "adwaita-dark";
+    style.package = pkgs.adwaita-qt6;
+  };
+
   home.sessionVariables = {
      EDITOR = "nvim";
   };
@@ -94,6 +101,7 @@
         "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
+        "QT_SCALE_FACTOR,1.5"
         # misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
@@ -109,11 +117,19 @@
     ags = {
       enable = true;
       configDir = ./ags;
+
       extraPackages = with pkgs; [
-        gtksourceview
-        webkitgtk
-        accountsservice
-      ];
+        fzf
+      ] ++ (with inputs.ags.packages.${pkgs.system}; [
+        battery
+        hyprland
+        network
+        wireplumber
+        mpris
+        tray
+        greet
+        bluetooth
+      ]);
     };
 
     btop.enable = true;
@@ -185,13 +201,24 @@ home.packages = with pkgs; [
   unzip
   rclone
   musescore
+  clipse
+  blender
+  vivaldi
+  spotify
+  jetbrains.idea-ultimate
+  qalculate-gtk
+  libqalculate
+  slack
 ] ++ (with pkgs.unstable; [
   #Unstable
-  vivaldi
-  jetbrains.idea-ultimate
+  chromium
   cosmic-term
   arduino
   zig
+  android-studio
+  zed-editor
+]) ++ (with inputs; [
+  #zen-browser.packages."${system}".beta
 ]);
   
   # Enable home-manager and git

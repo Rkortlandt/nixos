@@ -1,0 +1,7 @@
+{
+    "name": "astal-shell",
+    "dependencies": {
+        "astal": "/home/ss-rowan/.local/share/ags",
+        "typescript": "5.7"
+    }
+}

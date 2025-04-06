@@ -1,0 +1,270 @@
+// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
+$theme_fg_color: "@theme_fg_color";
+$theme_bg_color: "@theme_bg_color";
+
+//Terqoise
+$selected_btn_color: #0EA16F;
+//Dark-blue
+$secondary_btn_color: #172A7D;
+//Blue
+$primary_btn_color: #0F5880;
+ 
+
+* {
+    font-size: 12px; 
+}
+
+.bar {
+    padding-top: 2px;
+    padding-right: 4px;
+    padding-left: 4px;
+    padding-bottom: 2px;
+}
+
+button {
+    background-clip: padding-box;
+    min-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 15px;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+    color: white;
+}
+
+entry {
+    background-clip: padding-box;
+    min-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    min-height: 20px;
+}
+
+eventbox {
+    font-weight: bold;
+    background-clip: padding-box;
+    min-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 15px;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+    color: white;
+}
+
+
+button:active {
+    background-color: grey;
+}
+
+button:hover{
+    border: 1px solid grey;
+}
+
+window {
+    background-color: transparent;
+}
+
+.bg-player {
+    border-radius: 15px;
+    background-image: linear-gradient(45deg, #1C8CFB, #854FB9);
+}
+
+.bg-norad {
+    background-color: rgba(0,0,0, .80);
+}
+
+.bg-light {
+    background-color: rgba(50,50,50, .5)
+}
+
+.bg {
+    background-color: rgba(0,0,0, 1);
+}
+
+.bg-secondary {
+    background-color: $secondary-btn-color;
+}
+.bg-selected {
+    background-color: $selected-btn-color;
+}
+
+.bg-blue {
+    background-color: $primary-btn-color;
+}
+
+.bg-black {
+    background-color: black;
+}
+
+.round {
+    border-radius: 15px;
+}
+
+.padding {
+    padding: 8px;
+}
+
+.margin {
+    margin: 4px;
+}
+
+.invis-btn {
+    background-color: transparent;
+    border: transparent;
+}
+.invis-btn:active {
+    background-color: transparent;
+    border: transparent;
+}
+
+.invis-btn:hover {
+    background-color: transparent;
+    border: transparent;
+}
+
+.menu-btn {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.mic {
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 13px;
+}
+.wifi {
+    background-clip: border-box;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 1px;
+}
+
+.calc {
+    background-clip: border-box;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 13px;
+}
+
+.square-button {
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-left: 1px;
+    border-radius: 9px;
+}
+
+.square-button-no-rad {
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-left: 1px;
+}
+
+.thick-button-left {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 1px;
+    padding-left: 1px;
+    border-right: 1px solid $primary-btn-color;
+    border-radius: 15px 0px 0px 15px;
+}
+.thick-button-right {
+    padding-top: 2px;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    border-left: 1px solid $primary-btn-color;
+    border-radius: 0px 15px 15px 0px;
+}
+
+
+
+.workspace-button {
+    background-color: black;
+    border-color: black;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 0px;
+}
+
+.workspaces button.focused {
+    border-bottom: 1px solid white;
+}
+
+.client-title {
+    color: grey;
+}
+
+.top {
+    background-color: white;
+}
+
+slider {
+    min-height: 5px;
+    min-width: 5px;
+    margin: 0px;
+    box-shadow: none;	
+    background-color: white;
+}
+
+highlight {
+    border-radius: 10px 0px 0px 10px;
+}
+
+
+progress {
+    background-color: white
+}
+
+.menu {
+    background-color: black;
+    border: none;
+    border-radius: 10px;
+}
+
+.title {
+    color: white;
+    font-size: 16px; 
+    font-weight: bold;
+}
+
+.subtitle {
+    color: grey;
+}
+
+
+
+.highlight {
+    background-color: transparent;
+    border-width: 0px;
+}
+.header {
+    background-color: transparent;
+    border-width: 0px;
+}
+
+.media-player {
+    margin: 4px;
+    padding: 8px;
+    border-radius: 15px;
+}
+
+circular-progress {
+    font-size: 2px;
+    margin: 10px;
+    color: white;
+}
+
+calendar {
+	border: none;
+}
+
+:focus {
+  outline: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+
