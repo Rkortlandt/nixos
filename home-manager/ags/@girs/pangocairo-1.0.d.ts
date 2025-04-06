@@ -293,7 +293,7 @@ declare module 'gi://PangoCairo?version=1.0' {
         interface ShapeRendererFunc {
             (cr: cairo.Context, attr: Pango.AttrShape, do_path: boolean): void;
         }
-        module Font {
+        namespace Font {
             // Constructor properties interface
 
             interface ConstructorProps extends Pango.Font.ConstructorProps {}
@@ -319,7 +319,7 @@ declare module 'gi://PangoCairo?version=1.0' {
             new (): Font; // This allows `obj instanceof Font`
         };
 
-        module FontMap {
+        namespace FontMap {
             // Constructor properties interface
 
             interface ConstructorProps extends Pango.FontMap.ConstructorProps {}

@@ -449,7 +449,7 @@ declare module 'gi://Json?version=1.0' {
         interface ObjectForeach {
             (object: Object, member_name: string, member_node: Node): void;
         }
-        module Builder {
+        namespace Builder {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -659,7 +659,7 @@ declare module 'gi://Json?version=1.0' {
             set_member_name(member_name: string): Builder | null;
         }
 
-        module Generator {
+        namespace Generator {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -810,7 +810,7 @@ declare module 'gi://Json?version=1.0' {
             to_stream(stream: Gio.OutputStream, cancellable?: Gio.Cancellable | null): boolean;
         }
 
-        module Parser {
+        namespace Parser {
             // Signal callback interfaces
 
             interface ArrayElement {
@@ -1187,7 +1187,7 @@ declare module 'gi://Json?version=1.0' {
             steal_root(): Node | null;
         }
 
-        module Path {
+        namespace Path {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -1369,7 +1369,7 @@ declare module 'gi://Json?version=1.0' {
             match(root: Node): Node;
         }
 
-        module Reader {
+        namespace Reader {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -2850,7 +2850,7 @@ declare module 'gi://Json?version=1.0' {
         }
 
         type SerializableIface = typeof Serializable;
-        module Serializable {
+        namespace Serializable {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -2979,7 +2979,11 @@ declare module 'gi://Json?version=1.0' {
              * @param pspec a property description
              * @returns a node containing the serialized property
              */
-            serialize_property(property_name: string, value: GObject.Value | any, pspec: GObject.ParamSpec): Node;
+            serialize_property(
+                property_name: string,
+                value: GObject.Value | any,
+                pspec: GObject.ParamSpec,
+            ): Node | null;
             /**
              * Calls the [vfunc`Json`.Serializable.set_property] implementation
              * on the `JsonSerializable` instance, which will set the property
@@ -3039,7 +3043,11 @@ declare module 'gi://Json?version=1.0' {
              * @param value the value of the property to serialize
              * @param pspec a property description
              */
-            vfunc_serialize_property(property_name: string, value: GObject.Value | any, pspec: GObject.ParamSpec): Node;
+            vfunc_serialize_property(
+                property_name: string,
+                value: GObject.Value | any,
+                pspec: GObject.ParamSpec,
+            ): Node | null;
             /**
              * Calls the [vfunc`Json`.Serializable.set_property] implementation
              * on the `JsonSerializable` instance, which will set the property

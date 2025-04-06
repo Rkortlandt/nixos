@@ -1706,7 +1706,7 @@ declare module 'gi://GIRepository?version=2.0' {
              */
             THROWS,
         }
-        module Repository {
+        namespace Repository {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}

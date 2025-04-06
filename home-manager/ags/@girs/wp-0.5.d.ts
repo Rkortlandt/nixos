@@ -541,7 +541,7 @@ declare module 'gi://Wp?version=0.5' {
         enum SpaDeviceFeatures {
             ENABLED,
         }
-        module AsyncEventHook {
+        namespace AsyncEventHook {
             // Constructor properties interface
 
             interface ConstructorProps extends InterestEventHook.ConstructorProps {
@@ -580,7 +580,7 @@ declare module 'gi://Wp?version=0.5' {
             ): AsyncEventHook;
         }
 
-        module Client {
+        namespace Client {
             // Constructor properties interface
 
             interface ConstructorProps extends GlobalProxy.ConstructorProps, PipewireObject.ConstructorProps {}
@@ -692,7 +692,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -782,7 +782,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             vfunc_enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -848,7 +848,7 @@ declare module 'gi://Wp?version=0.5' {
             vfunc_pw_proxy_destroyed(): void;
         }
 
-        module Conf {
+        namespace Conf {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -919,7 +919,7 @@ declare module 'gi://Wp?version=0.5' {
             section_update_props(section: string, props: Properties): number;
         }
 
-        module Core {
+        namespace Core {
             // Signal callback interfaces
 
             interface Connected {
@@ -1305,7 +1305,7 @@ declare module 'gi://Wp?version=0.5' {
             update_properties(updates: Properties): void;
         }
 
-        module Device {
+        namespace Device {
             // Constructor properties interface
 
             interface ConstructorProps extends GlobalProxy.ConstructorProps, PipewireObject.ConstructorProps {}
@@ -1402,7 +1402,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -1492,7 +1492,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             vfunc_enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -1558,7 +1558,7 @@ declare module 'gi://Wp?version=0.5' {
             vfunc_pw_proxy_destroyed(): void;
         }
 
-        module EventDispatcher {
+        namespace EventDispatcher {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -1611,7 +1611,7 @@ declare module 'gi://Wp?version=0.5' {
             unregister_hook(hook: EventHook): void;
         }
 
-        module EventHook {
+        namespace EventHook {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -1711,7 +1711,7 @@ declare module 'gi://Wp?version=0.5' {
             runs_for_event(event: Event): boolean;
         }
 
-        module Factory {
+        namespace Factory {
             // Constructor properties interface
 
             interface ConstructorProps extends GlobalProxy.ConstructorProps, PipewireObject.ConstructorProps {}
@@ -1806,7 +1806,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -1896,7 +1896,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             vfunc_enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -1962,7 +1962,7 @@ declare module 'gi://Wp?version=0.5' {
             vfunc_pw_proxy_destroyed(): void;
         }
 
-        module FeatureActivationTransition {
+        namespace FeatureActivationTransition {
             // Constructor properties interface
 
             interface ConstructorProps extends Transition.ConstructorProps, Gio.AsyncResult.ConstructorProps {}
@@ -2440,7 +2440,7 @@ declare module 'gi://Wp?version=0.5' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module GlobalProxy {
+        namespace GlobalProxy {
             // Constructor properties interface
 
             interface ConstructorProps extends Proxy.ConstructorProps {
@@ -2503,7 +2503,7 @@ declare module 'gi://Wp?version=0.5' {
             request_destroy(): void;
         }
 
-        module ImplMetadata {
+        namespace ImplMetadata {
             // Constructor properties interface
 
             interface ConstructorProps extends Metadata.ConstructorProps {
@@ -2535,7 +2535,7 @@ declare module 'gi://Wp?version=0.5' {
             static new_full(core: Core, name?: string | null, properties?: Properties | null): ImplMetadata;
         }
 
-        module ImplModule {
+        namespace ImplModule {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -2587,7 +2587,7 @@ declare module 'gi://Wp?version=0.5' {
             ): ImplModule | null;
         }
 
-        module ImplNode {
+        namespace ImplNode {
             // Constructor properties interface
 
             interface ConstructorProps extends Proxy.ConstructorProps, PipewireObject.ConstructorProps {
@@ -2693,7 +2693,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -2783,7 +2783,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             vfunc_enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -2849,7 +2849,7 @@ declare module 'gi://Wp?version=0.5' {
             vfunc_pw_proxy_destroyed(): void;
         }
 
-        module InterestEventHook {
+        namespace InterestEventHook {
             // Constructor properties interface
 
             interface ConstructorProps extends EventHook.ConstructorProps {}
@@ -2872,7 +2872,7 @@ declare module 'gi://Wp?version=0.5' {
             add_interest_full(interest: ObjectInterest): void;
         }
 
-        module Link {
+        namespace Link {
             // Signal callback interfaces
 
             interface StateChanged {
@@ -3011,7 +3011,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -3101,7 +3101,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             vfunc_enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -3167,7 +3167,7 @@ declare module 'gi://Wp?version=0.5' {
             vfunc_pw_proxy_destroyed(): void;
         }
 
-        module Metadata {
+        namespace Metadata {
             // Signal callback interfaces
 
             interface Changed {
@@ -3242,7 +3242,7 @@ declare module 'gi://Wp?version=0.5' {
             set(...args: never[]): any;
         }
 
-        module Node {
+        namespace Node {
             // Signal callback interfaces
 
             interface PortsChanged {
@@ -3456,7 +3456,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -3546,7 +3546,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             vfunc_enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -3612,7 +3612,7 @@ declare module 'gi://Wp?version=0.5' {
             vfunc_pw_proxy_destroyed(): void;
         }
 
-        module Object {
+        namespace Object {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -3781,7 +3781,7 @@ declare module 'gi://Wp?version=0.5' {
             update_features(activated: ObjectFeatures, deactivated: ObjectFeatures): void;
         }
 
-        module ObjectManager {
+        namespace ObjectManager {
             // Signal callback interfaces
 
             interface Installed {
@@ -3876,7 +3876,7 @@ declare module 'gi://Wp?version=0.5' {
              *
              *
              * If more than one objects match, only the first one is returned. To find multiple objects that match certain criteria, wp_object_manager_new_filtered_iterator() is more suitable.
-             * @param interest the interst
+             * @param interest the interest
              * @returns the first managed object that matches the lookup interest, or NULL if no object matches
              */
             lookup_full<T = GObject.Object>(interest: ObjectInterest): T;
@@ -3902,7 +3902,7 @@ declare module 'gi://Wp?version=0.5' {
             request_object_features(object_type: GObject.GType, wanted_features: ObjectFeatures): void;
         }
 
-        module Plugin {
+        namespace Plugin {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {
@@ -3945,13 +3945,13 @@ declare module 'gi://Wp?version=0.5' {
             // Methods
 
             /**
-             * Retreives the name of a plugin.
+             * Retrieves the name of a plugin.
              * @returns the name of this plugin
              */
             get_name(): string;
         }
 
-        module Port {
+        namespace Port {
             // Constructor properties interface
 
             interface ConstructorProps extends GlobalProxy.ConstructorProps, PipewireObject.ConstructorProps {}
@@ -4057,7 +4057,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -4147,7 +4147,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             vfunc_enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -4213,7 +4213,7 @@ declare module 'gi://Wp?version=0.5' {
             vfunc_pw_proxy_destroyed(): void;
         }
 
-        module Proxy {
+        namespace Proxy {
             // Signal callback interfaces
 
             interface Bound {
@@ -4321,7 +4321,7 @@ declare module 'gi://Wp?version=0.5' {
             set_pw_proxy(proxy?: any | null): void;
         }
 
-        module SessionItem {
+        namespace SessionItem {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {
@@ -4349,7 +4349,7 @@ declare module 'gi://Wp?version=0.5' {
             // Static methods
 
             /**
-             * Helper callback for sub-classes that deffers and unexports the session item.
+             * Helper callback for sub-classes that defers and unexports the session item.
              *
              *
              * Only meant to be used when the pipewire proxy destroyed signal is triggered.
@@ -4447,7 +4447,7 @@ declare module 'gi://Wp?version=0.5' {
             set_properties(props: Properties): void;
         }
 
-        module Settings {
+        namespace Settings {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {
@@ -4571,7 +4571,7 @@ declare module 'gi://Wp?version=0.5' {
             unsubscribe(subscription_id: never): boolean;
         }
 
-        module SiFactory {
+        namespace SiFactory {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -4642,7 +4642,7 @@ declare module 'gi://Wp?version=0.5' {
             get_name(): string;
         }
 
-        module SimpleEventHook {
+        namespace SimpleEventHook {
             // Constructor properties interface
 
             interface ConstructorProps extends InterestEventHook.ConstructorProps {
@@ -4669,7 +4669,7 @@ declare module 'gi://Wp?version=0.5' {
             static ['new'](name: string, before: string, after: string, closure: GObject.Closure): SimpleEventHook;
         }
 
-        module SpaDevice {
+        namespace SpaDevice {
             // Signal callback interfaces
 
             interface CreateObject {
@@ -4750,6 +4750,15 @@ declare module 'gi://Wp?version=0.5' {
              */
             new_managed_object_iterator(): Iterator;
             /**
+             * Marks a managed object id pending.
+             *
+             *
+             * When an object id is pending, Props from received ObjectConfig events for the id are saved. When wp_spa_device_store_managed_object later sets an object for the id, the saved Props are immediately set on the object and pending status is cleared.
+             * If an object is already set for the id, this has no effect.
+             * @param id the (device-internal) id of the object
+             */
+            set_managed_pending(id: number): void;
+            /**
              * Stores or removes a managed object into/from a device.
              * @param id the (device-internal) id of the object
              * @param object the object to store or NULL to remove the managed object associated with @id
@@ -4814,7 +4823,7 @@ declare module 'gi://Wp?version=0.5' {
             parent(): SpaType;
         }
 
-        module State {
+        namespace State {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -4885,7 +4894,7 @@ declare module 'gi://Wp?version=0.5' {
             save_after_timeout(core: Core, props: Properties): void;
         }
 
-        module Transition {
+        namespace Transition {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps, Gio.AsyncResult.ConstructorProps {
@@ -5905,7 +5914,7 @@ declare module 'gi://Wp?version=0.5' {
              *
              * If a property is contained in `other` and not in `self,` the result is not matched. If a property is contained in both sets, then the value of the property in `other` is interpreted as a glob-style pattern (using g_pattern_match_simple()) and the value in `self` is checked to see if it matches with this pattern.
              * @param other a set of properties to match
-             * @returns TRUE if all matches were successfull, FALSE if at least one property value did not match
+             * @returns TRUE if all matches were successful, FALSE if at least one property value did not match
              */
             matches(other: Properties): boolean;
             /**
@@ -6175,7 +6184,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             is_array(): boolean;
             /**
-             * Checks wether the spa json is of type boolean or not.
+             * Checks whether the spa json is of type boolean or not.
              * @returns TRUE if it is of type boolean, FALSE otherwise
              */
             is_boolean(): boolean;
@@ -6185,17 +6194,17 @@ declare module 'gi://Wp?version=0.5' {
              */
             is_container(): boolean;
             /**
-             * Checks wether the spa json is of type float or not.
+             * Checks whether the spa json is of type float or not.
              * @returns TRUE if it is of type float, FALSE otherwise
              */
             is_float(): boolean;
             /**
-             * Checks wether the spa json is of type int or not.
+             * Checks whether the spa json is of type int or not.
              * @returns TRUE if it is of type int, FALSE otherwise
              */
             is_int(): boolean;
             /**
-             * Checks wether the spa json is of type null or not.
+             * Checks whether the spa json is of type null or not.
              * @returns TRUE if it is of type null, FALSE otherwise
              */
             is_null(): boolean;
@@ -6205,7 +6214,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             is_object(): boolean;
             /**
-             * Checks wether the spa json is of type string or not.
+             * Checks whether the spa json is of type string or not.
              * @returns TRUE if it is of type string, FALSE otherwise
              */
             is_string(): boolean;
@@ -6552,102 +6561,102 @@ declare module 'gi://Wp?version=0.5' {
              */
             get_string(): [boolean, string];
             /**
-             * Checks wether the spa pod is of type array or not.
+             * Checks whether the spa pod is of type array or not.
              * @returns TRUE if it is of type array, FALSE otherwise
              */
             is_array(): boolean;
             /**
-             * Checks wether the spa pod is of type boolean or not.
+             * Checks whether the spa pod is of type boolean or not.
              * @returns TRUE if it is of type boolean, FALSE otherwise
              */
             is_boolean(): boolean;
             /**
-             * Checks wether the spa pod is of type bytes or not.
+             * Checks whether the spa pod is of type bytes or not.
              * @returns TRUE if it is of type bytes, FALSE otherwise
              */
             is_bytes(): boolean;
             /**
-             * Checks wether the spa pod is of type choice or not.
+             * Checks whether the spa pod is of type choice or not.
              * @returns TRUE if it is of type choice, FALSE otherwise
              */
             is_choice(): boolean;
             /**
-             * Checks wether the spa pod is of type control or not.
+             * Checks whether the spa pod is of type control or not.
              * @returns TRUE if it is of type control, FALSE otherwise
              */
             is_control(): boolean;
             /**
-             * Checks wether the spa pod is of type double or not.
+             * Checks whether the spa pod is of type double or not.
              * @returns TRUE if it is of type double, FALSE otherwise
              */
             is_double(): boolean;
             /**
-             * Checks wether the spa pod is of type Fd or not.
+             * Checks whether the spa pod is of type Fd or not.
              * @returns TRUE if it is of type Fd, FALSE otherwise
              */
             is_fd(): boolean;
             /**
-             * Checks wether the spa pod is of type float or not.
+             * Checks whether the spa pod is of type float or not.
              * @returns TRUE if it is of type float, FALSE otherwise
              */
             is_float(): boolean;
             /**
-             * Checks wether the spa pod is of type fraction or not.
+             * Checks whether the spa pod is of type fraction or not.
              * @returns TRUE if it is of type fraction, FALSE otherwise
              */
             is_fraction(): boolean;
             /**
-             * Checks wether the spa pod is of type Id or not.
+             * Checks whether the spa pod is of type Id or not.
              * @returns TRUE if it is of type Id, FALSE otherwise
              */
             is_id(): boolean;
             /**
-             * Checks wether the spa pod is of type int or not.
+             * Checks whether the spa pod is of type int or not.
              * @returns TRUE if it is of type int, FALSE otherwise
              */
             is_int(): boolean;
             /**
-             * Checks wether the spa pod is of type long or not.
+             * Checks whether the spa pod is of type long or not.
              * @returns TRUE if it is of type long, FALSE otherwise
              */
             is_long(): boolean;
             /**
-             * Checks wether the spa pod is of type none or not.
+             * Checks whether the spa pod is of type none or not.
              * @returns TRUE if it is of type none, FALSE otherwise
              */
             is_none(): boolean;
             /**
-             * Checks wether the spa pod is of type object or not.
+             * Checks whether the spa pod is of type object or not.
              * @returns TRUE if it is of type object, FALSE otherwise
              */
             is_object(): boolean;
             /**
-             * Checks wether the spa pod is of type pointer or not.
+             * Checks whether the spa pod is of type pointer or not.
              * @returns TRUE if it is of type pointer, FALSE otherwise
              */
             is_pointer(): boolean;
             /**
-             * Checks wether the spa pod is of type property or not.
+             * Checks whether the spa pod is of type property or not.
              * @returns TRUE if it is of type property, FALSE otherwise
              */
             is_property(): boolean;
             /**
-             * Checks wether the spa pod is of type rectangle or not.
+             * Checks whether the spa pod is of type rectangle or not.
              * @returns TRUE if it is of type rectangle, FALSE otherwise
              */
             is_rectangle(): boolean;
             /**
-             * Checks wether the spa pod is of type sequence or not.
+             * Checks whether the spa pod is of type sequence or not.
              * @returns TRUE if it is of type sequence, FALSE otherwise
              */
             is_sequence(): boolean;
             /**
-             * Checks wether the spa pod is of type string or not.
+             * Checks whether the spa pod is of type string or not.
              * @returns TRUE if it is of type string, FALSE otherwise
              */
             is_string(): boolean;
             /**
-             * Checks wether the spa pod is of type struct or not.
+             * Checks whether the spa pod is of type struct or not.
              * @returns TRUE if it is of type struct, FALSE otherwise
              */
             is_struct(): boolean;
@@ -6692,7 +6701,7 @@ declare module 'gi://Wp?version=0.5' {
             set_float(value: number): boolean;
             /**
              * Sets the numerator and denominator values of a fraction in the spa pod object.
-             * @param num the numerator value of the farction
+             * @param num the numerator value of the fraction
              * @param denom the denominator value of the fraction
              * @returns TRUE if the value could be set, FALSE othewrise.
              */
@@ -6826,7 +6835,7 @@ declare module 'gi://Wp?version=0.5' {
             /**
              * Adds a pointer value with its type name into the builder.
              * @param type_name the type name that the pointer points to
-             * @param value the pointer vaue
+             * @param value the pointer value
              */
             add_pointer(type_name: string, value?: any | null): void;
             /**
@@ -6962,7 +6971,7 @@ declare module 'gi://Wp?version=0.5' {
 
         type StateClass = typeof State;
         type TransitionClass = typeof Transition;
-        module ComponentLoader {
+        namespace ComponentLoader {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -6990,7 +6999,7 @@ declare module 'gi://Wp?version=0.5' {
             new (): ComponentLoader; // This allows `obj instanceof ComponentLoader`
         };
 
-        module PipewireObject {
+        namespace PipewireObject {
             // Constructor properties interface
 
             interface ConstructorProps extends Proxy.ConstructorProps {
@@ -7081,7 +7090,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -7174,7 +7183,7 @@ declare module 'gi://Wp?version=0.5' {
              */
             vfunc_enum_params_sync(id: string, filter?: SpaPod | null): Iterator | null;
             /**
-             * Retrieves the native infor structure of this object (pw_node_info, pw_port_info, etc...)
+             * Retrieves the native info structure of this object (pw_node_info, pw_port_info, etc...)
              *
              *
              * Requires WP_PIPEWIRE_OBJECT_FEATURE_INFO
@@ -7213,7 +7222,7 @@ declare module 'gi://Wp?version=0.5' {
             new (): PipewireObject; // This allows `obj instanceof PipewireObject`
         };
 
-        module SiAcquisition {
+        namespace SiAcquisition {
             // Constructor properties interface
 
             interface ConstructorProps extends SessionItem.ConstructorProps {}
@@ -7305,7 +7314,7 @@ declare module 'gi://Wp?version=0.5' {
             new (): SiAcquisition; // This allows `obj instanceof SiAcquisition`
         };
 
-        module SiAdapter {
+        namespace SiAdapter {
             // Constructor properties interface
 
             interface ConstructorProps extends SessionItem.ConstructorProps {}
@@ -7407,7 +7416,7 @@ declare module 'gi://Wp?version=0.5' {
             new (): SiAdapter; // This allows `obj instanceof SiAdapter`
         };
 
-        module SiLink {
+        namespace SiLink {
             // Constructor properties interface
 
             interface ConstructorProps extends SessionItem.ConstructorProps {}
@@ -7467,7 +7476,7 @@ declare module 'gi://Wp?version=0.5' {
             new (): SiLink; // This allows `obj instanceof SiLink`
         };
 
-        module SiLinkable {
+        namespace SiLinkable {
             // Constructor properties interface
 
             interface ConstructorProps extends SessionItem.ConstructorProps {}

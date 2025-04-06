@@ -6722,7 +6722,7 @@ declare module 'gi://NM?version=1.0' {
              */
             IPV6,
         }
-        module AccessPoint {
+        namespace AccessPoint {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {
@@ -6917,7 +6917,7 @@ declare module 'gi://NM?version=1.0' {
             get_wpa_flags(): __80211ApSecurityFlags;
         }
 
-        module ActiveConnection {
+        namespace ActiveConnection {
             // Signal callback interfaces
 
             interface StateChanged {
@@ -7177,7 +7177,7 @@ declare module 'gi://NM?version=1.0' {
             get_vpn(): boolean;
         }
 
-        module Checkpoint {
+        namespace Checkpoint {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {
@@ -7238,7 +7238,7 @@ declare module 'gi://NM?version=1.0' {
             get_rollback_timeout(): number;
         }
 
-        module Client {
+        namespace Client {
             // Signal callback interfaces
 
             interface ActiveConnectionAdded {
@@ -9847,7 +9847,7 @@ declare module 'gi://NM?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module Device {
+        namespace Device {
             // Signal callback interfaces
 
             interface StateChanged {
@@ -10621,7 +10621,7 @@ declare module 'gi://NM?version=1.0' {
             set_managed(managed: boolean): void;
         }
 
-        module Device6Lowpan {
+        namespace Device6Lowpan {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -10650,7 +10650,7 @@ declare module 'gi://NM?version=1.0' {
             get_parent(): Device;
         }
 
-        module DeviceAdsl {
+        namespace DeviceAdsl {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -10683,7 +10683,7 @@ declare module 'gi://NM?version=1.0' {
             get_carrier(): boolean;
         }
 
-        module DeviceBond {
+        namespace DeviceBond {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -10726,7 +10726,7 @@ declare module 'gi://NM?version=1.0' {
             get_slaves(): Device[];
         }
 
-        module DeviceBridge {
+        namespace DeviceBridge {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -10769,7 +10769,7 @@ declare module 'gi://NM?version=1.0' {
             get_slaves(): Device[];
         }
 
-        module DeviceBt {
+        namespace DeviceBt {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -10819,7 +10819,7 @@ declare module 'gi://NM?version=1.0' {
             get_name(): string;
         }
 
-        module DeviceDummy {
+        namespace DeviceDummy {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {}
@@ -10835,7 +10835,7 @@ declare module 'gi://NM?version=1.0' {
             _init(...args: any[]): void;
         }
 
-        module DeviceEthernet {
+        namespace DeviceEthernet {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -10910,7 +10910,7 @@ declare module 'gi://NM?version=1.0' {
             get_speed(): number;
         }
 
-        module DeviceGeneric {
+        namespace DeviceGeneric {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -10942,7 +10942,7 @@ declare module 'gi://NM?version=1.0' {
             _init(...args: any[]): void;
         }
 
-        module DeviceHsr {
+        namespace DeviceHsr {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11005,7 +11005,7 @@ declare module 'gi://NM?version=1.0' {
             get_supervision_address(): string;
         }
 
-        module DeviceIPTunnel {
+        namespace DeviceIPTunnel {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11140,7 +11140,7 @@ declare module 'gi://NM?version=1.0' {
             get_ttl(): number;
         }
 
-        module DeviceInfiniband {
+        namespace DeviceInfiniband {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11173,7 +11173,7 @@ declare module 'gi://NM?version=1.0' {
             get_carrier(): boolean;
         }
 
-        module DeviceLoopback {
+        namespace DeviceLoopback {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {}
@@ -11189,7 +11189,7 @@ declare module 'gi://NM?version=1.0' {
             _init(...args: any[]): void;
         }
 
-        module DeviceMacsec {
+        namespace DeviceMacsec {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11375,7 +11375,7 @@ declare module 'gi://NM?version=1.0' {
             get_window(): number;
         }
 
-        module DeviceMacvlan {
+        namespace DeviceMacvlan {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11439,7 +11439,7 @@ declare module 'gi://NM?version=1.0' {
             get_tap(): boolean;
         }
 
-        module DeviceModem {
+        namespace DeviceModem {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11531,7 +11531,7 @@ declare module 'gi://NM?version=1.0' {
             get_operator_code(): string;
         }
 
-        module DeviceOlpcMesh {
+        namespace DeviceOlpcMesh {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11579,7 +11579,7 @@ declare module 'gi://NM?version=1.0' {
             get_companion(): DeviceWifi;
         }
 
-        module DeviceOvsBridge {
+        namespace DeviceOvsBridge {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11612,7 +11612,7 @@ declare module 'gi://NM?version=1.0' {
             get_slaves(): Device[];
         }
 
-        module DeviceOvsInterface {
+        namespace DeviceOvsInterface {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {}
@@ -11628,7 +11628,7 @@ declare module 'gi://NM?version=1.0' {
             _init(...args: any[]): void;
         }
 
-        module DeviceOvsPort {
+        namespace DeviceOvsPort {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11661,7 +11661,7 @@ declare module 'gi://NM?version=1.0' {
             get_slaves(): Device[];
         }
 
-        module DevicePpp {
+        namespace DevicePpp {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {}
@@ -11677,7 +11677,7 @@ declare module 'gi://NM?version=1.0' {
             _init(...args: any[]): void;
         }
 
-        module DeviceTeam {
+        namespace DeviceTeam {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11730,7 +11730,7 @@ declare module 'gi://NM?version=1.0' {
             get_slaves(): Device[];
         }
 
-        module DeviceTun {
+        namespace DeviceTun {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11836,7 +11836,7 @@ declare module 'gi://NM?version=1.0' {
             get_vnet_hdr(): boolean;
         }
 
-        module DeviceVeth {
+        namespace DeviceVeth {
             // Constructor properties interface
 
             interface ConstructorProps extends DeviceEthernet.ConstructorProps {
@@ -11865,7 +11865,7 @@ declare module 'gi://NM?version=1.0' {
             get_peer(): Device;
         }
 
-        module DeviceVlan {
+        namespace DeviceVlan {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11915,7 +11915,7 @@ declare module 'gi://NM?version=1.0' {
             get_vlan_id(): number;
         }
 
-        module DeviceVrf {
+        namespace DeviceVrf {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -11944,7 +11944,7 @@ declare module 'gi://NM?version=1.0' {
             get_table(): number;
         }
 
-        module DeviceVxlan {
+        namespace DeviceVxlan {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -12099,7 +12099,7 @@ declare module 'gi://NM?version=1.0' {
             get_ttl(): number;
         }
 
-        module DeviceWifi {
+        namespace DeviceWifi {
             // Signal callback interfaces
 
             interface AccessPointAdded {
@@ -12334,7 +12334,7 @@ declare module 'gi://NM?version=1.0' {
             ): void;
         }
 
-        module DeviceWifiP2P {
+        namespace DeviceWifiP2P {
             // Signal callback interfaces
 
             interface PeerAdded {
@@ -12470,7 +12470,7 @@ declare module 'gi://NM?version=1.0' {
             stop_find_finish(result: Gio.AsyncResult): boolean;
         }
 
-        module DeviceWimax {
+        namespace DeviceWimax {
             // Signal callback interfaces
 
             interface NspAdded {
@@ -12644,7 +12644,7 @@ declare module 'gi://NM?version=1.0' {
             get_tx_power(): number;
         }
 
-        module DeviceWireGuard {
+        namespace DeviceWireGuard {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {
@@ -12713,7 +12713,7 @@ declare module 'gi://NM?version=1.0' {
             get_public_key(): GLib.Bytes;
         }
 
-        module DeviceWpan {
+        namespace DeviceWpan {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {}
@@ -12729,7 +12729,7 @@ declare module 'gi://NM?version=1.0' {
             _init(...args: any[]): void;
         }
 
-        module DhcpConfig {
+        namespace DhcpConfig {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {
@@ -12779,7 +12779,7 @@ declare module 'gi://NM?version=1.0' {
             get_options(): GLib.HashTable<string, string>;
         }
 
-        module IPConfig {
+        namespace IPConfig {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {
@@ -12890,7 +12890,7 @@ declare module 'gi://NM?version=1.0' {
             get_wins_servers(): string[];
         }
 
-        module Object {
+        namespace Object {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -12945,7 +12945,7 @@ declare module 'gi://NM?version=1.0' {
             get_path(): string;
         }
 
-        module RemoteConnection {
+        namespace RemoteConnection {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps, Connection.ConstructorProps {
@@ -14052,7 +14052,7 @@ declare module 'gi://NM?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module SecretAgentOld {
+        namespace SecretAgentOld {
             // Constructor properties interface
 
             interface ConstructorProps
@@ -15108,7 +15108,7 @@ declare module 'gi://NM?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module Setting {
+        namespace Setting {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -15285,7 +15285,7 @@ declare module 'gi://NM?version=1.0' {
             verify_secrets(connection?: Connection | null): boolean;
         }
 
-        module Setting6Lowpan {
+        namespace Setting6Lowpan {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -15321,7 +15321,7 @@ declare module 'gi://NM?version=1.0' {
             get_parent(): string;
         }
 
-        module Setting8021x {
+        namespace Setting8021x {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -16927,7 +16927,7 @@ declare module 'gi://NM?version=1.0' {
             ): boolean;
         }
 
-        module SettingAdsl {
+        namespace SettingAdsl {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -17010,7 +17010,7 @@ declare module 'gi://NM?version=1.0' {
             get_vpi(): number;
         }
 
-        module SettingBluetooth {
+        namespace SettingBluetooth {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -17063,7 +17063,7 @@ declare module 'gi://NM?version=1.0' {
             get_connection_type(): string;
         }
 
-        module SettingBond {
+        namespace SettingBond {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -17157,7 +17157,7 @@ declare module 'gi://NM?version=1.0' {
             remove_option(name: string): boolean;
         }
 
-        module SettingBondPort {
+        namespace SettingBondPort {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -17210,7 +17210,7 @@ declare module 'gi://NM?version=1.0' {
             get_queue_id(): number;
         }
 
-        module SettingBridge {
+        namespace SettingBridge {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -17686,7 +17686,7 @@ declare module 'gi://NM?version=1.0' {
             remove_vlan_by_vid(vid_start: number, vid_end: number): boolean;
         }
 
-        module SettingBridgePort {
+        namespace SettingBridgePort {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -17794,7 +17794,7 @@ declare module 'gi://NM?version=1.0' {
             remove_vlan_by_vid(vid_start: number, vid_end: number): boolean;
         }
 
-        module SettingCdma {
+        namespace SettingCdma {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -17870,7 +17870,7 @@ declare module 'gi://NM?version=1.0' {
             get_username(): string;
         }
 
-        module SettingConnection {
+        namespace SettingConnection {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -18796,7 +18796,7 @@ declare module 'gi://NM?version=1.0' {
             remove_secondary_by_value(sec_uuid: string): boolean;
         }
 
-        module SettingDcb {
+        namespace SettingDcb {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -19125,7 +19125,7 @@ declare module 'gi://NM?version=1.0' {
             set_priority_traffic_class(user_priority: number, traffic_class: number): void;
         }
 
-        module SettingDummy {
+        namespace SettingDummy {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {}
@@ -19146,7 +19146,7 @@ declare module 'gi://NM?version=1.0' {
             static ['new'](): SettingDummy;
         }
 
-        module SettingEthtool {
+        namespace SettingEthtool {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {}
@@ -19200,7 +19200,7 @@ declare module 'gi://NM?version=1.0' {
             set_feature(optname: string, value: Ternary | null): void;
         }
 
-        module SettingGeneric {
+        namespace SettingGeneric {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -19265,7 +19265,7 @@ declare module 'gi://NM?version=1.0' {
             get_device_handler(): string;
         }
 
-        module SettingGsm {
+        namespace SettingGsm {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -19523,7 +19523,7 @@ declare module 'gi://NM?version=1.0' {
             get_username(): string;
         }
 
-        module SettingHostname {
+        namespace SettingHostname {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -19671,7 +19671,7 @@ declare module 'gi://NM?version=1.0' {
             get_priority(): number;
         }
 
-        module SettingHsr {
+        namespace SettingHsr {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -19733,7 +19733,7 @@ declare module 'gi://NM?version=1.0' {
             get_prp(): boolean;
         }
 
-        module SettingIP4Config {
+        namespace SettingIP4Config {
             // Constructor properties interface
 
             interface ConstructorProps extends SettingIPConfig.ConstructorProps {
@@ -19933,7 +19933,7 @@ declare module 'gi://NM?version=1.0' {
             get_link_local(): SettingIP4LinkLocal;
         }
 
-        module SettingIP6Config {
+        namespace SettingIP6Config {
             // Constructor properties interface
 
             interface ConstructorProps extends SettingIPConfig.ConstructorProps {
@@ -20307,7 +20307,7 @@ declare module 'gi://NM?version=1.0' {
             get_token(): string;
         }
 
-        module SettingIPConfig {
+        namespace SettingIPConfig {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -21340,7 +21340,7 @@ declare module 'gi://NM?version=1.0' {
             remove_routing_rule(idx: number): void;
         }
 
-        module SettingIPTunnel {
+        namespace SettingIPTunnel {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -21578,7 +21578,7 @@ declare module 'gi://NM?version=1.0' {
             get_ttl(): number;
         }
 
-        module SettingInfiniband {
+        namespace SettingInfiniband {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -21711,7 +21711,7 @@ declare module 'gi://NM?version=1.0' {
             get_virtual_interface_name(): string;
         }
 
-        module SettingLink {
+        namespace SettingLink {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -21825,7 +21825,7 @@ declare module 'gi://NM?version=1.0' {
             get_tx_queue_length(): number;
         }
 
-        module SettingLoopback {
+        namespace SettingLoopback {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -21861,7 +21861,7 @@ declare module 'gi://NM?version=1.0' {
             get_mtu(): number;
         }
 
-        module SettingMacsec {
+        namespace SettingMacsec {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22007,7 +22007,7 @@ declare module 'gi://NM?version=1.0' {
             get_validation(): SettingMacsecValidation;
         }
 
-        module SettingMacvlan {
+        namespace SettingMacvlan {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22067,7 +22067,7 @@ declare module 'gi://NM?version=1.0' {
             get_tap(): boolean;
         }
 
-        module SettingMatch {
+        namespace SettingMatch {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22327,7 +22327,7 @@ declare module 'gi://NM?version=1.0' {
             remove_path_by_value(path: string): boolean;
         }
 
-        module SettingOlpcMesh {
+        namespace SettingOlpcMesh {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22390,7 +22390,7 @@ declare module 'gi://NM?version=1.0' {
             get_ssid(): GLib.Bytes;
         }
 
-        module SettingOvsBridge {
+        namespace SettingOvsBridge {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22483,7 +22483,7 @@ declare module 'gi://NM?version=1.0' {
             get_stp_enable(): boolean;
         }
 
-        module SettingOvsDpdk {
+        namespace SettingOvsDpdk {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22577,7 +22577,7 @@ declare module 'gi://NM?version=1.0' {
             get_n_txq_desc(): number;
         }
 
-        module SettingOvsExternalIDs {
+        namespace SettingOvsExternalIDs {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22635,7 +22635,7 @@ declare module 'gi://NM?version=1.0' {
             set_data(...args: never[]): any;
         }
 
-        module SettingOvsInterface {
+        namespace SettingOvsInterface {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22691,7 +22691,7 @@ declare module 'gi://NM?version=1.0' {
             get_ofport_request(): number;
         }
 
-        module SettingOvsOtherConfig {
+        namespace SettingOvsOtherConfig {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22734,7 +22734,7 @@ declare module 'gi://NM?version=1.0' {
             set_data(...args: never[]): any;
         }
 
-        module SettingOvsPatch {
+        namespace SettingOvsPatch {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22770,7 +22770,7 @@ declare module 'gi://NM?version=1.0' {
             get_peer(): string;
         }
 
-        module SettingOvsPort {
+        namespace SettingOvsPort {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -22900,7 +22900,7 @@ declare module 'gi://NM?version=1.0' {
             remove_trunk_by_value(start: number, end: number): boolean;
         }
 
-        module SettingPpp {
+        namespace SettingPpp {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -23153,7 +23153,7 @@ declare module 'gi://NM?version=1.0' {
             get_require_mppe_128(): boolean;
         }
 
-        module SettingPppoe {
+        namespace SettingPppoe {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -23228,7 +23228,7 @@ declare module 'gi://NM?version=1.0' {
             get_username(): string;
         }
 
-        module SettingProxy {
+        namespace SettingProxy {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -23310,7 +23310,7 @@ declare module 'gi://NM?version=1.0' {
             get_pac_url(): string;
         }
 
-        module SettingSerial {
+        namespace SettingSerial {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -23382,7 +23382,7 @@ declare module 'gi://NM?version=1.0' {
             get_stopbits(): number;
         }
 
-        module SettingSriov {
+        namespace SettingSriov {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -23610,7 +23610,7 @@ declare module 'gi://NM?version=1.0' {
             remove_vf_by_index(index: number): boolean;
         }
 
-        module SettingTCConfig {
+        namespace SettingTCConfig {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -23718,7 +23718,7 @@ declare module 'gi://NM?version=1.0' {
             remove_tfilter_by_value(tfilter: TCTfilter): boolean;
         }
 
-        module SettingTeam {
+        namespace SettingTeam {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -24001,7 +24001,7 @@ declare module 'gi://NM?version=1.0' {
             remove_runner_tx_hash_by_value(txhash: string): boolean;
         }
 
-        module SettingTeamPort {
+        namespace SettingTeamPort {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -24143,7 +24143,7 @@ declare module 'gi://NM?version=1.0' {
             remove_link_watcher_by_value(link_watcher: TeamLinkWatcher): boolean;
         }
 
-        module SettingTun {
+        namespace SettingTun {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -24239,7 +24239,7 @@ declare module 'gi://NM?version=1.0' {
             get_vnet_hdr(): boolean;
         }
 
-        module SettingUser {
+        namespace SettingUser {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -24300,7 +24300,7 @@ declare module 'gi://NM?version=1.0' {
             set_data(...args: never[]): any;
         }
 
-        module SettingVeth {
+        namespace SettingVeth {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -24336,7 +24336,7 @@ declare module 'gi://NM?version=1.0' {
             get_peer(): string;
         }
 
-        module SettingVlan {
+        namespace SettingVlan {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -24516,7 +24516,7 @@ declare module 'gi://NM?version=1.0' {
             remove_priority_str_by_value(map: VlanPriorityMap | null, str: string): boolean;
         }
 
-        module SettingVpn {
+        namespace SettingVpn {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -24708,7 +24708,7 @@ declare module 'gi://NM?version=1.0' {
             remove_secret(key: string): boolean;
         }
 
-        module SettingVrf {
+        namespace SettingVrf {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -24743,7 +24743,7 @@ declare module 'gi://NM?version=1.0' {
             get_table(): number;
         }
 
-        module SettingVxlan {
+        namespace SettingVxlan {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -24924,7 +24924,7 @@ declare module 'gi://NM?version=1.0' {
             get_ttl(): number;
         }
 
-        module SettingWifiP2P {
+        namespace SettingWifiP2P {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -25002,7 +25002,7 @@ declare module 'gi://NM?version=1.0' {
             get_wps_method(): SettingWirelessSecurityWpsMethod;
         }
 
-        module SettingWimax {
+        namespace SettingWimax {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -25072,7 +25072,7 @@ declare module 'gi://NM?version=1.0' {
             get_network_name(): string;
         }
 
-        module SettingWireGuard {
+        namespace SettingWireGuard {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -25285,7 +25285,7 @@ declare module 'gi://NM?version=1.0' {
             set_peer(peer: WireGuardPeer, idx: number): void;
         }
 
-        module SettingWired {
+        namespace SettingWired {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -25813,7 +25813,7 @@ declare module 'gi://NM?version=1.0' {
             remove_s390_option(key: string): boolean;
         }
 
-        module SettingWireless {
+        namespace SettingWireless {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -26333,7 +26333,7 @@ declare module 'gi://NM?version=1.0' {
             remove_mac_denylist_item_by_value(mac: string): boolean;
         }
 
-        module SettingWirelessSecurity {
+        namespace SettingWirelessSecurity {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -26778,7 +26778,7 @@ declare module 'gi://NM?version=1.0' {
             set_wep_key(idx: number, key: string): void;
         }
 
-        module SettingWpan {
+        namespace SettingWpan {
             // Constructor properties interface
 
             interface ConstructorProps extends Setting.ConstructorProps {
@@ -26863,7 +26863,7 @@ declare module 'gi://NM?version=1.0' {
             get_short_address(): number;
         }
 
-        module SimpleConnection {
+        namespace SimpleConnection {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps, Connection.ConstructorProps {}
@@ -27714,7 +27714,7 @@ declare module 'gi://NM?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module VpnConnection {
+        namespace VpnConnection {
             // Signal callback interfaces
 
             interface VpnStateChanged {
@@ -27780,7 +27780,7 @@ declare module 'gi://NM?version=1.0' {
             get_vpn_state(): VpnConnectionState;
         }
 
-        module VpnPluginInfo {
+        namespace VpnPluginInfo {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps, Gio.Initable.ConstructorProps {
@@ -28375,7 +28375,7 @@ declare module 'gi://NM?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module VpnPluginOld {
+        namespace VpnPluginOld {
             // Signal callback interfaces
 
             interface Config {
@@ -29024,7 +29024,7 @@ declare module 'gi://NM?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module VpnServicePlugin {
+        namespace VpnServicePlugin {
             // Signal callback interfaces
 
             interface Config {
@@ -29692,7 +29692,7 @@ declare module 'gi://NM?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module WifiP2PPeer {
+        namespace WifiP2PPeer {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {
@@ -29860,7 +29860,7 @@ declare module 'gi://NM?version=1.0' {
             get_wfd_ies(): GLib.Bytes;
         }
 
-        module WimaxNsp {
+        namespace WimaxNsp {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {
@@ -31259,7 +31259,7 @@ declare module 'gi://NM?version=1.0' {
             unref(): void;
         }
 
-        module Connection {
+        namespace Connection {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -31695,7 +31695,7 @@ declare module 'gi://NM?version=1.0' {
             new (): Connection; // This allows `obj instanceof Connection`
         };
 
-        module VpnEditor {
+        namespace VpnEditor {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -31738,7 +31738,7 @@ declare module 'gi://NM?version=1.0' {
             new (): VpnEditor; // This allows `obj instanceof VpnEditor`
         };
 
-        module VpnEditorPlugin {
+        namespace VpnEditorPlugin {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {

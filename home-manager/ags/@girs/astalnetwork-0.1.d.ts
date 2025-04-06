@@ -104,7 +104,7 @@ declare module 'gi://AstalNetwork?version=0.1' {
         function internet_from_device(device: NM.Device): Internet;
         function internet_to_string(): string;
         function get_default(): Network;
-        module Network {
+        namespace Network {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -155,7 +155,7 @@ declare module 'gi://AstalNetwork?version=0.1' {
             get_state(): State;
         }
 
-        module Wifi {
+        namespace Wifi {
             // Signal callback interfaces
 
             interface StateChanged {
@@ -286,7 +286,7 @@ declare module 'gi://AstalNetwork?version=0.1' {
             get_scanning(): boolean;
         }
 
-        module Wired {
+        namespace Wired {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -337,7 +337,7 @@ declare module 'gi://AstalNetwork?version=0.1' {
             get_icon_name(): string;
         }
 
-        module AccessPoint {
+        namespace AccessPoint {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {

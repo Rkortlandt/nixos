@@ -375,7 +375,7 @@ declare module 'gi://GioUnix?version=2.0' {
         interface DesktopAppLaunchCallback {
             (appinfo: Gio.DesktopAppInfo, pid: GLib.Pid): void;
         }
-        module DesktopAppInfo {
+        namespace DesktopAppInfo {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps, Gio.AppInfo.ConstructorProps {
@@ -1512,7 +1512,7 @@ declare module 'gi://GioUnix?version=2.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module FDMessage {
+        namespace FDMessage {
             // Constructor properties interface
 
             interface ConstructorProps extends Gio.SocketControlMessage.ConstructorProps {
@@ -1605,7 +1605,7 @@ declare module 'gi://GioUnix?version=2.0' {
             static steal_fds(message: Gio.UnixFDMessage): number[];
         }
 
-        module InputStream {
+        namespace InputStream {
             // Constructor properties interface
 
             interface ConstructorProps
@@ -2953,7 +2953,7 @@ declare module 'gi://GioUnix?version=2.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module MountMonitor {
+        namespace MountMonitor {
             // Signal callback interfaces
 
             interface MountpointsChanged {
@@ -3023,7 +3023,7 @@ declare module 'gi://GioUnix?version=2.0' {
             static set_rate_limit(mount_monitor: Gio.UnixMountMonitor, limit_msec: number): void;
         }
 
-        module OutputStream {
+        namespace OutputStream {
             // Constructor properties interface
 
             interface ConstructorProps
@@ -5006,7 +5006,7 @@ declare module 'gi://GioUnix?version=2.0' {
             _init(...args: any[]): void;
         }
 
-        module DesktopAppInfoLookup {
+        namespace DesktopAppInfoLookup {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5037,7 +5037,7 @@ declare module 'gi://GioUnix?version=2.0' {
             new (): DesktopAppInfoLookup; // This allows `obj instanceof DesktopAppInfoLookup`
         };
 
-        module FileDescriptorBased {
+        namespace FileDescriptorBased {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}

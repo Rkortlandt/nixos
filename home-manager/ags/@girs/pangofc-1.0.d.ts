@@ -99,7 +99,7 @@ declare module 'gi://PangoFc?version=1.0' {
         interface SubstituteFunc {
             (pattern: fontconfig.Pattern, data?: any | null): void;
         }
-        module Decoder {
+        namespace Decoder {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -179,7 +179,7 @@ declare module 'gi://PangoFc?version=1.0' {
             get_glyph(fcfont: Font, wc: number): Pango.Glyph;
         }
 
-        module Font {
+        namespace Font {
             // Constructor properties interface
 
             interface ConstructorProps extends Pango.Font.ConstructorProps {
@@ -292,7 +292,7 @@ declare module 'gi://PangoFc?version=1.0' {
             unlock_face(): void;
         }
 
-        module FontMap {
+        namespace FontMap {
             // Constructor properties interface
 
             interface ConstructorProps<A extends GObject.Object = GObject.Object>
@@ -333,8 +333,8 @@ declare module 'gi://PangoFc?version=1.0' {
              */
             cache_clear(): void;
             /**
-             * Informs font map that the fontconfig configuration (i.e., FcConfig
-             * object) used by this font map has changed.
+             * Informs font map that the fontconfig configuration (i.e.,
+             * the `FcConfig` object) used by this font map has changed.
              *
              * This currently calls [method`PangoFc`.FontMap.cache_clear] which
              * ensures that list of fonts, etc will be regenerated using the

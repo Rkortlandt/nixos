@@ -73,7 +73,7 @@ declare module 'gi://AstalMpris?version=0.1' {
          * Gets the default singleton Mpris instance.
          */
         function get_default(): Mpris;
-        module Mpris {
+        namespace Mpris {
             // Signal callback interfaces
 
             interface PlayerAdded {
@@ -136,7 +136,7 @@ declare module 'gi://AstalMpris?version=0.1' {
             get_players(): Player[];
         }
 
-        module Player {
+        namespace Player {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {

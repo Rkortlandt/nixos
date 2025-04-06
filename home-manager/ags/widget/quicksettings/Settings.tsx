@@ -5,6 +5,7 @@ import AstalTray from "gi://AstalTray?version=0.1"
 import { System } from "./System"
 import Gtk from "gi://Gtk?version=3.0"
 import Calendar from "./Calendar"
+import { Battery } from "../bar/Battery"
 export function TopLeft () {
     const tray = AstalTray.get_default()
     for (const item of tray.get_items()) {
@@ -28,6 +29,8 @@ export function TopRight () {
 export function BottomLeft () {
 
     return <box className="bg-black menu" vertical={true}>
+	<Battery/>
+	<box hexpand={true} css="min-height: 1px; background-color: rgba(160,160,160,.15); margin: 6px"/>
 	<System/>
     </box>
 }
@@ -35,6 +38,6 @@ export function BottomLeft () {
 export function BottomRight () {
 
     return <box className="bg-black menu" >
-	<Calendar className="calendar" hexpand={true}/>	
+	<Calendar className={'calendar-menu-widget'} hexpand={true} showHeading showDayNames/>	
     </box>
 }	

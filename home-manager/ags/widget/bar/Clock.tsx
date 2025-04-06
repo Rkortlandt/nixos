@@ -9,8 +9,8 @@ export function Clock(props: { monitor: string | null, }) {
     return <button className="bg-black" onClick={() => {App.toggle_window(`quicksettings-${props.monitor}`)}}>
 	<box>
 	    <label label={time()}/>
-	    <label label="  |  " visible={weather().as(w => w.includes("Unknown"))? false : true}/>
-	    <label label={weather((w) => w)} visible={weather().as(w => w.includes("Unknown"))? false : true}/>
+	    <label label="  |  "/>
+	    <label label={weather((w) => w)}/>
 	    <label label=" "/>
 	</box>
     </button>

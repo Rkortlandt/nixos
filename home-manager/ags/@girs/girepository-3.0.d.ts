@@ -1596,7 +1596,7 @@ declare module 'gi://GIRepository?version=3.0' {
             is_boxed(): boolean;
         }
 
-        module Repository {
+        namespace Repository {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}

@@ -118,7 +118,7 @@ declare module 'gi://AstalBattery?version=0.1' {
          * Get the DisplayDevice.
          */
         function get_default(): Device;
-        module Device {
+        namespace Device {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -540,7 +540,7 @@ declare module 'gi://AstalBattery?version=0.1' {
             get_device_type_icon(): string;
         }
 
-        module UPower {
+        namespace UPower {
             // Signal callback interfaces
 
             interface DeviceAdded {

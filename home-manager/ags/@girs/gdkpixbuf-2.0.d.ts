@@ -333,7 +333,7 @@ declare module 'gi://GdkPixbuf?version=2.0' {
              */
             THREADSAFE,
         }
-        module Pixbuf {
+        namespace Pixbuf {
             // Constructor properties interface
 
             interface ConstructorProps
@@ -1832,7 +1832,7 @@ declare module 'gi://GdkPixbuf?version=2.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module PixbufAnimation {
+        namespace PixbufAnimation {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -2039,7 +2039,7 @@ declare module 'gi://GdkPixbuf?version=2.0' {
             is_static_image(): boolean;
         }
 
-        module PixbufAnimationIter {
+        namespace PixbufAnimationIter {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -2197,7 +2197,7 @@ declare module 'gi://GdkPixbuf?version=2.0' {
             on_currently_loading_frame(): boolean;
         }
 
-        module PixbufLoader {
+        namespace PixbufLoader {
             // Signal callback interfaces
 
             interface AreaPrepared {
@@ -2402,7 +2402,7 @@ declare module 'gi://GdkPixbuf?version=2.0' {
             write_bytes(buffer: GLib.Bytes | Uint8Array): boolean;
         }
 
-        module PixbufNonAnim {
+        namespace PixbufNonAnim {
             // Constructor properties interface
 
             interface ConstructorProps extends PixbufAnimation.ConstructorProps {}
@@ -2420,7 +2420,7 @@ declare module 'gi://GdkPixbuf?version=2.0' {
             static ['new'](pixbuf: Pixbuf): PixbufNonAnim;
         }
 
-        module PixbufSimpleAnim {
+        namespace PixbufSimpleAnim {
             // Constructor properties interface
 
             interface ConstructorProps extends PixbufAnimation.ConstructorProps {
@@ -2471,7 +2471,7 @@ declare module 'gi://GdkPixbuf?version=2.0' {
             set_loop(loop: boolean): void;
         }
 
-        module PixbufSimpleAnimIter {
+        namespace PixbufSimpleAnimIter {
             // Constructor properties interface
 
             interface ConstructorProps extends PixbufAnimationIter.ConstructorProps {}

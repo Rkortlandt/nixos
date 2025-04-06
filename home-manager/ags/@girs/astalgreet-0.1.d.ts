@@ -141,7 +141,7 @@ declare module 'gi://AstalGreet?version=0.1' {
             _callback_?: Gio.AsyncReadyCallback<string> | null,
         ): Promise<void> | void;
         function login_with_env_finish(_res_: Gio.AsyncResult): void;
-        module Request {
+        namespace Request {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -191,7 +191,7 @@ declare module 'gi://AstalGreet?version=0.1' {
             get_type_name(): string;
         }
 
-        module CreateSession {
+        namespace CreateSession {
             // Constructor properties interface
 
             interface ConstructorProps extends Request.ConstructorProps {
@@ -224,7 +224,7 @@ declare module 'gi://AstalGreet?version=0.1' {
             set_username(value: string): void;
         }
 
-        module PostAuthMesssage {
+        namespace PostAuthMesssage {
             // Constructor properties interface
 
             interface ConstructorProps extends Request.ConstructorProps {
@@ -258,7 +258,7 @@ declare module 'gi://AstalGreet?version=0.1' {
             set_response(value: string): void;
         }
 
-        module StartSession {
+        namespace StartSession {
             // Constructor properties interface
 
             interface ConstructorProps extends Request.ConstructorProps {
@@ -297,7 +297,7 @@ declare module 'gi://AstalGreet?version=0.1' {
             set_env(value: string[]): void;
         }
 
-        module CancelSession {
+        namespace CancelSession {
             // Constructor properties interface
 
             interface ConstructorProps extends Request.ConstructorProps {}
@@ -318,7 +318,7 @@ declare module 'gi://AstalGreet?version=0.1' {
             static ['new'](): CancelSession;
         }
 
-        module Response {
+        namespace Response {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -337,7 +337,7 @@ declare module 'gi://AstalGreet?version=0.1' {
             _init(...args: any[]): void;
         }
 
-        module Success {
+        namespace Success {
             // Constructor properties interface
 
             interface ConstructorProps extends Response.ConstructorProps {}
@@ -356,7 +356,7 @@ declare module 'gi://AstalGreet?version=0.1' {
             _init(...args: any[]): void;
         }
 
-        module Error {
+        namespace Error {
             // Constructor properties interface
 
             interface ConstructorProps extends Response.ConstructorProps {
@@ -393,7 +393,7 @@ declare module 'gi://AstalGreet?version=0.1' {
             get_description(): string;
         }
 
-        module AuthMessage {
+        namespace AuthMessage {
             // Constructor properties interface
 
             interface ConstructorProps extends Response.ConstructorProps {

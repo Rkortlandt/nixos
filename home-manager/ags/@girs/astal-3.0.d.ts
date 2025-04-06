@@ -1,12 +1,13 @@
+/// <reference path="./astalio-0.1.d.ts" />
+/// <reference path="./glib-2.0.d.ts" />
+/// <reference path="./gobject-2.0.d.ts" />
+/// <reference path="./gio-2.0.d.ts" />
+/// <reference path="./gmodule-2.0.d.ts" />
 /// <reference path="./gdk-3.0.d.ts" />
 /// <reference path="./cairo-1.0.d.ts" />
-/// <reference path="./gobject-2.0.d.ts" />
-/// <reference path="./glib-2.0.d.ts" />
 /// <reference path="./pango-1.0.d.ts" />
 /// <reference path="./harfbuzz-0.0.d.ts" />
 /// <reference path="./freetype2-2.0.d.ts" />
-/// <reference path="./gio-2.0.d.ts" />
-/// <reference path="./gmodule-2.0.d.ts" />
 /// <reference path="./gdkpixbuf-2.0.d.ts" />
 /// <reference path="./gtk-3.0.d.ts" />
 /// <reference path="./xlib-2.0.d.ts" />
@@ -23,15 +24,16 @@
 
 declare module 'gi://Astal?version=3.0' {
     // Module dependencies
+    import type AstalIO from 'gi://AstalIO?version=0.1';
+    import type GLib from 'gi://GLib?version=2.0';
+    import type GObject from 'gi://GObject?version=2.0';
+    import type Gio from 'gi://Gio?version=2.0';
+    import type GModule from 'gi://GModule?version=2.0';
     import type Gdk from 'gi://Gdk?version=3.0';
     import type cairo from 'gi://cairo?version=1.0';
-    import type GObject from 'gi://GObject?version=2.0';
-    import type GLib from 'gi://GLib?version=2.0';
     import type Pango from 'gi://Pango?version=1.0';
     import type HarfBuzz from 'gi://HarfBuzz?version=0.0';
     import type freetype2 from 'gi://freetype2?version=2.0';
-    import type Gio from 'gi://Gio?version=2.0';
-    import type GModule from 'gi://GModule?version=2.0';
     import type GdkPixbuf from 'gi://GdkPixbuf?version=2.0';
     import type Gtk from 'gi://Gtk?version=3.0';
     import type xlib from 'gi://xlib?version=2.0';
@@ -124,7 +126,7 @@ declare module 'gi://Astal?version=3.0' {
             LEFT,
             BOTTOM,
         }
-        module Box {
+        namespace Box {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.Box.ConstructorProps {
@@ -170,7 +172,7 @@ declare module 'gi://Astal?version=3.0' {
             set_child(value: Gtk.Widget): void;
         }
 
-        module Button {
+        namespace Button {
             // Signal callback interfaces
 
             interface Hover {
@@ -235,7 +237,7 @@ declare module 'gi://Astal?version=3.0' {
             emit(signal: 'scroll', event: ScrollEvent): void;
         }
 
-        module CenterBox {
+        namespace CenterBox {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.Box.ConstructorProps {
@@ -296,7 +298,7 @@ declare module 'gi://Astal?version=3.0' {
             set_center_widget(...args: never[]): any;
         }
 
-        module CircularProgress {
+        namespace CircularProgress {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.Bin.ConstructorProps {
@@ -377,7 +379,7 @@ declare module 'gi://Astal?version=3.0' {
             set_rounded(value: boolean): void;
         }
 
-        module EventBox {
+        namespace EventBox {
             // Signal callback interfaces
 
             interface Hover {
@@ -450,7 +452,7 @@ declare module 'gi://Astal?version=3.0' {
             emit(signal: 'motion', event: MotionEvent): void;
         }
 
-        module Icon {
+        namespace Icon {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.Image.ConstructorProps {
@@ -506,7 +508,7 @@ declare module 'gi://Astal?version=3.0' {
             set_icon(value: string): void;
         }
 
-        module Label {
+        namespace Label {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.Label.ConstructorProps {
@@ -553,7 +555,7 @@ declare module 'gi://Astal?version=3.0' {
             set_justify_fill(value: boolean): void;
         }
 
-        module LevelBar {
+        namespace LevelBar {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.LevelBar.ConstructorProps {
@@ -586,7 +588,7 @@ declare module 'gi://Astal?version=3.0' {
             set_vertical(value: boolean): void;
         }
 
-        module Overlay {
+        namespace Overlay {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.Overlay.ConstructorProps {
@@ -642,7 +644,7 @@ declare module 'gi://Astal?version=3.0' {
             set_child(value?: Gtk.Widget | null): void;
         }
 
-        module Scrollable {
+        namespace Scrollable {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.ScrolledWindow.ConstructorProps {
@@ -684,7 +686,7 @@ declare module 'gi://Astal?version=3.0' {
             set_vscroll(value: Gtk.PolicyType | null): void;
         }
 
-        module Slider {
+        namespace Slider {
             // Signal callback interfaces
 
             interface Dragged {
@@ -700,6 +702,7 @@ declare module 'gi://Astal?version=3.0' {
                 min: number;
                 max: number;
                 step: number;
+                page: number;
             }
         }
 
@@ -741,6 +744,11 @@ declare module 'gi://Astal?version=3.0' {
              */
             get step(): number;
             set step(val: number);
+            /**
+             * Size of page increments. Defaults to `0.01`.
+             */
+            get page(): number;
+            set page(val: number);
 
             // Constructors
 
@@ -772,9 +780,11 @@ declare module 'gi://Astal?version=3.0' {
             set_max(value: number): void;
             get_step(): number;
             set_step(value: number): void;
+            get_page(): number;
+            set_page(value: number): void;
         }
 
-        module Stack {
+        namespace Stack {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.Stack.ConstructorProps {
@@ -816,7 +826,7 @@ declare module 'gi://Astal?version=3.0' {
             set_children(value: Gtk.Widget[]): void;
         }
 
-        module Window {
+        namespace Window {
             // Constructor properties interface
 
             interface ConstructorProps extends Gtk.Window.ConstructorProps {
@@ -919,6 +929,10 @@ declare module 'gi://Astal?version=3.0' {
 
             // Methods
 
+            /**
+             * Get the current [class`Gdk`.Monitor] this window resides in.
+             */
+            get_current_monitor(): Gdk.Monitor;
             get_inhibit(): boolean;
             set_inhibit(value: boolean): void;
             get_namespace(): string;
@@ -946,7 +960,7 @@ declare module 'gi://Astal?version=3.0' {
             set_monitor(value: number): void;
         }
 
-        module Application {
+        namespace Application {
             // Signal callback interfaces
 
             interface MonitorAdded {

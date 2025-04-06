@@ -3,14 +3,6 @@
 /// <reference path="./glib-2.0.d.ts" />
 /// <reference path="./gmodule-2.0.d.ts" />
 /// <reference path="./gdkpixbuf-2.0.d.ts" />
-/// <reference path="./gtk-3.0.d.ts" />
-/// <reference path="./xlib-2.0.d.ts" />
-/// <reference path="./gdk-3.0.d.ts" />
-/// <reference path="./cairo-1.0.d.ts" />
-/// <reference path="./pango-1.0.d.ts" />
-/// <reference path="./harfbuzz-0.0.d.ts" />
-/// <reference path="./freetype2-2.0.d.ts" />
-/// <reference path="./atk-1.0.d.ts" />
 
 /**
  * Type Definitions for Gjs (https://gjs.guide/)
@@ -28,14 +20,6 @@ declare module 'gi://AstalTray?version=0.1' {
     import type GLib from 'gi://GLib?version=2.0';
     import type GModule from 'gi://GModule?version=2.0';
     import type GdkPixbuf from 'gi://GdkPixbuf?version=2.0';
-    import type Gtk from 'gi://Gtk?version=3.0';
-    import type xlib from 'gi://xlib?version=2.0';
-    import type Gdk from 'gi://Gdk?version=3.0';
-    import type cairo from 'gi://cairo?version=1.0';
-    import type Pango from 'gi://Pango?version=1.0';
-    import type HarfBuzz from 'gi://HarfBuzz?version=0.0';
-    import type freetype2 from 'gi://freetype2?version=2.0';
-    import type Atk from 'gi://Atk?version=1.0';
 
     export namespace AstalTray {
         /**
@@ -72,7 +56,7 @@ declare module 'gi://AstalTray?version=0.1' {
          * Get the singleton instance of [class`AstalTray`.Tray]
          */
         function get_default(): Tray;
-        module Tray {
+        namespace Tray {
             // Signal callback interfaces
 
             interface ItemAdded {
@@ -137,7 +121,7 @@ declare module 'gi://AstalTray?version=0.1' {
             get_items(): TrayItem[];
         }
 
-        module TrayItem {
+        namespace TrayItem {
             // Signal callback interfaces
 
             interface Changed {
@@ -169,6 +153,10 @@ declare module 'gi://AstalTray?version=0.1' {
                 gicon: Gio.Icon;
                 item_id: string;
                 itemId: string;
+                menu_model: Gio.MenuModel;
+                menuModel: Gio.MenuModel;
+                action_group: Gio.ActionGroup;
+                actionGroup: Gio.ActionGroup;
             }
         }
 
@@ -186,19 +174,19 @@ declare module 'gi://AstalTray?version=0.1' {
              */
             get category(): Category;
             /**
-             * the current status of this item
+             * The current status of this item
              */
             get status(): Status;
             /**
-             * the tooltip of this item
+             * The tooltip of this item
              */
             get tooltip(): Tooltip;
             /**
-             * a markup representation of the tooltip. This is basically equvivalent to `tooltip.title \n tooltip.description`
+             * A markup representation of the tooltip. This is basically equvivalent to `tooltip.title \n tooltip.description`
              */
             get tooltip_markup(): string;
             /**
-             * a markup representation of the tooltip. This is basically equvivalent to `tooltip.title \n tooltip.description`
+             * A markup representation of the tooltip. This is basically equvivalent to `tooltip.title \n tooltip.description`
              */
             get tooltipMarkup(): string;
             /**
@@ -214,54 +202,56 @@ declare module 'gi://AstalTray?version=0.1' {
              */
             get isMenu(): boolean;
             /**
-             * the icon theme path, where to look for the [property`AstalTray`.TrayItem:icon-name].
-             * It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for you.
+             * The icon theme path, where to look for the [property`AstalTray`.TrayItem:icon-name]. It is recommended to use the [property@
+             * AstalTray.TrayItem:gicon] property, which does the icon lookups for you.
              */
             get icon_theme_path(): string;
             /**
-             * the icon theme path, where to look for the [property`AstalTray`.TrayItem:icon-name].
-             * It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for you.
+             * The icon theme path, where to look for the [property`AstalTray`.TrayItem:icon-name]. It is recommended to use the [property@
+             * AstalTray.TrayItem:gicon] property, which does the icon lookups for you.
              */
             get iconThemePath(): string;
             /**
-             * the name of the icon. This should be looked up in the [property`AstalTray`.TrayItem:icon-theme-path] if set or in the currently used icon
-             * theme otherwise.
-             * It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for you.
+             * The name of the icon. This should be looked up in the [property`AstalTray`.TrayItem:icon-theme-path] if set or in the currently used icon
+             * theme otherwise. It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for you.
              */
             get icon_name(): string;
             /**
-             * the name of the icon. This should be looked up in the [property`AstalTray`.TrayItem:icon-theme-path] if set or in the currently used icon
-             * theme otherwise.
-             * It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for you.
+             * The name of the icon. This should be looked up in the [property`AstalTray`.TrayItem:icon-theme-path] if set or in the currently used icon
+             * theme otherwise. It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for you.
              */
             get iconName(): string;
             /**
-             * a pixbuf containing the icon.
-             * It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for you.
+             * A pixbuf containing the icon. It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for
+             * you.
              */
             get icon_pixbuf(): GdkPixbuf.Pixbuf;
             /**
-             * a pixbuf containing the icon.
-             * It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for you.
+             * A pixbuf containing the icon. It is recommended to use the [property`AstalTray`.TrayItem:gicon] property, which does the icon lookups for
+             * you.
              */
             get iconPixbuf(): GdkPixbuf.Pixbuf;
             /**
-             * contains the items icon. This property is intended to be used with the gicon property of the Icon widget and the recommended way to display the
+             * Contains the items icon. This property is intended to be used with the gicon property of the Icon widget and the recommended way to display the
              * icon. This property unifies the [property`AstalTray`.TrayItem:icon-name], [property`AstalTray`.TrayItem:icon-theme-path] and [property
              * `AstalTray`.TrayItem:icon-pixbuf] properties.
              */
             get gicon(): Gio.Icon;
             set gicon(val: Gio.Icon);
             /**
-             * the id of the item used to uniquely identify the TrayItems by this lib.
+             * The id of the item used to uniquely identify the TrayItems by this lib.
              */
             get item_id(): string;
             set item_id(val: string);
             /**
-             * the id of the item used to uniquely identify the TrayItems by this lib.
+             * The id of the item used to uniquely identify the TrayItems by this lib.
              */
             get itemId(): string;
             set itemId(val: string);
+            get menu_model(): Gio.MenuModel;
+            get menuModel(): Gio.MenuModel;
+            get action_group(): Gio.ActionGroup;
+            get actionGroup(): Gio.ActionGroup;
 
             // Constructors
 
@@ -284,27 +274,28 @@ declare module 'gi://AstalTray?version=0.1' {
             // Methods
 
             /**
-             * send an activate request to the tray app.
+             * tells the tray app that its menu is about to be opened, so it can update the menu if needed. You should call this method before openening the
+             * menu.
+             */
+            about_to_show(): void;
+            /**
+             * Send an activate request to the tray app.
              * @param x
              * @param y
              */
             activate(x: number, y: number): void;
             /**
-             * send a secondary activate request to the tray app.
+             * Send a secondary activate request to the tray app.
              * @param x
              * @param y
              */
             secondary_activate(x: number, y: number): void;
             /**
-             * send a scroll request to the tray app. valid values for the orientation are "horizontal" and "vertical".
+             * Send a scroll request to the tray app. valid values for the orientation are "horizontal" and "vertical".
              * @param delta
              * @param orientation
              */
             scroll(delta: number, orientation: string): void;
-            /**
-             * creates a new Gtk Menu for this item.
-             */
-            create_menu(): Gtk.Menu | null;
             to_json_string(): string;
             get_title(): string;
             get_category(): Category;
@@ -318,6 +309,8 @@ declare module 'gi://AstalTray?version=0.1' {
             get_icon_pixbuf(): GdkPixbuf.Pixbuf;
             get_gicon(): Gio.Icon;
             get_item_id(): string;
+            get_menu_model(): Gio.MenuModel | null;
+            get_action_group(): Gio.ActionGroup | null;
         }
 
         type TrayClass = typeof Tray;

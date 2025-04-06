@@ -32,6 +32,17 @@ button {
     color: white;
 }
 
+entry {
+    background-clip: padding-box;
+    min-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    min-height: 20px;
+}
+
 eventbox {
     font-weight: bold;
     background-clip: padding-box;
@@ -43,6 +54,7 @@ eventbox {
     border-bottom: 1px solid transparent;
     color: white;
 }
+
 
 button:active {
     background-color: grey;
@@ -125,9 +137,17 @@ window {
     border-radius: 13px;
 }
 .wifi {
+    background-clip: border-box;
     padding-left: 3px;
     padding-right: 3px;
-    border-radius: 12px;
+    border-radius: 1px;
+}
+
+.calc {
+    background-clip: border-box;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 13px;
 }
 
 .square-button {
@@ -215,10 +235,8 @@ progress {
     color: grey;
 }
 
-.calender {
-    background-color: transparent;
-    border-width: 0px;
-}
+
+
 .highlight {
     background-color: transparent;
     border-width: 0px;
@@ -242,6 +260,11 @@ circular-progress {
 
 calendar {
 	border: none;
+}
+
+:focus {
+  outline: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
 

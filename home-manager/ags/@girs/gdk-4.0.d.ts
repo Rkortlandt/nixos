@@ -4330,7 +4330,7 @@ declare module 'gi://Gdk?version=4.0' {
          * Apple, CapsLock or ShiftLock.
          *
          * Note that GDK may add internal values to events which include values outside
-         * of this enumeration. Your code should preserve and ignore them.  You can use
+         * of this enumeration. Your code should preserve and ignore them. You can use
          * %GDK_MODIFIER_MASK to remove all private values.
          */
 
@@ -4342,7 +4342,7 @@ declare module 'gi://Gdk?version=4.0' {
          * Apple, CapsLock or ShiftLock.
          *
          * Note that GDK may add internal values to events which include values outside
-         * of this enumeration. Your code should preserve and ignore them.  You can use
+         * of this enumeration. Your code should preserve and ignore them. You can use
          * %GDK_MODIFIER_MASK to remove all private values.
          */
         export namespace ModifierType {
@@ -4359,8 +4359,8 @@ declare module 'gi://Gdk?version=4.0' {
              */
             SHIFT_MASK,
             /**
-             * a Lock key (depending on the modifier mapping of the
-             *  X server this may either be CapsLock or ShiftLock).
+             * a Lock key (depending on the Windowing System configuration,
+             *    this may either be <kbd>CapsLock</kbd> or <kbd>ShiftLock</kbd>).
              */
             LOCK_MASK,
             /**
@@ -4368,9 +4368,9 @@ declare module 'gi://Gdk?version=4.0' {
              */
             CONTROL_MASK,
             /**
-             * the fourth modifier key (it depends on the modifier
-             *  mapping of the X server which key is interpreted as this modifier, but
-             *  normally it is the Alt key).
+             * the fourth modifier key (it depends on the Windowing System
+             *    configuration which key is interpreted as this modifier, but normally it
+             *    is the <kbd>Alt</kbd> key).
              */
             ALT_MASK,
             /**
@@ -4573,7 +4573,7 @@ declare module 'gi://Gdk?version=4.0' {
              */
             SUSPENDED,
         }
-        module AppLaunchContext {
+        namespace AppLaunchContext {
             // Constructor properties interface
 
             interface ConstructorProps extends Gio.AppLaunchContext.ConstructorProps {
@@ -4702,7 +4702,7 @@ declare module 'gi://Gdk?version=4.0' {
             get_button(): number;
         }
 
-        module CairoContext {
+        namespace CairoContext {
             // Constructor properties interface
 
             interface ConstructorProps extends DrawContext.ConstructorProps {}
@@ -4741,7 +4741,7 @@ declare module 'gi://Gdk?version=4.0' {
             cairo_create(): cairo.Context | null;
         }
 
-        module CicpParams {
+        namespace CicpParams {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -4931,7 +4931,7 @@ declare module 'gi://Gdk?version=4.0' {
             set_transfer_function(transfer_function: number): void;
         }
 
-        module Clipboard {
+        namespace Clipboard {
             // Signal callback interfaces
 
             interface Changed {
@@ -5331,7 +5331,7 @@ declare module 'gi://Gdk?version=4.0' {
             store_finish(result: Gio.AsyncResult): boolean;
         }
 
-        module ContentDeserializer {
+        namespace ContentDeserializer {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps, Gio.AsyncResult.ConstructorProps {}
@@ -5869,7 +5869,7 @@ declare module 'gi://Gdk?version=4.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module ContentProvider {
+        namespace ContentProvider {
             // Signal callback interfaces
 
             interface ContentChanged {
@@ -6102,7 +6102,7 @@ declare module 'gi://Gdk?version=4.0' {
             write_mime_type_finish(result: Gio.AsyncResult): boolean;
         }
 
-        module ContentSerializer {
+        namespace ContentSerializer {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps, Gio.AsyncResult.ConstructorProps {}
@@ -6670,7 +6670,7 @@ declare module 'gi://Gdk?version=4.0' {
             get_mode(): CrossingMode;
         }
 
-        module Cursor {
+        namespace Cursor {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -6856,7 +6856,7 @@ declare module 'gi://Gdk?version=4.0' {
             _init(...args: any[]): void;
         }
 
-        module Device {
+        namespace Device {
             // Signal callback interfaces
 
             interface Changed {
@@ -7209,7 +7209,7 @@ declare module 'gi://Gdk?version=4.0' {
             get_vendor_id(): string | null;
         }
 
-        module DeviceTool {
+        namespace DeviceTool {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -7298,7 +7298,7 @@ declare module 'gi://Gdk?version=4.0' {
             get_tool_type(): DeviceToolType;
         }
 
-        module Display {
+        namespace Display {
             // Signal callback interfaces
 
             interface Closed {
@@ -7725,7 +7725,7 @@ declare module 'gi://Gdk?version=4.0' {
             ): [boolean, number, number, number, ModifierType | null];
         }
 
-        module DisplayManager {
+        namespace DisplayManager {
             // Signal callback interfaces
 
             interface DisplayOpened {
@@ -7855,7 +7855,7 @@ declare module 'gi://Gdk?version=4.0' {
             set_default_display(display: Display): void;
         }
 
-        module DmabufTexture {
+        namespace DmabufTexture {
             // Constructor properties interface
 
             interface ConstructorProps
@@ -8621,7 +8621,7 @@ declare module 'gi://Gdk?version=4.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module DmabufTextureBuilder {
+        namespace DmabufTextureBuilder {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -8760,12 +8760,12 @@ declare module 'gi://Gdk?version=4.0' {
             get premultiplied(): boolean;
             set premultiplied(val: boolean);
             /**
-             * The update region for [property`Gdk`.GLTextureBuilder:update-texture].
+             * The update region for [property`Gdk`.DmabufTextureBuilder:update-texture].
              */
             get update_region(): cairo.Region;
             set update_region(val: cairo.Region);
             /**
-             * The update region for [property`Gdk`.GLTextureBuilder:update-texture].
+             * The update region for [property`Gdk`.DmabufTextureBuilder:update-texture].
              */
             get updateRegion(): cairo.Region;
             set updateRegion(val: cairo.Region);
@@ -8922,14 +8922,14 @@ declare module 'gi://Gdk?version=4.0' {
              *
              * The format is specified as a fourcc code.
              *
-             * The format must be set before calling [method`Gdk`.GLTextureBuilder.build].
+             * The format must be set before calling [method`Gdk`.DmabufTextureBuilder.build].
              * @param fourcc the texture's format or 0 to unset
              */
             set_fourcc(fourcc: number): void;
             /**
              * Sets the height of the texture.
              *
-             * The height must be set before calling [method`Gdk`.GLTextureBuilder.build].
+             * The height must be set before calling [method`Gdk`.DmabufTextureBuilder.build].
              * @param height the texture's height or 0 to unset
              */
             set_height(height: number): void;
@@ -8960,7 +8960,7 @@ declare module 'gi://Gdk?version=4.0' {
             /**
              * Sets the stride for a plane.
              *
-             * The stride must be set for all planes before calling [method`Gdk`.GLTextureBuilder.build].
+             * The stride must be set for all planes before calling [method`Gdk`.DmabufTextureBuilder.build].
              * @param plane the plane to set the stride for
              * @param stride the stride value
              */
@@ -8988,13 +8988,13 @@ declare module 'gi://Gdk?version=4.0' {
             /**
              * Sets the width of the texture.
              *
-             * The width must be set before calling [method`Gdk`.GLTextureBuilder.build].
+             * The width must be set before calling [method`Gdk`.DmabufTextureBuilder.build].
              * @param width The texture's width or 0 to unset
              */
             set_width(width: number): void;
         }
 
-        module Drag {
+        namespace Drag {
             // Signal callback interfaces
 
             interface Cancel {
@@ -9204,7 +9204,7 @@ declare module 'gi://Gdk?version=4.0' {
             set_hotspot(hot_x: number, hot_y: number): void;
         }
 
-        module DrawContext {
+        namespace DrawContext {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -9318,7 +9318,7 @@ declare module 'gi://Gdk?version=4.0' {
             is_in_frame(): boolean;
         }
 
-        module Drop {
+        namespace Drop {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -9774,7 +9774,7 @@ declare module 'gi://Gdk?version=4.0' {
             get_in(): boolean;
         }
 
-        module FrameClock {
+        namespace FrameClock {
             // Signal callback interfaces
 
             interface AfterPaint {
@@ -9978,7 +9978,7 @@ declare module 'gi://Gdk?version=4.0' {
             request_phase(phase: FrameClockPhase | null): void;
         }
 
-        module GLContext {
+        namespace GLContext {
             // Constructor properties interface
 
             interface ConstructorProps extends DrawContext.ConstructorProps {
@@ -10277,7 +10277,7 @@ declare module 'gi://Gdk?version=4.0' {
             set_use_es(use_es: number): void;
         }
 
-        module GLTexture {
+        namespace GLTexture {
             // Constructor properties interface
 
             interface ConstructorProps
@@ -11051,7 +11051,7 @@ declare module 'gi://Gdk?version=4.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module GLTextureBuilder {
+        namespace GLTextureBuilder {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -11439,7 +11439,7 @@ declare module 'gi://Gdk?version=4.0' {
             matches(keyval: number, modifiers: ModifierType | null): KeyMatch;
         }
 
-        module MemoryTexture {
+        namespace MemoryTexture {
             // Constructor properties interface
 
             interface ConstructorProps
@@ -12208,7 +12208,7 @@ declare module 'gi://Gdk?version=4.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module MemoryTextureBuilder {
+        namespace MemoryTextureBuilder {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -12436,7 +12436,7 @@ declare module 'gi://Gdk?version=4.0' {
             set_width(width: number): void;
         }
 
-        module Monitor {
+        namespace Monitor {
             // Signal callback interfaces
 
             interface Invalidate {
@@ -12780,7 +12780,7 @@ declare module 'gi://Gdk?version=4.0' {
             is_stop(): boolean;
         }
 
-        module Seat {
+        namespace Seat {
             // Signal callback interfaces
 
             interface DeviceAdded {
@@ -12879,7 +12879,7 @@ declare module 'gi://Gdk?version=4.0' {
             get_tools(): DeviceTool[];
         }
 
-        module Snapshot {
+        namespace Snapshot {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -12900,7 +12900,7 @@ declare module 'gi://Gdk?version=4.0' {
             _init(...args: any[]): void;
         }
 
-        module Surface {
+        namespace Surface {
             // Signal callback interfaces
 
             interface EnterMonitor {
@@ -13298,7 +13298,7 @@ declare module 'gi://Gdk?version=4.0' {
             translate_coordinates(to: Surface, x: number, y: number): [boolean, number, number];
         }
 
-        module Texture {
+        namespace Texture {
             // Constructor properties interface
 
             interface ConstructorProps
@@ -14292,7 +14292,7 @@ declare module 'gi://Gdk?version=4.0' {
             get_pinch_scale(): number;
         }
 
-        module VulkanContext {
+        namespace VulkanContext {
             // Signal callback interfaces
 
             interface ImagesUpdated {
@@ -16042,7 +16042,7 @@ declare module 'gi://Gdk?version=4.0' {
             set_size(width: number, height: number): void;
         }
 
-        module DevicePad {
+        namespace DevicePad {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {}
@@ -16091,7 +16091,7 @@ declare module 'gi://Gdk?version=4.0' {
             new (): DevicePad; // This allows `obj instanceof DevicePad`
         };
 
-        module DragSurface {
+        namespace DragSurface {
             // Constructor properties interface
 
             interface ConstructorProps extends Surface.ConstructorProps {}
@@ -16117,7 +16117,7 @@ declare module 'gi://Gdk?version=4.0' {
             new (): DragSurface; // This allows `obj instanceof DragSurface`
         };
 
-        module Paintable {
+        namespace Paintable {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -16353,7 +16353,7 @@ declare module 'gi://Gdk?version=4.0' {
             new (): Paintable; // This allows `obj instanceof Paintable`
         };
 
-        module Popup {
+        namespace Popup {
             // Constructor properties interface
 
             interface ConstructorProps extends Surface.ConstructorProps {
@@ -16444,7 +16444,7 @@ declare module 'gi://Gdk?version=4.0' {
             new (): Popup; // This allows `obj instanceof Popup`
         };
 
-        module Toplevel {
+        namespace Toplevel {
             // Constructor properties interface
 
             interface ConstructorProps extends Surface.ConstructorProps {

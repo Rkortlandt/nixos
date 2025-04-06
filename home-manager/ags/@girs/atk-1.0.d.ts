@@ -1808,7 +1808,7 @@ declare module 'gi://Atk?version=1.0' {
              */
             INLINE,
         }
-        module GObjectAccessible {
+        namespace GObjectAccessible {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {}
@@ -1848,7 +1848,7 @@ declare module 'gi://Atk?version=1.0' {
             get_object<T = GObject.Object>(): T;
         }
 
-        module Hyperlink {
+        namespace Hyperlink {
             // Signal callback interfaces
 
             interface LinkActivated {
@@ -2569,7 +2569,7 @@ declare module 'gi://Atk?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module Misc {
+        namespace Misc {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -2642,7 +2642,7 @@ declare module 'gi://Atk?version=1.0' {
             threads_leave(): void;
         }
 
-        module NoOpObject {
+        namespace NoOpObject {
             // Constructor properties interface
 
             interface ConstructorProps
@@ -5248,7 +5248,7 @@ declare module 'gi://Atk?version=1.0' {
             vfunc_visible_data_changed(): void;
         }
 
-        module NoOpObjectFactory {
+        namespace NoOpObjectFactory {
             // Constructor properties interface
 
             interface ConstructorProps extends ObjectFactory.ConstructorProps {}
@@ -5273,7 +5273,7 @@ declare module 'gi://Atk?version=1.0' {
             static ['new'](): NoOpObjectFactory;
         }
 
-        module Object {
+        namespace Object {
             // Signal callback interfaces
 
             interface ActiveDescendantChanged {
@@ -5840,7 +5840,7 @@ declare module 'gi://Atk?version=1.0' {
             set_role(role: Role | null): void;
         }
 
-        module ObjectFactory {
+        namespace ObjectFactory {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5900,7 +5900,7 @@ declare module 'gi://Atk?version=1.0' {
             invalidate(): void;
         }
 
-        module Plug {
+        namespace Plug {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps, Component.ConstructorProps {}
@@ -6591,7 +6591,7 @@ declare module 'gi://Atk?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module Registry {
+        namespace Registry {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -6645,7 +6645,7 @@ declare module 'gi://Atk?version=1.0' {
             set_factory_type(type: GObject.GType, factory_type: GObject.GType): void;
         }
 
-        module Relation {
+        namespace Relation {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -6714,7 +6714,7 @@ declare module 'gi://Atk?version=1.0' {
             remove_target(target: Object): boolean;
         }
 
-        module RelationSet {
+        namespace RelationSet {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -6810,7 +6810,7 @@ declare module 'gi://Atk?version=1.0' {
             remove(relation: Relation): void;
         }
 
-        module Socket {
+        namespace Socket {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps, Component.ConstructorProps {}
@@ -7531,7 +7531,7 @@ declare module 'gi://Atk?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module StateSet {
+        namespace StateSet {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -7635,7 +7635,7 @@ declare module 'gi://Atk?version=1.0' {
             xor_sets(compare_set: StateSet): StateSet;
         }
 
-        module Util {
+        namespace Util {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -7957,7 +7957,7 @@ declare module 'gi://Atk?version=1.0' {
         type UtilClass = typeof Util;
         type ValueIface = typeof Value;
         type WindowIface = typeof Window;
-        module Action {
+        namespace Action {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -8128,7 +8128,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): Action; // This allows `obj instanceof Action`
         };
 
-        module Component {
+        namespace Component {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -8384,7 +8384,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): Component; // This allows `obj instanceof Component`
         };
 
-        module Document {
+        namespace Document {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -8526,7 +8526,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): Document; // This allows `obj instanceof Document`
         };
 
-        module EditableText {
+        namespace EditableText {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -8643,7 +8643,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): EditableText; // This allows `obj instanceof EditableText`
         };
 
-        module HyperlinkImpl {
+        namespace HyperlinkImpl {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -8674,7 +8674,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): HyperlinkImpl; // This allows `obj instanceof HyperlinkImpl`
         };
 
-        module Hypertext {
+        namespace Hypertext {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -8732,7 +8732,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): Hypertext; // This allows `obj instanceof Hypertext`
         };
 
-        module Image {
+        namespace Image {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -8819,7 +8819,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): Image; // This allows `obj instanceof Image`
         };
 
-        module ImplementorIface {
+        namespace ImplementorIface {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -8835,7 +8835,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): ImplementorIface; // This allows `obj instanceof ImplementorIface`
         };
 
-        module Selection {
+        namespace Selection {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -8961,7 +8961,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): Selection; // This allows `obj instanceof Selection`
         };
 
-        module StreamableContent {
+        namespace StreamableContent {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -9041,7 +9041,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): StreamableContent; // This allows `obj instanceof StreamableContent`
         };
 
-        module Table {
+        namespace Table {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -9411,7 +9411,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): Table; // This allows `obj instanceof Table`
         };
 
-        module TableCell {
+        namespace TableCell {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {}
@@ -9504,7 +9504,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): TableCell; // This allows `obj instanceof TableCell`
         };
 
-        module Text {
+        namespace Text {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -10017,7 +10017,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): Text; // This allows `obj instanceof Text`
         };
 
-        module Value {
+        namespace Value {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -10169,7 +10169,7 @@ declare module 'gi://Atk?version=1.0' {
             new (): Value; // This allows `obj instanceof Value`
         };
 
-        module Window {
+        namespace Window {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {}

@@ -993,7 +993,7 @@ declare module 'gi://Gsk?version=4.0' {
             get_widths(): number[];
         }
 
-        module BroadwayRenderer {
+        namespace BroadwayRenderer {
             // Constructor properties interface
 
             interface ConstructorProps extends Renderer.ConstructorProps {}
@@ -1046,7 +1046,7 @@ declare module 'gi://Gsk?version=4.0' {
             get_surface(): cairo.Surface;
         }
 
-        module CairoRenderer {
+        namespace CairoRenderer {
             // Constructor properties interface
 
             interface ConstructorProps extends Renderer.ConstructorProps {}
@@ -1324,7 +1324,7 @@ declare module 'gi://Gsk?version=4.0' {
             get_path(): Path;
         }
 
-        module GLRenderer {
+        namespace GLRenderer {
             // Constructor properties interface
 
             interface ConstructorProps extends Renderer.ConstructorProps {}
@@ -1347,7 +1347,7 @@ declare module 'gi://Gsk?version=4.0' {
             static ['new'](): GLRenderer;
         }
 
-        module GLShader {
+        namespace GLShader {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -1816,7 +1816,7 @@ declare module 'gi://Gsk?version=4.0' {
             get_source(): RenderNode;
         }
 
-        module NglRenderer {
+        namespace NglRenderer {
             // Constructor properties interface
 
             interface ConstructorProps extends Renderer.ConstructorProps {}
@@ -2089,7 +2089,7 @@ declare module 'gi://Gsk?version=4.0' {
             write_to_file(filename: string): boolean;
         }
 
-        module Renderer {
+        namespace Renderer {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -2511,7 +2511,7 @@ declare module 'gi://Gsk?version=4.0' {
             get_transform(): Transform;
         }
 
-        module VulkanRenderer {
+        namespace VulkanRenderer {
             // Constructor properties interface
 
             interface ConstructorProps extends Renderer.ConstructorProps {}

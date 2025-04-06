@@ -114,7 +114,7 @@ declare module 'gi://GdkX11?version=4.0' {
          * @param sm_client_id the client id assigned by the session manager    when the connection was opened, or %NULL to remove the property.
          */
         function x11_set_sm_client_id(sm_client_id?: string | null): void;
-        module X11AppLaunchContext {
+        namespace X11AppLaunchContext {
             // Constructor properties interface
 
             interface ConstructorProps extends Gdk.AppLaunchContext.ConstructorProps {}
@@ -130,7 +130,7 @@ declare module 'gi://GdkX11?version=4.0' {
             _init(...args: any[]): void;
         }
 
-        module X11DeviceManagerXI2 {
+        namespace X11DeviceManagerXI2 {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -158,7 +158,7 @@ declare module 'gi://GdkX11?version=4.0' {
             _init(...args: any[]): void;
         }
 
-        module X11DeviceXI2 {
+        namespace X11DeviceXI2 {
             // Constructor properties interface
 
             interface ConstructorProps extends Gdk.Device.ConstructorProps {
@@ -182,7 +182,7 @@ declare module 'gi://GdkX11?version=4.0' {
             _init(...args: any[]): void;
         }
 
-        module X11Display {
+        namespace X11Display {
             // Signal callback interfaces
 
             interface Xevent {
@@ -432,7 +432,7 @@ declare module 'gi://GdkX11?version=4.0' {
             utf8_to_compound_text(str: string): [boolean, string, number, Uint8Array];
         }
 
-        module X11Drag {
+        namespace X11Drag {
             // Constructor properties interface
 
             interface ConstructorProps extends Gdk.Drag.ConstructorProps {}
@@ -448,7 +448,7 @@ declare module 'gi://GdkX11?version=4.0' {
             _init(...args: any[]): void;
         }
 
-        module X11GLContext {
+        namespace X11GLContext {
             // Constructor properties interface
 
             interface ConstructorProps extends Gdk.GLContext.ConstructorProps {}
@@ -464,7 +464,7 @@ declare module 'gi://GdkX11?version=4.0' {
             _init(...args: any[]): void;
         }
 
-        module X11Monitor {
+        namespace X11Monitor {
             // Constructor properties interface
 
             interface ConstructorProps extends Gdk.Monitor.ConstructorProps {}
@@ -496,7 +496,7 @@ declare module 'gi://GdkX11?version=4.0' {
             get_workarea(): Gdk.Rectangle;
         }
 
-        module X11Screen {
+        namespace X11Screen {
             // Signal callback interfaces
 
             interface WindowManagerChanged {
@@ -586,7 +586,7 @@ declare module 'gi://GdkX11?version=4.0' {
             supports_net_wm_hint(property_name: string): boolean;
         }
 
-        module X11Surface {
+        namespace X11Surface {
             // Constructor properties interface
 
             interface ConstructorProps extends Gdk.Surface.ConstructorProps {}

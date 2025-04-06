@@ -171,7 +171,7 @@ declare module 'gi://PangoXft?version=1.0' {
         interface SubstituteFunc {
             (pattern: fontconfig.Pattern, data?: any | null): void;
         }
-        module Font {
+        namespace Font {
             // Constructor properties interface
 
             interface ConstructorProps extends PangoFc.Font.ConstructorProps {}
@@ -223,7 +223,7 @@ declare module 'gi://PangoXft?version=1.0' {
             has_char(wc: number): boolean;
         }
 
-        module FontMap {
+        namespace FontMap {
             // Constructor properties interface
 
             interface ConstructorProps<A extends GObject.Object = GObject.Object>
@@ -742,7 +742,7 @@ declare module 'gi://PangoXft?version=1.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module Renderer {
+        namespace Renderer {
             // Constructor properties interface
 
             interface ConstructorProps extends Pango.Renderer.ConstructorProps {

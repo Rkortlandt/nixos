@@ -32,7 +32,7 @@ declare module 'gi://AstalBluetooth?version=0.1' {
          * Gets the default singleton Bluetooth object.
          */
         function get_default(): Bluetooth;
-        module Adapter {
+        namespace Adapter {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -177,7 +177,7 @@ declare module 'gi://AstalBluetooth?version=0.1' {
             set_pairable_timeout(value: number): void;
         }
 
-        module Bluetooth {
+        namespace Bluetooth {
             // Signal callback interfaces
 
             interface DeviceAdded {
@@ -296,7 +296,7 @@ declare module 'gi://AstalBluetooth?version=0.1' {
             get_devices(): Device[];
         }
 
-        module Device {
+        namespace Device {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {

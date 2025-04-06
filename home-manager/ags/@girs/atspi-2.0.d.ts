@@ -2348,7 +2348,7 @@ declare module 'gi://Atspi?version=2.0' {
              */
             ALL_WINDOWS,
         }
-        module Accessible {
+        namespace Accessible {
             // Signal callback interfaces
 
             interface ModeChanged {
@@ -4143,7 +4143,7 @@ declare module 'gi://Atspi?version=2.0' {
             stop_emission_by_name(detailedName: string): any;
         }
 
-        module Application {
+        namespace Application {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -4176,7 +4176,7 @@ declare module 'gi://Atspi?version=2.0' {
             _init(...args: any[]): void;
         }
 
-        module Device {
+        namespace Device {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -4330,7 +4330,7 @@ declare module 'gi://Atspi?version=2.0' {
             unmap_modifier(keycode: number): void;
         }
 
-        module DeviceLegacy {
+        namespace DeviceLegacy {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {}
@@ -4348,7 +4348,7 @@ declare module 'gi://Atspi?version=2.0' {
             static ['new'](): DeviceLegacy;
         }
 
-        module DeviceListener {
+        namespace DeviceListener {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -4389,7 +4389,7 @@ declare module 'gi://Atspi?version=2.0' {
             remove_callback(callback: DeviceListenerCB): void;
         }
 
-        module DeviceX11 {
+        namespace DeviceX11 {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {}
@@ -4407,7 +4407,7 @@ declare module 'gi://Atspi?version=2.0' {
             static ['new'](): DeviceX11;
         }
 
-        module EventListener {
+        namespace EventListener {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -4581,7 +4581,7 @@ declare module 'gi://Atspi?version=2.0' {
             register_with_app(event_type: string, properties?: string[] | null, app?: Accessible | null): boolean;
         }
 
-        module Hyperlink {
+        namespace Hyperlink {
             // Constructor properties interface
 
             interface ConstructorProps extends Object.ConstructorProps {}
@@ -4656,7 +4656,7 @@ declare module 'gi://Atspi?version=2.0' {
             is_valid(): boolean;
         }
 
-        module MatchRule {
+        namespace MatchRule {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -4699,7 +4699,7 @@ declare module 'gi://Atspi?version=2.0' {
             ): MatchRule;
         }
 
-        module Object {
+        namespace Object {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -4720,7 +4720,7 @@ declare module 'gi://Atspi?version=2.0' {
             _init(...args: any[]): void;
         }
 
-        module Relation {
+        namespace Relation {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -4770,7 +4770,7 @@ declare module 'gi://Atspi?version=2.0' {
             get_target(i: number): Accessible;
         }
 
-        module StateSet {
+        namespace StateSet {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5124,7 +5124,7 @@ declare module 'gi://Atspi?version=2.0' {
             _init(...args: any[]): void;
         }
 
-        module Action {
+        namespace Action {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5215,7 +5215,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): Action; // This allows `obj instanceof Action`
         };
 
-        module Collection {
+        namespace Collection {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5295,7 +5295,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): Collection; // This allows `obj instanceof Collection`
         };
 
-        module Component {
+        namespace Component {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5417,7 +5417,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): Component; // This allows `obj instanceof Component`
         };
 
-        module Document {
+        namespace Document {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5491,7 +5491,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): Document; // This allows `obj instanceof Document`
         };
 
-        module EditableText {
+        namespace EditableText {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5565,7 +5565,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): EditableText; // This allows `obj instanceof EditableText`
         };
 
-        module Hypertext {
+        namespace Hypertext {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5603,7 +5603,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): Hypertext; // This allows `obj instanceof Hypertext`
         };
 
-        module Image {
+        namespace Image {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5657,7 +5657,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): Image; // This allows `obj instanceof Image`
         };
 
-        module Selection {
+        namespace Selection {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5744,7 +5744,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): Selection; // This allows `obj instanceof Selection`
         };
 
-        module Table {
+        namespace Table {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -5975,7 +5975,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): Table; // This allows `obj instanceof Table`
         };
 
-        module TableCell {
+        namespace TableCell {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -6035,7 +6035,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): TableCell; // This allows `obj instanceof TableCell`
         };
 
-        module Text {
+        namespace Text {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -6303,7 +6303,7 @@ declare module 'gi://Atspi?version=2.0' {
             new (): Text; // This allows `obj instanceof Text`
         };
 
-        module Value {
+        namespace Value {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}

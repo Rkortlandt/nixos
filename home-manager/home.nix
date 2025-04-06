@@ -206,6 +206,9 @@ home.packages = with pkgs; [
   vivaldi
   spotify
   jetbrains.idea-ultimate
+  qalculate-gtk
+  libqalculate
+  slack
 ] ++ (with pkgs.unstable; [
   #Unstable
   chromium

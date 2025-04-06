@@ -54,7 +54,7 @@ declare module 'gi://AstalHyprland?version=0.1' {
             MAXIMIZED,
             FULLSCREEN,
         }
-        module Client {
+        namespace Client {
             // Signal callback interfaces
 
             interface Removed {
@@ -201,7 +201,7 @@ declare module 'gi://AstalHyprland?version=0.1' {
             get_focus_history_id(): number;
         }
 
-        module Hyprland {
+        namespace Hyprland {
             // Signal callback interfaces
 
             interface Event {
@@ -413,7 +413,7 @@ declare module 'gi://AstalHyprland?version=0.1' {
             get_cursor_position(): Position;
         }
 
-        module Monitor {
+        namespace Monitor {
             // Signal callback interfaces
 
             interface Removed {
@@ -591,7 +591,7 @@ declare module 'gi://AstalHyprland?version=0.1' {
             get_available_modes(): string[];
         }
 
-        module Bind {
+        namespace Bind {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -599,14 +599,19 @@ declare module 'gi://AstalHyprland?version=0.1' {
                 mouse: boolean;
                 release: boolean;
                 repeat: boolean;
+                long_press: boolean;
+                longPress: boolean;
                 non_consuming: boolean;
                 nonConsuming: boolean;
+                has_description: boolean;
+                hasDescription: boolean;
                 modmask: number;
                 submap: string;
                 key: string;
                 keycode: number;
                 catch_all: boolean;
                 catchAll: boolean;
+                description: string;
                 dispatcher: string;
                 arg: string;
             }
@@ -625,10 +630,18 @@ declare module 'gi://AstalHyprland?version=0.1' {
             set release(val: boolean);
             get repeat(): boolean;
             set repeat(val: boolean);
+            get long_press(): boolean;
+            set long_press(val: boolean);
+            get longPress(): boolean;
+            set longPress(val: boolean);
             get non_consuming(): boolean;
             set non_consuming(val: boolean);
             get nonConsuming(): boolean;
             set nonConsuming(val: boolean);
+            get has_description(): boolean;
+            set has_description(val: boolean);
+            get hasDescription(): boolean;
+            set hasDescription(val: boolean);
             get modmask(): number;
             set modmask(val: number);
             get submap(): string;
@@ -641,6 +654,8 @@ declare module 'gi://AstalHyprland?version=0.1' {
             set catch_all(val: boolean);
             get catchAll(): boolean;
             set catchAll(val: boolean);
+            get description(): string;
+            set description(val: string);
             get dispatcher(): string;
             set dispatcher(val: string);
             get arg(): string;
@@ -664,8 +679,12 @@ declare module 'gi://AstalHyprland?version=0.1' {
             set_release(value: boolean): void;
             get_repeat(): boolean;
             set_repeat(value: boolean): void;
+            get_long_press(): boolean;
+            set_long_press(value: boolean): void;
             get_non_consuming(): boolean;
             set_non_consuming(value: boolean): void;
+            get_has_description(): boolean;
+            set_has_description(value: boolean): void;
             get_modmask(): number;
             set_modmask(value: number): void;
             get_submap(): string;
@@ -676,13 +695,15 @@ declare module 'gi://AstalHyprland?version=0.1' {
             set_keycode(value: number): void;
             get_catch_all(): boolean;
             set_catch_all(value: boolean): void;
+            get_description(): string;
+            set_description(value: string): void;
             get_dispatcher(): string;
             set_dispatcher(value: string): void;
             get_arg(): string;
             set_arg(value: string): void;
         }
 
-        module Position {
+        namespace Position {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -717,7 +738,7 @@ declare module 'gi://AstalHyprland?version=0.1' {
             set_y(value: number): void;
         }
 
-        module Workspace {
+        namespace Workspace {
             // Signal callback interfaces
 
             interface Removed {

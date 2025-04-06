@@ -3,6 +3,7 @@ import Bar from "./widget/Bar"
 import { Gdk, Gtk, App } from "astal/gtk3"
 import QuickSettings from "./widget/QuickSettings"
 import { Variable, bind } from "astal"
+import { calculate } from "./calculator/qalculate" 
 
 App.start({
     icons: `${SRC}/assets`,
@@ -11,6 +12,7 @@ App.start({
         const bars = new Map<Gdk.Monitor, Gtk.Widget>()
         const quickSettings = new Map<Gdk.Monitor, Gtk.Widget>()
 
+        console.log(calculate("2 + 2"))
         // initialize
         for (const gdkmonitor of App.get_monitors()) {
             bars.set(gdkmonitor, Bar(gdkmonitor))

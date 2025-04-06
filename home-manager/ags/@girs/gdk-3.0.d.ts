@@ -6497,7 +6497,7 @@ declare module 'gi://Gdk?version=3.0' {
              */
             LEFT_RESIZABLE,
         }
-        module AppLaunchContext {
+        namespace AppLaunchContext {
             // Constructor properties interface
 
             interface ConstructorProps extends Gio.AppLaunchContext.ConstructorProps {
@@ -6613,7 +6613,7 @@ declare module 'gi://Gdk?version=3.0' {
             set_timestamp(timestamp: number): void;
         }
 
-        module Cursor {
+        namespace Cursor {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -6693,7 +6693,7 @@ declare module 'gi://Gdk?version=3.0' {
             unref(): void;
         }
 
-        module Device {
+        namespace Device {
             // Signal callback interfaces
 
             interface Changed {
@@ -7136,7 +7136,7 @@ declare module 'gi://Gdk?version=3.0' {
             warp(screen: Screen, x: number, y: number): void;
         }
 
-        module DeviceManager {
+        namespace DeviceManager {
             // Signal callback interfaces
 
             interface DeviceAdded {
@@ -7330,7 +7330,7 @@ declare module 'gi://Gdk?version=3.0' {
             list_devices(type: DeviceType | null): Device[];
         }
 
-        module DeviceTool {
+        namespace DeviceTool {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -7389,7 +7389,7 @@ declare module 'gi://Gdk?version=3.0' {
             get_tool_type(): DeviceToolType;
         }
 
-        module Display {
+        namespace Display {
             // Signal callback interfaces
 
             interface Closed {
@@ -7813,7 +7813,7 @@ declare module 'gi://Gdk?version=3.0' {
             warp_pointer(screen: Screen, x: number, y: number): void;
         }
 
-        module DisplayManager {
+        namespace DisplayManager {
             // Signal callback interfaces
 
             interface DisplayOpened {
@@ -7934,7 +7934,7 @@ declare module 'gi://Gdk?version=3.0' {
             set_default_display(display: Display): void;
         }
 
-        module DragContext {
+        namespace DragContext {
             // Signal callback interfaces
 
             interface ActionChanged {
@@ -8076,7 +8076,7 @@ declare module 'gi://Gdk?version=3.0' {
             set_hotspot(hot_x: number, hot_y: number): void;
         }
 
-        module DrawingContext {
+        namespace DrawingContext {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -8146,7 +8146,7 @@ declare module 'gi://Gdk?version=3.0' {
             is_valid(): boolean;
         }
 
-        module FrameClock {
+        namespace FrameClock {
             // Signal callback interfaces
 
             interface AfterPaint {
@@ -8333,7 +8333,7 @@ declare module 'gi://Gdk?version=3.0' {
             request_phase(phase: FrameClockPhase | null): void;
         }
 
-        module GLContext {
+        namespace GLContext {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -8567,7 +8567,7 @@ declare module 'gi://Gdk?version=3.0' {
             set_use_es(use_es: number): void;
         }
 
-        module Keymap {
+        namespace Keymap {
             // Signal callback interfaces
 
             interface DirectionChanged {
@@ -8804,7 +8804,7 @@ declare module 'gi://Gdk?version=3.0' {
             ): [boolean, number, number, number, ModifierType | null];
         }
 
-        module Monitor {
+        namespace Monitor {
             // Signal callback interfaces
 
             interface Invalidate {
@@ -8964,7 +8964,7 @@ declare module 'gi://Gdk?version=3.0' {
             is_primary(): boolean;
         }
 
-        module Screen {
+        namespace Screen {
             // Signal callback interfaces
 
             interface CompositedChanged {
@@ -9348,7 +9348,7 @@ declare module 'gi://Gdk?version=3.0' {
             set_resolution(dpi: number): void;
         }
 
-        module Seat {
+        namespace Seat {
             // Signal callback interfaces
 
             interface DeviceAdded {
@@ -9487,7 +9487,7 @@ declare module 'gi://Gdk?version=3.0' {
             ungrab(): void;
         }
 
-        module Visual {
+        namespace Visual {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
@@ -9619,7 +9619,7 @@ declare module 'gi://Gdk?version=3.0' {
             get_visual_type(): VisualType;
         }
 
-        module Window {
+        namespace Window {
             // Signal callback interfaces
 
             interface CreateSurface {
@@ -13101,7 +13101,7 @@ declare module 'gi://Gdk?version=3.0' {
             triggers_context_menu(): boolean;
         }
 
-        module DevicePad {
+        namespace DevicePad {
             // Constructor properties interface
 
             interface ConstructorProps extends Device.ConstructorProps {}

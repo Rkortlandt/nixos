@@ -65,7 +65,7 @@ declare module 'gi://AstalWp?version=0.1' {
          * @returns gets the default wireplumber object.
          */
         function get_default(): Wp | null;
-        module Audio {
+        namespace Audio {
             // Signal callback interfaces
 
             interface DeviceAdded {
@@ -277,7 +277,7 @@ declare module 'gi://AstalWp?version=0.1' {
             get_streams(): Endpoint[] | null;
         }
 
-        module Device {
+        namespace Device {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -376,7 +376,7 @@ declare module 'gi://AstalWp?version=0.1' {
             set_active_profile(profile_id: number): void;
         }
 
-        module Endpoint {
+        namespace Endpoint {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -522,7 +522,7 @@ declare module 'gi://AstalWp?version=0.1' {
             set_volume(volume: number): void;
         }
 
-        module Profile {
+        namespace Profile {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -551,7 +551,7 @@ declare module 'gi://AstalWp?version=0.1' {
             get_index(): number;
         }
 
-        module Video {
+        namespace Video {
             // Signal callback interfaces
 
             interface DeviceAdded {
@@ -737,7 +737,7 @@ declare module 'gi://AstalWp?version=0.1' {
             get_streams(): Endpoint[] | null;
         }
 
-        module Wp {
+        namespace Wp {
             // Signal callback interfaces
 
             interface DeviceAdded {

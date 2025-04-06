@@ -20,7 +20,7 @@ declare module 'gi://DBusGLib?version=1.0' {
          * DBusGLib-1.0
          */
 
-        module Proxy {
+        namespace Proxy {
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {}
