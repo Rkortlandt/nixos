@@ -24,13 +24,14 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
             <Workspaces />
             <Speaker />
             <Mic />
-            <Calculator/>
+            <Calculator />
             <BarBattery />
-            <box expand={true}/>
-            <BarMprisPlayer/>
+            <box expand={true} />
+            <box expand={true} />
+            <BarMprisPlayer />
             <NetworkIndicator />
             <Brightness />
-            <Clock monitor={gdkmonitor.get_model()}/>
+            <Clock monitor={gdkmonitor.get_model()} />
         </box>
     </window>
 }
