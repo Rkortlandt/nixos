@@ -1,4 +1,5 @@
 #this is your home-manager configuration file
+
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   inputs,
@@ -82,6 +83,7 @@
 
   qt = {
     enable = true;
+
     style.name = "adwaita-dark";
     style.package = pkgs.adwaita-qt6;
   };
@@ -101,7 +103,7 @@
         "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
-        "QT_SCALE_FACTOR,1.5"
+        "QT_SCALE_FACTOR,1"
         # misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
@@ -209,6 +211,8 @@ home.packages = with pkgs; [
   qalculate-gtk
   libqalculate
   slack
+  lua-language-server
+  hyprpicker
 ] ++ (with pkgs.unstable; [
   #Unstable
   chromium
@@ -217,6 +221,8 @@ home.packages = with pkgs; [
   zig
   android-studio
   zed-editor
+  godot_4
+  bluetui
 ]) ++ (with inputs; [
   #zen-browser.packages."${system}".beta
 ]);
