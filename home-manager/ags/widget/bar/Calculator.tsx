@@ -15,6 +15,7 @@ export function Calculator() {
 
     var calculateShown = Variable(CalculatorState.None);
     var recentCalculation = Variable("");
+    var lastCalculation = Variable("1");
 
     calculateShown.subscribe((value) => {
         if (value == CalculatorState.ShowAnswer) {
@@ -52,8 +53,11 @@ export function Calculator() {
                     placeholderText="Enter Text"
                     onKeyPressEvent={(self, event) => {
                         if (event.get_keyval()[1] === 65293) {
-                            let calculated = calculate(self.get_buffer().text).result
-                            recentCalculation.set(calculated);
+                            let text = self.get_buffer().text.replace("ans", lastCalculation.get());
+                            console.log(text);
+                            let calculated = calculate(text)
+                            recentCalculation.set(calculated.result);
+                            lastCalculation.set(calculated.terse);
                             self.get_buffer().set_text("", 0)
                             calculateShown.set(CalculatorState.ShowAnswer)
                         }

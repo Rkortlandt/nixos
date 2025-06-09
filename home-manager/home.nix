@@ -77,7 +77,7 @@
     theme.package = pkgs.adw-gtk3;
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Classic";
-    iconTheme.package = pkgs.gnome.adwaita-icon-theme;
+    iconTheme.package = pkgs.adwaita-icon-theme;
     iconTheme.name = "Adwaita";
   };
 
@@ -95,6 +95,8 @@
   services = {
     dunst.enable = true;
   };  
+
+
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -153,11 +155,11 @@
         editor = "nvim";
       };
     };
-
+ 
     firefox.enable = true;
     firefox.profiles.rowan = {
       search = {
-        default = "Bing";
+        default = "google";
         force = true;
        engines."Nix-Packages" = {
           urls = [{
@@ -172,17 +174,16 @@
         };
       };
 
-      extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
+      extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
         bitwarden
         ublock-origin
         sponsorblock
       ];
-    }; 
+     }; 
   };
 
 home.packages = with pkgs; [
-  #Stable 
-  tofi 
+  #Stable
   swaybg
   obsidian
   grim
@@ -194,7 +195,7 @@ home.packages = with pkgs; [
   jdk21
   gcc
   gradle
-  python39
+  python3
   go
   nodejs
   air
@@ -213,6 +214,9 @@ home.packages = with pkgs; [
   slack
   lua-language-server
   hyprpicker
+  tofi
+  inkscape
+  dolphin-emu
 ] ++ (with pkgs.unstable; [
   #Unstable
   chromium
@@ -223,6 +227,8 @@ home.packages = with pkgs; [
   zed-editor
   godot_4
   bluetui
+  freecad
+  orca-slicer
 ]) ++ (with inputs; [
   #zen-browser.packages."${system}".beta
 ]);

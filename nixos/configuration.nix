@@ -66,7 +66,7 @@
     tctiEnvironment.enable = true;
   };
 #Audio
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -108,10 +108,41 @@
     powerKeyLongPress = "poweroff";
   };
 
-  services.avahi = {
+ /*  services.avahi = {
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
+  }; */
+
+   # 1. Enable Avahi and NSS mDNS support
+  services.avahi = {
+    enable = true;
+    nssmdns = true; # Enable Name Service Switch (NSS) support for mDNS
+    openFirewall = true; # Open firewall for Avahi mDNS traffic (port 5353)
+
+    # Publish services
+    publish = {
+      enable = true;
+      addresses = true; # Publish your computer's IP addresses
+      workstation = true; # Publish your workstation details
+      userServices = true; # Allow publishing user-defined services
+    };
+
+    # Define your custom service
+    extraServiceFiles = {
+      "my-local-service.service" = ''
+        <?xml version="1.0" standalone='no'?>
+        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+        <service-group>
+          <name replace-wildcards="yes">%h My Local Service</name>
+          <service>
+            <type>_http._tcp</type> <port>9002</port>
+            <txt-record>path=/</txt-record>
+            <txt-record>description=My application on port 9002</txt-record>
+          </service>
+        </service-group>
+      '';
+    };
   };
 
   xdg.portal = {
@@ -135,11 +166,12 @@
   fonts.packages = with pkgs; [
     font-awesome
     helvetica-neue-lt-std
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    nerd-fonts._0xproto
+    nerd-fonts.droid-sans-mono
   ];
 
   environment.systemPackages = with pkgs; [
-    gnome.gnome-bluetooth_1_0
+    gnome-bluetooth_1_0
     gh
     kicad-small
     git
@@ -151,7 +183,7 @@
     ripgrep
     udiskie
     efibootmgr
-    templ
+    # templ
     inkscape
     lm_sensors
     wl-clipboard
