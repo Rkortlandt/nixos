@@ -6,29 +6,30 @@ import { Variable } from "../../../../.local/share/ags";
 
 export default function QuickSettings(gdkmonitor: Gdk.Monitor) {
     function toggleSettings() {
-        App.toggle_window(`quicksettings-${gdkmonitor.get_model()}`); 
+        App.toggle_window(`quicksettings-${gdkmonitor.get_model()}`);
     }
 
     return <window
         name={`quicksettings-${gdkmonitor.get_model()}`}
         gdkmonitor={gdkmonitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
+        keymode={Astal.Keymode.ON_DEMAND}
         anchor={Astal.WindowAnchor.TOP
             | Astal.WindowAnchor.LEFT
             | Astal.WindowAnchor.RIGHT
-            | Astal.WindowAnchor.BOTTOM }
+            | Astal.WindowAnchor.BOTTOM}
         application={App}>
         <box className="bg-light">
             <box vertical={true} hexpand={false}>
-                <TopLeft/>
-                <button className="invis-btn" vexpand={true} hexpand={true} onClick={() => toggleSettings()}/>
-                <BottomLeft/>
+                <TopLeft />
+                <button className="invis-btn" vexpand={true} hexpand={true} onClick={() => toggleSettings()} />
+                <BottomLeft />
             </box>
-            <button className="invis-btn" vexpand={true} hexpand={true} onClick={() => toggleSettings()}/>
+            <button className="invis-btn" vexpand={true} hexpand={true} onClick={() => toggleSettings()} />
             <box vertical={true} hexpand={false}>
-                <TopRight/>
-                <button className="invis-btn" vexpand={true} hexpand={true} onClick={() => toggleSettings()}/>
-                <BottomRight/>
+                <TopRight />
+                <button className="invis-btn" vexpand={true} hexpand={true} onClick={() => toggleSettings()} />
+                <BottomRight />
             </box>
         </box>
     </window>

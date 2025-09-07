@@ -1,7 +1,6 @@
 import AstalBattery from "gi://AstalBattery?version=0.1"
 import { Gdk, Gtk } from "astal/gtk3"
 import { Variable, bind } from "astal"
-import { calculate } from "../../calculator/qalculate";
 
 var battery = AstalBattery.get_default();
 var upower = new AstalBattery.UPower;
@@ -11,31 +10,21 @@ function getBatteryIcon(percent: number): string {
         return 'Battery-Charging';
     } else if (percent >= .70) {
         return 'Battery-Full';
-    } else if (percent >= .10) {
+    } else if (percent >= .20) {
         return 'Battery-Mid';
+    } else if (percent >= .10) {
+        return 'Battery-Low'
     } else {
         return 'Battery-Critical';
     }
 }
 
-function getColorState(percent: number): string {
-    if (battery.charging) {
-        return '#127CF0';
-    } else if (percent >= .70) {
-        return '#239A20';
-    } else if (percent >= .10) {
-        return '#6FAB40';
-    } else {
-        return '#BD3030';
-    }
-}
-
 export function BarBattery() {
-    return <button css={bind(battery, "percentage").as((p) => `background-color:${getColorState(p)};`)}>
+    return <button>
         <box>
             <label label={bind(battery, "percentage").as((p) => `${Math.floor(p * 100)}%`)} />
             <icon
-                icon={bind(battery, "percentage").as((p) => getBatteryIcon(p))}
+                icon={bind(battery, "batteryIconName").as(() => getBatteryIcon(battery.percentage))}
                 css="font-size: 25px; padding-left: 3px;" />
         </box>
     </button>
@@ -70,7 +59,7 @@ export function Battery() {
         </box>
         <box css="padding-left: 8px;">
             <label label={bind(device, "capacity").as((rate) => `Health ${(rate * 100).toFixed(2).toString()}% ⋅ `)} />
-            <label label={bind(device, "charge_cycles").as((rate) => rate.toString() +  "cycles")} />
+            <label label={bind(device, "charge_cycles").as((rate) => rate.toString() + "cycles")} />
         </box>
     </box>
 }

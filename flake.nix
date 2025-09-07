@@ -51,6 +51,7 @@
     grub2-themes,
     nixos-cosmic,
     ags,
+    zen-browser,
     ...
   } @ inputs: let
     inherit (self) outputs;

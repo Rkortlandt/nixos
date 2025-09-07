@@ -84,8 +84,8 @@
   qt = {
     enable = true;
 
-    style.name = "adwaita-dark";
-    style.package = pkgs.adwaita-qt6;
+    style.name = "dracula";
+    style.package = pkgs.dracula-qt5-theme;
   };
 
   home.sessionVariables = {
@@ -217,6 +217,12 @@ home.packages = with pkgs; [
   tofi
   inkscape
   dolphin-emu
+  mpg123
+  freecad-wayland
+  fuzzel
+  rpi-imager
+  rustc
+  davinci-resolve
 ] ++ (with pkgs.unstable; [
   #Unstable
   chromium
@@ -227,10 +233,9 @@ home.packages = with pkgs; [
   zed-editor
   godot_4
   bluetui
-  freecad
   orca-slicer
 ]) ++ (with inputs; [
-  #zen-browser.packages."${system}".beta
+  zen-browser.packages."${system}".default
 ]);
   
   # Enable home-manager and git

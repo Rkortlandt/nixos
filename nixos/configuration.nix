@@ -145,6 +145,13 @@
     };
   };
 
+networking.firewall = {
+  enable = true; # Make sure the firewall is enabled
+  allowedTCPPorts = [ 8080 ]; # Add the port for your Go server here
+  # You might have other ports listed here, like for SSH (22).
+  # If so, add 8080 to the existing list, e.g., [ 22 8080 ].
+};
+
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [

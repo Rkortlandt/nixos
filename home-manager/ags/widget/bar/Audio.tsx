@@ -1,18 +1,23 @@
 import Wp from "gi://AstalWp"
 import { bind } from "astal";
 
-export function getVolumeIcon(volume: number): string {
-    if (volume > .8) {
-        return "Speaker-High"
-    } else if (volume > .5) {
-        return "Speaker-Mid"
-    }
-    return "Speaker-Low"
-}
-
 export function Speaker() {
     const speaker = Wp.get_default()?.audio.defaultSpeaker!
 
+    function getVolumeIcon(): string {
+        let volume = speaker.get_volume();
+        if (speaker.get_mute()) {
+            return "Speaker-Muted"
+        }
+        if (volume > .8) {
+            return "Speaker-High"
+        } else if (volume > .5) {
+            return "Speaker-Mid"
+        } else if (volume > 0) {
+            return "Speaker-Low"
+        }
+        return "Speaker-Zero"
+    }
 
 
     return <button
@@ -20,10 +25,11 @@ export function Speaker() {
         onScroll={(self, scroll) =>
             speaker.volume = Math.max(0, Math.min(1, speaker.volume - (scroll.delta_y / 50)))
         }
-        className="bg-black">
+        className="bg-black"
+    >
         <box>
             <label label={bind(speaker, "volume").as((v) => `${Math.floor(v * 100)}%`)} />
-            <icon icon={bind(speaker, "volume").as((v) => getVolumeIcon(v))} css="font-size: 23px; padding-left: 3px;" />
+            <icon icon={bind(speaker, "volumeIcon").as((v) => getVolumeIcon())} css="font-size: 23px; padding-left: 3px;" />
 
         </box>
     </button>

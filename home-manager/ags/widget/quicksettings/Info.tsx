@@ -92,21 +92,20 @@ export function Info() {
         </box>
         <Wifi visibleSetting={VisibleSetting} />
         <Bluetooth visibleSetting={VisibleSetting} />
-        {/*
+
         <box>
             <button className="thick-button-left bg-blue">
-                <label label="Timer"hexpand={true} />
+                <label label="Timer" hexpand={true} />
             </button>
             <button className="thick-button-right bg-blue"
-                onClick={() => (VisibleSetting.get() == Settings.TIMER)? VisibleSetting.set(Settings.NONE) : VisibleSetting.set(Settings.TIMER)}
+                onClick={() => (VisibleSetting.get() == Settings.TIMER) ? VisibleSetting.set(Settings.NONE) : VisibleSetting.set(Settings.TIMER)}
             >
-                <icon 
-                    icon={VisibleSetting().as((vs) => vs == Settings.TIMER? "Arrow-Down" : "Arrow-Right")} 
+                <icon
+                    icon={VisibleSetting().as((vs) => vs == Settings.TIMER ? "Arrow-Down" : "Arrow-Right")}
                     css="font-size: 23px;"
                 />
             </button>
         </box>
-        <Timer visibleSetting={VisibleSetting}/>
-        */}
+        <Timer visibleSetting={VisibleSetting} />
     </box>
 }

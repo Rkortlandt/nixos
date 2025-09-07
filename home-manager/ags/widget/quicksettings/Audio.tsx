@@ -1,14 +1,28 @@
 import Wp from "gi://AstalWp";
 import { bind } from "astal";
-import { getVolumeIcon } from "../bar/Audio";
 
 const wireplumber = Wp.get_default()
 
 export function SpeakerSlider() {
     const speaker = Wp.get_default()?.audio.defaultSpeaker!
+    function getVolumeIcon(): string {
+        let volume = speaker.get_volume();
+        if (speaker.get_mute()) {
+            return "Speaker-Muted"
+        }
+        if (volume > .8) {
+            return "Speaker-High"
+        } else if (volume > .5) {
+            return "Speaker-Mid"
+        } else if (volume > 0) {
+            return "Speaker-Low"
+        }
+        return "Speaker-Zero"
+    }
+
 
     return <box css="min-width: 250px">
-        <button className="bg-blue margin menu-btn"><icon css="font-size: 23px;" icon={bind(speaker, "volume").as((v) => getVolumeIcon(v))} /></button>
+        <button className="bg-blue margin menu-btn"><icon css="font-size: 23px;" icon={bind(speaker, "volume").as((v) => getVolumeIcon())} /></button>
         <slider
             hexpand
             onDragged={({ value }) => speaker.volume = value}
@@ -33,19 +47,19 @@ export function MicSlider() {
 
 export function Output() {
     const audio = Wp.get_default()?.audio
-    if(audio == undefined) return null;
+    if (audio == undefined) return null;
 
-    
-    
-    function setOutputDevice(id : number) {
+
+
+    function setOutputDevice(id: number) {
         audio?.get_endpoint(id)?.set_is_default(true);
-    } 
+    }
     return <box>
-        {(audio != undefined) && bind(audio, "speakers").as((spks) => spks.map((spk) => 
+        {(audio != undefined) && bind(audio, "speakers").as((spks) => spks.map((spk) =>
             <button
-                className={bind(spk, "is_default").as((isDef) => isDef? "bg-selected menu-btn margin" : "menu-btn margin")}
+                className={bind(spk, "is_default").as((isDef) => isDef ? "bg-selected menu-btn margin" : "menu-btn margin")}
                 onClick={() => setOutputDevice(spk.get_id())}>
-                {(spk.get_name() != null)? spk.get_name() : "Built-in Audio"}
+                {(spk.get_name() != null) ? spk.get_name() : "Built-in Audio"}
             </button>))}
     </box>
 }
