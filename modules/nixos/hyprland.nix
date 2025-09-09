@@ -9,7 +9,6 @@
 
   config = mkIf cfg.enable {
     programs = {
-      thunar.enable = true;
       hyprland.enable = true;
     };
 

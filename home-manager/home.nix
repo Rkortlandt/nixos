@@ -92,10 +92,56 @@
      EDITOR = "nvim";
   };
 
-  services = {
-    dunst.enable = true;
-  };  
+ services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        offset = "";
+        corner_radius = 10;
+        origin = "top-left";
+        progress_bar = true;
+        dmenu = "${pkgs.fuzzel}";
+        follow = "mouse";
+        font = "Droid Sans 10";
+        format = "<b>%s</b>\\n%b";
+        frame_color = "#000000";
+        frame_width = 2;
+        geometry = "500x5-5+30";
+        horizontal_padding = 8;
+        icon_position = "left";
+        line_height = 0;
+        markup = "full";
+        padding = 8;
+        separator_color = "frame";
+        separator_height = 2;
+        transparency = 0;
+        word_wrap = true;
+      };
 
+      urgency_low = {
+        background = "#000000";
+        foreground = "#4da1af";
+        timeout = 10;
+      };
+
+      urgency_normal = {
+        background = "#000000";
+        foreground = "#70a040";
+        timeout = 15;
+      };
+
+      urgency_critical = {
+        background = "#000000";
+        foreground = "#dd5633";
+        timeout = 0;
+      };
+
+      shortcuts = {
+        context = "mod4+grave";
+        close = "mod4+shift+space";
+      };
+    };
+  };
 
 
   wayland.windowManager.hyprland = {
@@ -185,6 +231,7 @@
 home.packages = with pkgs; [
   #Stable
   swaybg
+  nemo
   obsidian
   grim
   slurp
@@ -205,6 +252,7 @@ home.packages = with pkgs; [
   rclone
   musescore
   clipse
+  cliphist
   blender
   vivaldi
   spotify
