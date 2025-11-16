@@ -143,6 +143,34 @@
     };
   };
 
+ services.udiskie = {
+   enable = true;
+# The 'settings' attribute set is automatically translated into the
+# ~/.config/udiskie/config.yml file for you.
+   settings = {
+     rules = [
+     {
+       name = "Ignore Windows Partition";
+       ignore = true;
+       match = {
+         uuid = "6832EF5632EF27B0";
+       };
+     }
+     {
+       name = "Ignore Shared Partition";
+       ignore = true;
+       match = {
+         uuid = "F67F-6912";
+       };
+     }
+     ];
+# You can set other udiskie options here as well
+     program_options = {
+       file_manager = "thunar"; # Optional: Change to your preferred file manager
+     };
+   };
+ };
+
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -230,7 +258,10 @@
 
 home.packages = with pkgs; [
   #Stable
+  prismlauncher
   swaybg
+  snapshot
+  gimp
   nemo
   obsidian
   grim
@@ -257,6 +288,7 @@ home.packages = with pkgs; [
   vivaldi
   spotify
   jetbrains.idea-ultimate
+  jetbrains.rider
   qalculate-gtk
   libqalculate
   slack
@@ -266,13 +298,16 @@ home.packages = with pkgs; [
   inkscape
   dolphin-emu
   mpg123
-  freecad-wayland
   fuzzel
   rpi-imager
   rustc
-  davinci-resolve
+  nixd
+  rquickshare
+  taskwarrior3
+  unityhub
 ] ++ (with pkgs.unstable; [
   #Unstable
+  freecad-wayland
   chromium
   cosmic-term
   arduino

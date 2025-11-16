@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "ags": "*",
+    "gnim": "*",
+    "gnim-utils": "github:retrozinndev/gnim-utils"
+  },
+  "prettier": {
+    "semi": false,
+    "tabWidth": 2
+  }
+}

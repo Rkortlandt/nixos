@@ -42,9 +42,8 @@ const weekday = Variable("").poll(1000, `date "+%w"`, (out) => weekdays[parseInt
 
 export function Info() {
     return <box vertical={true} spacing={4} css="min-width: 250px">
-        <box>
+        <box vertical={true} >
             <label className="padding title" label={bind(date)} />
-            <box hexpand={true} />
             <label className="padding subtitle" label={bind(weekday)} />
         </box>
         <box css="min-height: 10px;" />

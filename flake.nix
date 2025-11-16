@@ -4,6 +4,15 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     
+    quickshell = {
+      # add ?ref=<tag> to track a tag
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+
+      # THIS IS IMPORTANT
+      # Mismatched system dependencies will lead to crashes and other issues.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     zen-browser.url = "github:0xc000022070/zen-browser-flake"; 
 
     # Home Manager
@@ -26,9 +35,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-#    nixos-cosmic = {
-#     url = "github:lilyinstarlight/nixos-cosmic";
-#  };
 
     templ.url = "github:a-h/templ";
     grub2-themes.url = "github:vinceliuice/grub2-themes";
@@ -49,7 +55,6 @@
     nixos-hardware,
     split-monitor-workspaces,
     grub2-themes,
-    nixos-cosmic,
     ags,
     zen-browser,
     ...
@@ -82,12 +87,7 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           {
-            nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-            };
           }
-#          nixos-cosmic.nixosModules.default
           grub2-themes.nixosModules.default
           ./nixos/configuration.nix
         ];

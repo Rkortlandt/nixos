@@ -13,6 +13,7 @@
       ../modules/nixos/hyprland.nix
       ../modules/nixos/i3.nix
       ../modules/nixos/boot.nix
+      ../modules/nixos/cosmic.nix
   ];
 
   nixpkgs = {
@@ -85,14 +86,33 @@
   };
 
  
-
+  
   modules.hyprland.enable = lib.mkDefault true;
   modules.gnome.enable = lib.mkDefault false;
   modules.i3.enable = lib.mkDefault false;
+  modules.cosmic.enable = lib.mkDefault false;
   programs.virt-manager.enable = true;
+
+  specialisation = { 
+    cosmic.configuration = {
+      modules.hyprland.enable = false;
+      modules.cosmic.enable = true;
+    };
+    i3.configuration = {
+      modules.hyprland.enable = false;
+      modules.i3.enable = true;
+    };
+
+  };
 
 
   virtualisation.docker.enable = true;
+
+  services.n8n = {
+    enable = false;
+    openFirewall = true;
+  };
+
   services.fwupd.enable = true;
   services.gvfs.enable = true;  
   services.dbus.enable = true;
@@ -147,7 +167,7 @@
 
 networking.firewall = {
   enable = true; # Make sure the firewall is enabled
-  allowedTCPPorts = [ 8080 ]; # Add the port for your Go server here
+  allowedTCPPorts = [ 8080 12345 ]; # Add the port for your Go server here
   # You might have other ports listed here, like for SSH (22).
   # If so, add 8080 to the existing list, e.g., [ 22 8080 ].
 };
@@ -188,7 +208,6 @@ networking.firewall = {
     unzip
     neovim 
     ripgrep
-    udiskie
     efibootmgr
     # templ
     inkscape

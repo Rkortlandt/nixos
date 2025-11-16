@@ -191,6 +191,11 @@ local treesitter = {
   end
 }
 
+local wakatime = {
+  "wakatime/vim-wakatime",
+  lazy = false,
+}
+
 require('lazy').setup({
   lspconfig,
   autocmp,
@@ -202,6 +207,7 @@ require('lazy').setup({
   telescope,
   comment,
   treesitter,
+  wakatime,
 
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
@@ -264,6 +270,15 @@ local function live_grep_git_root()
 end
 
 vim.api.nvim_create_user_command('Livegrepgitroot', live_grep_git_root, {})
+
+-- Remap <leader>y to yank (copy) to the system clipboard
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to system clipboard" })
+
+-- Remap <leader>p to paste from the system clipboard
+vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
+
+-- Optional: Remap <leader>P for pasting before the cursor
+vim.keymap.set({ "n" }, "<leader>P", '"+P', { desc = "Paste (before) from system clipboard" })
 
 -- see `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] find recently opened files' })

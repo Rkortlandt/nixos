@@ -45,7 +45,7 @@ background-size: cover;`)
             <box className="title">
                 <label truncate hexpand halign={START} label={title} />
             </box>
-                <label truncate hexpand halign={START} label={artist} />
+            <label truncate hexpand halign={START} label={artist} />
             <slider
                 visible={bind(player, "length").as(l => l > 0)}
                 onDragged={({ value }) => player.position = value * player.length}
@@ -93,15 +93,15 @@ background-size: cover;`)
 
 
 function BarMediaPlayer({ player, name, shown, length }: { player: Mpris.Player, name: number, shown: Variable<string>, length: number }) {
-    
+
     const playIcon = bind(player, "playbackStatus").as(s =>
         s === Mpris.PlaybackStatus.PLAYING
             ? "Pause"
             : "Play"
     )
-    
+
     const title = bind(player, "title").as(t =>
-        (t.length > 28)? t.slice(0, 28).trim() + "..." : t || "Unknown Track")
+        (t.length > 28) ? t.slice(0, 28).trim() + "..." : t || "Unknown Track")
 
     var showPlayIcons = Variable(false);
 
@@ -110,14 +110,16 @@ function BarMediaPlayer({ player, name, shown, length }: { player: Mpris.Player,
         hexpand={false}
         halign={Gtk.Align.END}
         css="background: linear-gradient(45deg, #0F5880, #0EA16F);"
-        onClick={() => {(name >= (length - 1))? shown.set("0"): shown.set(`${name + 1}`);
+        onClick={() => {
+            (name >= (length - 1)) ? shown.set("0") : shown.set(`${name + 1}`);
             print(length);
-            print(player.bus_name, name); }}
-        onHover={() => showPlayIcons.set(true)} 
+            print(player.bus_name, name);
+        }}
+        onHover={() => showPlayIcons.set(true)}
         onHoverLost={() => showPlayIcons.set(false)}
     >
         <box>
-            <icon icon="Music" css="margin-left: 8px; font-size: 23px"/>
+            <icon icon="Music" css="margin-left: 8px; font-size: 23px" />
             <revealer revealChild={showPlayIcons()} transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}>
                 <box>
                     <button
@@ -139,19 +141,19 @@ function BarMediaPlayer({ player, name, shown, length }: { player: Mpris.Player,
                     </button>
                 </box>
             </revealer>
-            <label label={title} css="margin-left: 2px; margin-right: 8px;"/> 
+            <label label={title} css="margin-left: 2px; margin-right: 8px;" />
         </box>
     </eventbox>
 }
 
 export function BarMprisPlayer() {
     const mpris = Mpris.get_default()
-    const shown = Variable("0"); 
+    const shown = Variable("0");
     return <Stack shown={shown()} transitionType={Gtk.StackTransitionType.SLIDE_UP}>
         {bind(mpris, "players").as((players) => players.map((player, index, arr) => {
             shown.set("0");
             print("changed")
-            return <BarMediaPlayer name={index} player={player} shown={shown} length={arr.length}/>
+            return <BarMediaPlayer name={index} player={player} shown={shown} length={arr.length} />
         }))}
     </Stack>
 }

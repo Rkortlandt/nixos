@@ -197,7 +197,7 @@ declare module 'gi://Astal?version=3.0' {
 
             // Constructor properties interface
 
-            interface ConstructorProps extends Gtk.Button.ConstructorProps {}
+            interface ConstructorProps extends Gtk.Button.ConstructorProps { }
         }
 
         /**
@@ -408,7 +408,7 @@ declare module 'gi://Astal?version=3.0' {
 
             // Constructor properties interface
 
-            interface ConstructorProps extends Gtk.EventBox.ConstructorProps {}
+            interface ConstructorProps extends Gtk.EventBox.ConstructorProps { }
         }
 
         /**

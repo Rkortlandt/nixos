@@ -4,7 +4,6 @@ import { Gdk, Gtk } from "astal/gtk3";
 import { calculate } from "../../calculator/qalculate";
 import { Box, Popover, Stack } from "astal/gtk4/widget";
 
-
 enum CalculatorState {
     None,
     ShowAnswer,

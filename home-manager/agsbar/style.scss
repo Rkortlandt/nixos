@@ -1,0 +1,202 @@
+// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
+$fg-color: #ffffff;
+$bg-color: black;
+
+window {
+  background: transparent;
+  color: $fg-color;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.bar {
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-top: 4px;
+  margin-bottom: 0px;
+}
+
+.side-trigger {
+  margin-top: 120px;
+  background-color: rgba(0, 0, 0, 1);
+  min-width: 1px;
+  margin-bottom: 500px;
+}
+
+.sidebar {
+  margin-top: 38px;
+  margin-left: 4px;
+  margin-bottom: 4px;
+  background-color: black;
+  border-radius: 10px;
+}
+
+.no-bg {
+  background-color: transparent;
+}
+
+.square-button-no-rad {
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-left: 1px;
+}
+
+box {
+  border-radius: 15px;
+}
+
+button {
+  background-clip: padding-box;
+  min-width: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-radius: 15px;
+  background: black;
+  color: white;
+  border-color: transparent;
+}
+
+button:active {
+  background-color: grey;
+}
+
+button:hover {
+  border: 1px solid grey;
+}
+
+.workspace {
+  background: $bg-color;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  border-radius: 0px;
+  color: #0F5880;
+}
+
+.mic {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 13px;
+}
+
+.firstws:not(.lastws) {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 0px;
+}
+
+.lastws:not(.firstws) {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 15px;
+}
+
+.firstws.lastws {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.focusedws {
+  color: #0EA16F;
+}
+
+//Media player
+
+.media-player {
+  margin: 4px;
+  padding: 8px;
+  border-radius: 15px;
+}
+
+.top {
+  background-color: white;
+}
+
+slider {
+  min-height: 5px;
+  min-width: 5px;
+  margin: 0px;
+  box-shadow: none;
+  background-color: white;
+}
+
+
+progress {
+  background-color: white;
+}
+
+highlight {
+  background-color: white;
+}
+
+slider {
+  min-height: 5px;
+  min-width: 5px;
+  margin: 0px;
+  box-shadow: none;
+  background-color: white;
+}
+
+
+.menu {
+  background-color: black;
+  border: none;
+  border-radius: 10px;
+}
+
+.title {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: grey;
+}
+
+/* For MediaPlayer */
+/* .media-player-cover {
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(2px) brightness(30%);
+} */
+
+.media-player-cover {
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /* * This is the magic. 
+    * We make the widget's "paint" semi-transparent,
+    * then tell the backdrop (the image) to blur.
+   */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Example: 20% dark tint */
+  backdrop-filter: blur(8px) brightness(60%);
+}
+
+.position {
+  color: white;
+}
+
+.length {
+  color: white;
+}
+
+/* For BarMediaPlayer */
+.bar-media-player {
+  background: linear-gradient(45deg, #0F5880, #0EA16F);
+}
+
+.bar-music-icon {
+  margin-left: 8px;
+}
+
+.bar-title-label {
+  margin-left: 2px;
+  margin-right: 8px;
+}
