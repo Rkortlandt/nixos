@@ -19,17 +19,9 @@ app.start({
     return (
       <For each={monitors}>
         {(monitor) => {
-          const [sideBarVisible, setSideBarVisible] = createState(false);
-
-          sideBarVisible.subscribe(() => {
-            console.log("changed");
-            app.toggle_window(`sidebar-${monitor.connector}`)
-          });
           return (
             <This this={app}>
               <Bar gdkmonitor={monitor} />
-              <SideBarTrigger gdkmonitor={monitor} setSideBarVisible={setSideBarVisible} />
-              <SideBar gdkmonitor={monitor} sideBarVisible={sideBarVisible} setSideBarVisible={setSideBarVisible} />
             </This>
           )
         }}

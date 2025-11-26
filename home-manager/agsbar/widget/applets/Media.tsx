@@ -26,7 +26,6 @@ function MediaPlayer({ player }: { player: AstalMpris.Player }) {
   });
 
   const coverArtStyle = createBinding(player, "coverArt").as(c => {
-    console.log(c);
     return `background-image: url('file://${c}');`
   })
 
@@ -172,18 +171,39 @@ function BarMediaPlayer(
 export function BarMprisPlayer() {
   const mpris = AstalMpris.get_default()
   const players = createBinding(mpris, "players");
-  const numberOfPlayers = createComputed((players) => players.length);
   const [shownPlayer, setShownPlayer] = createState(0);
 
+  players.subscribe(() => {
+    setShownPlayer(players.get().length - 1);
+
+    players.get().forEach((player, index) => {
+      var playerPaused = createBinding(player, "playbackStatus");
+
+      playerPaused.subscribe(() => {
+        if (playerPaused.get() == AstalMpris.PlaybackStatus.PLAYING) {
+          setShownPlayer(index);
+
+          players.get().forEach((player2, index2) => {
+            if (index != index2) {
+              player2.pause();
+            }
+          });
+        }
+      });
+    });
+  });
 
   return <box>
     <For each={players}>
       {(player, index) => {
         const onClick = () => {
-          console.log("this ran");
-          setShownPlayer((shownPlayer.get() < numberOfPlayers.get()) ? (shownPlayer.get() + 1) : 0)
+          var numberOfPlayers = players.get().length;
+          var newValue = ((shownPlayer.get() < numberOfPlayers - 1) && numberOfPlayers != 1) ? (shownPlayer.get() + 1) : 0;
+          // console.log(newValue, numberOfPlayers, shownPlayer.get())
+          setShownPlayer(newValue);
         }
 
+        // console.log(player.bus_name, index);
         return <revealer revealChild={shownPlayer.as((number) => number == index.get())} transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}>
           <BarMediaPlayer player={player} onClick={onClick} />
         </revealer>

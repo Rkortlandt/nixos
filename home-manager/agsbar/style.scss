@@ -1,6 +1,9 @@
 // https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
 $fg-color: #ffffff;
 $bg-color: black;
+$tertiary-bg-color: #0EA16F;
+$secondary-bg-color: #172A7D;
+$primary-bg-color: #0F5880;
 
 window {
   background: transparent;
@@ -45,6 +48,10 @@ box {
   border-radius: 15px;
 }
 
+contents {
+  background-color: $bg-color;
+}
+
 button {
   background-clip: padding-box;
   min-width: 0;
@@ -62,6 +69,16 @@ button:active {
 
 button:hover {
   border: 1px solid grey;
+}
+
+.primary-bg {
+  background-color: $primary-bg-color;
+}
+
+
+.menu-btn {
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .workspace {
@@ -117,29 +134,67 @@ button:hover {
   background-color: white;
 }
 
-slider {
+/* slider {
   min-height: 5px;
   min-width: 5px;
   margin: 0px;
   box-shadow: none;
   background-color: white;
+  border: none;
 }
 
 
 progress {
   background-color: white;
+  border: none;
 }
 
 highlight {
   background-color: white;
+  border-color: white;
+} */
+
+scale {
+  padding: 0;
+  border: none;
+  background: black;
 }
 
-slider {
-  min-height: 5px;
-  min-width: 5px;
-  margin: 0px;
+/* Style the trough (the line itself) */
+scale trough {
+  background-color: black;
+  border: none;
   box-shadow: none;
-  background-color: white;
+  min-height: 7px;
+  /* For horizontal slider */
+  min-width: 7px;
+  /* For vertical slider */
+  border-radius: 0px;
+  /* Sharp corners for a clean line */
+  margin: 4px;
+}
+
+/* Hide the slider handle (the part you drag) */
+scale slider {
+  border: none;
+  box-shadow: none;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  background: black;
+}
+
+/* Ensure no focus outline appears */
+scale:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* Ensure no hover effects change the appearance */
+scale trough:hover {
+  background-color: black;
 }
 
 
@@ -176,7 +231,6 @@ slider {
    */
   background-color: rgba(0, 0, 0, 0.5);
   /* Example: 20% dark tint */
-  backdrop-filter: blur(8px) brightness(60%);
 }
 
 .position {

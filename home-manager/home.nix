@@ -281,7 +281,6 @@ home.packages = with pkgs; [
   cargo
   unzip
   rclone
-  musescore
   clipse
   cliphist
   blender
@@ -308,6 +307,7 @@ home.packages = with pkgs; [
 ] ++ (with pkgs.unstable; [
   #Unstable
   freecad-wayland
+  musescore
   chromium
   cosmic-term
   arduino

@@ -196,6 +196,18 @@ local wakatime = {
   lazy = false,
 }
 
+local nvimtree = {
+  "nvim-tree/nvim-tree.lua",
+  lazy = false,
+  version = "*",
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+  },
+  config = function()
+    require("nvim-tree").setup {}
+  end,
+}
+
 require('lazy').setup({
   lspconfig,
   autocmp,
@@ -208,6 +220,7 @@ require('lazy').setup({
   comment,
   treesitter,
   wakatime,
+  nvimtree,
 
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
