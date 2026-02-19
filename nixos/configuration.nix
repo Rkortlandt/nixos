@@ -120,7 +120,7 @@
   services.upower.enable = true;
   services.envfs.enable = true;
 
-  services.logind = {
+  services.logind.settings.Login = {
     lidSwitch = "suspend-then-hibernate";
     lidSwitchDocked = "hybrid-sleep";
     lidSwitchExternalPower = "hybrid-sleep";

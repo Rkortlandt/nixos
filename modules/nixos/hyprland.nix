@@ -17,7 +17,7 @@
       restart = true;
       settings = rec {
         initial_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --user-menu --time --r --cmd Hyprland";
+          command = "${pkgs.tuigreet}/bin/tuigreet --asterisks --user-menu --time --r --cmd Hyprland";
           user = "ss-rowan";
         };
         default_session = initial_session;
