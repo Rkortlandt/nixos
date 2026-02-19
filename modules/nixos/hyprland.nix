@@ -15,7 +15,6 @@
     services.greetd = {
       enable = true;
       restart = true;
-      vt = 2;
       settings = rec {
         initial_session = {
           command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --user-menu --time --r --cmd Hyprland";

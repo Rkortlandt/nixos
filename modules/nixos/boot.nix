@@ -25,6 +25,7 @@
       };
       grub = {
         enable = true;
+        configurationLimit = 5;
         efiSupport = true;
         efiInstallAsRemovable = true;
         devices = ["nodev"];

@@ -24,6 +24,7 @@
       io
       astal4 # or astal3 for gtk3
       battery
+      bluetooth
       hyprland
       powerprofiles
       wireplumber

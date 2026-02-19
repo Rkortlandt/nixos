@@ -66,15 +66,12 @@
   };
 
   home.pointerCursor = {
-    gtk.enable = true;
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Classic";
   };
 
   gtk = {
     enable = true;
-    theme.name = "adw-gtk3-dark";
-    theme.package = pkgs.adw-gtk3;
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Classic";
     iconTheme.package = pkgs.adwaita-icon-theme;
@@ -229,8 +226,9 @@
         editor = "nvim";
       };
     };
+  };
  
-    firefox.enable = true;
+/*     firefox.enable = true;
     firefox.profiles.rowan = {
       search = {
         default = "google";
@@ -255,7 +253,7 @@
       ];
      }; 
   };
-
+ */
 home.packages = with pkgs; [
   #Stable
   prismlauncher
@@ -284,7 +282,6 @@ home.packages = with pkgs; [
   clipse
   cliphist
   blender
-  vivaldi
   spotify
   jetbrains.idea-ultimate
   jetbrains.rider
@@ -298,15 +295,13 @@ home.packages = with pkgs; [
   dolphin-emu
   mpg123
   fuzzel
-  rpi-imager
   rustc
   nixd
-  rquickshare
   taskwarrior3
   unityhub
 ] ++ (with pkgs.unstable; [
   #Unstable
-  freecad-wayland
+  freecad
   musescore
   chromium
   cosmic-term
@@ -317,6 +312,7 @@ home.packages = with pkgs; [
   godot_4
   bluetui
   orca-slicer
+  vivaldi
 ]) ++ (with inputs; [
   zen-browser.packages."${system}".default
 ]);

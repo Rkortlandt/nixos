@@ -86,7 +86,7 @@
   };
 
  
-  
+  programs.dconf.enable = true;
   modules.hyprland.enable = lib.mkDefault true;
   modules.gnome.enable = lib.mkDefault false;
   modules.i3.enable = lib.mkDefault false;
@@ -137,7 +137,7 @@
    # 1. Enable Avahi and NSS mDNS support
   services.avahi = {
     enable = true;
-    nssmdns = true; # Enable Name Service Switch (NSS) support for mDNS
+    nssmdns4 = true; # Enable Name Service Switch (NSS) support for mDNS
     openFirewall = true; # Open firewall for Avahi mDNS traffic (port 5353)
 
     # Publish services
@@ -209,10 +209,11 @@ networking.firewall = {
     neovim 
     ripgrep
     efibootmgr
-    # templ
     inkscape
     lm_sensors
     wl-clipboard
+    socat
+    jq
   ];
 
   services.openssh = {
@@ -252,7 +253,11 @@ networking.firewall = {
       extraGroups = ["wheel" "networkmanager" "audio" "input" "libvirtd" "tss" "docker" "qemu-libvirtd" "dialout"];
     };
   };
-
+nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
 
 
 # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
