@@ -214,6 +214,7 @@ networking.firewall = {
     wl-clipboard
     socat
     jq
+    libnotify
   ];
 
   services.openssh = {
