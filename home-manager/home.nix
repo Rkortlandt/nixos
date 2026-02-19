@@ -285,7 +285,7 @@ home.packages = with pkgs; [
   cliphist
   blender
   spotify
-  jetbrains.idea-ultimate
+  jetbrains.idea
   jetbrains.rider
   qalculate-gtk
   libqalculate
