@@ -18,11 +18,9 @@
 
   nixpkgs = {
     overlays = [
-      inputs.templ.overlays.default
         outputs.overlays.additions
         outputs.overlays.modifications
         outputs.overlays.unstable-packages
-        inputs.templ.overlays.default
     ];
     config = {
       allowUnfree = true;
