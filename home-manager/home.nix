@@ -215,8 +215,10 @@
 
     git = {
       enable = true;
-      userName = "rkortlandt";
-      userEmail = "rowankortlandt@otsegops.org";
+      settings.user = {
+        email = "rowankortlandt@otsegops.org";
+        name = "rkortlandt";
+      };
     }; 
 
     gh = {

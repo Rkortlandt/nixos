@@ -39,9 +39,9 @@
       quit = "exit";
       whatismyip = "whatsmyip";
       exec = "hyprctl dispatch exec";
-      rnix = "sudo nixos-rebuild switch --flake ~/nixos/#rowan-nixos";
-      rhome = "home-manager switch --flake ~/nixos/#ss-rowan@rowan-nixos";
-      rnixboot = "sudo nixos-rebuild boot --install-bootloader --flake ~/nixos/#rowan-nixos";
+      rnix = "~/nixos/scripts/rnix.sh";
+      rhome = "~/nixos/scripts/rhome.sh";
+      rnixboot = "~/nixos/scripts/rnixboot.sh";
     };
 
     initExtra = ''
