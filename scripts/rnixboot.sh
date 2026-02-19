@@ -20,7 +20,6 @@ if [ ${PIPESTATUS[0]} -eq 0 ]; then
     echo -e "\033[1;32m[STAGE 3/4]\033[0m Boot Success. Committing to Git..."
     git add .
     git commit -m "nixos-boot: $TIMESTAMP"
-    git push origin main
     
     notify-send "NixOS Boot" "Bootloader Success"
 else
