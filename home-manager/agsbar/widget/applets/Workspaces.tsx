@@ -80,7 +80,7 @@ export function Workspaces() {
 
 import { Gtk } from "ags/gtk4";
 import { createBinding, createComputed, createState, For, With } from "ags";
-import { variableToBoolean, getSymbolicIcon, getAppIcon } from "../../utils";
+import { getSymbolicIcon, getAppIcon } from "../../utils";
 
 import AstalHyprland from "gi://AstalHyprland";
 

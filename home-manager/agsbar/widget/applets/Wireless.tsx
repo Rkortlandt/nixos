@@ -56,15 +56,14 @@ export default function ConnectivityModule() {
           {/* --- TAB TOGGLE --- */}
           <box class="tab-toggle" hexpand={true} homogeneous={true} spacing={4}>
             <button
-              class="big-btn"
-
+              class={activeTab.as((cntd) => cntd === "wifi" ? "primary-bg big-btn" : "big-btn")}
               hexpand={true}
               onClicked={() => setActiveTab("wifi")}>
               <label label="Wi-Fi" />
             </button>
             <button
-              class="big-btn"
               hexpand={true}
+              class={activeTab.as((cntd) => cntd === "bluetooth" ? "primary-bg big-btn" : "big-btn")}
               onClicked={() => setActiveTab("bluetooth")}>
               <label label="Bluetooth" />
             </button>
@@ -96,14 +95,10 @@ export default function ConnectivityModule() {
               <box orientation={Gtk.Orientation.VERTICAL}>
                 <For each={createBinding(bluetooth, "devices")}>
                   {(device: AstalBluetooth.Device) => {
-                    const connecting = createBinding(device, "connecting");
-                    const connected = createBinding(device, "connected");
-                    const isFullyConnected = createComputed(() => {
-                      return connected != connecting
-                    });
                     return (
                       <button
-                        onClicked={() => device.connected ? device.disconnect_device(() => { }) : device.connect_device(() => { })} class={createBinding(device, "connected").as((cntd) => cntd ? "primary-bg" : "")}
+                        onClicked={() => device.connected ? device.disconnect_device(() => { }) : device.connect_device(() => { })}
+                        class={createBinding(device, "connected").as((cntd) => cntd ? "primary-bg" : "")}
                         hexpand={true}
                       >
                         <box spacing={8}>
@@ -113,7 +108,7 @@ export default function ConnectivityModule() {
                           <label label={createBinding(device, "batteryPercentage").as((pcnt) => { return pcnt == -1 ? "" : `${Math.floor(pcnt * 100)}%` })} />
                           <image
                             iconName="object-select-symbolic"
-                            visible={isFullyConnected}
+                            visible={createBinding(device, "connected")}
                           />
                         </box>
                       </button>
@@ -125,6 +120,6 @@ export default function ConnectivityModule() {
           </box>
         </box>
       </popover>
-    </menubutton>
+    </menubutton >
   )
 }

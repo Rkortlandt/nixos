@@ -6,19 +6,6 @@ import AstalApps from "gi://AstalApps"
 import GLib from "gi://GLib?version=2.0";
 import Gio from "gi://Gio?version=2.0";
 
-export {
-  type JSXNode as WidgetNodeType,
-  toBoolean as variableToBoolean,
-  construct,
-  transform,
-  transformWidget,
-  createSubscription,
-  createAccessorBinding as baseBinding,
-  createScopedConnection,
-  createSecureBinding as secureBinding,
-  createSecureAccessorBinding as secureBaseBinding,
-} from "gnim-utils";
-
 const astalApps: AstalApps.Apps = new AstalApps.Apps();
 
 let appsList: Array<AstalApps.Application> = astalApps.get_list();
