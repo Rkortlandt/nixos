@@ -282,6 +282,14 @@ local function live_grep_git_root()
   end
 end
 
+local lspconfig = require('lspconfig')
+
+lspconfig.java_language_server.setup({
+  -- NixOS specific: manually point to the Nix-installed binary
+  cmd = { "java-language-server" },
+  root_dir = lspconfig.util.root_pattern("pom.xml", "build.gradle", ".git"),
+})
+
 vim.api.nvim_create_user_command('Livegrepgitroot', live_grep_git_root, {})
 
 -- Remap <leader>y to yank (copy) to the system clipboard
@@ -362,6 +370,7 @@ require('lspconfig').lua_ls.setup {
   cmd = { "lua-language-server" },
   on_attach = on_attach,
 }
+
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
