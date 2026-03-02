@@ -160,6 +160,18 @@ local telescope = {
   },
   opts = {
     defaults = {
+      -- Use 'vertical' or 'flex' to allow top/bottom positioning
+      layout_strategy = 'vertical',
+      layout_config = {
+        vertical = {
+          -- Make preview appear at the top (0.5+ means top half)
+          preview_height = 0.5,
+          mirror = false, -- Set to true to flip preview to bottom
+        },
+        -- Adjust the width to fit your screen
+        width = 0.95,
+        height = .95,
+      },
       mappings = {
         i = {
           ['<c-u>'] = false,
