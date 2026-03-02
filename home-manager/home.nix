@@ -303,6 +303,7 @@ home.packages = with pkgs; [
   unityhub
 ] ++ (with pkgs.unstable; [
   #Unstable
+  java-language-server
   freecad
   musescore
   chromium
