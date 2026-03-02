@@ -288,6 +288,12 @@ lspconfig.java_language_server.setup({
   -- NixOS specific: manually point to the Nix-installed binary
   cmd = { "java-language-server" },
   root_dir = lspconfig.util.root_pattern("pom.xml", "build.gradle", ".git"),
+  on_attach = function(client, bufnr)
+    -- Disable dynamic registration which causes the crash
+    client.dynamic_capabilities = function()
+      return false
+    end
+  end,
 })
 
 vim.api.nvim_create_user_command('Livegrepgitroot', live_grep_git_root, {})
