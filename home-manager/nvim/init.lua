@@ -164,13 +164,12 @@ local telescope = {
       layout_strategy = 'vertical',
       layout_config = {
         vertical = {
-          -- Make preview appear at the top (0.5+ means top half)
-          preview_height = 0.5,
-          mirror = false, -- Set to true to flip preview to bottom
+          preview_height = 0.6,
+          mirror = true, -- Set to true to flip preview to bottom
         },
         -- Adjust the width to fit your screen
         width = 0.95,
-        height = .95,
+        height = 0.95,
       },
       mappings = {
         i = {
