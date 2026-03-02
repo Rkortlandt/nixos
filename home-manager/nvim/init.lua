@@ -108,10 +108,10 @@ local gitsigns = {
 local whichkey = { 'folke/which-key.nvim', opts = {} }
 
 local theme = {
-  'navarasu/onedark.nvim',
+  'rockerBOO/boo-colorscheme-nvim',
   priority = 1000,
   config = function()
-    vim.cmd.colorscheme 'onedark'
+    vim.cmd.colorscheme 'boo'
   end,
 }
 
