@@ -236,12 +236,28 @@ require('lazy').setup({
 
 require('lspconfig').jdtls.setup {
   capabilities = capabilities,
+  -- Add the settings block here
+  settings = {
+    java = {
+      completion = {
+        favoriteStaticMembers = {
+          "edu.wpi.first.units.Units.*",
+          -- Essential FRC Utilities
+          "edu.wpi.first.wpilibj.SmartDashboard.*",
+          "edu.wpi.first.wpilibj.util.Color.*",
+          -- Standard Testing Statics
+          "org.junit.jupiter.api.Assertions.*",
+          "org.mockito.Mockito.*",
+        },
+      },
+    },
+  },
   on_attach = function(client, bufnr)
     local nmap = function(keys, func, desc)
       vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'LSP: ' .. desc })
     end
 
-    -- Standard LSP Keymaps (Added manually here)
+    -- Standard LSP Keymaps
     nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
     nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
     nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
