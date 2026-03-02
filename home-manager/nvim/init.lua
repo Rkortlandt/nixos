@@ -234,7 +234,36 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
 }, {})
 
-vim.lsp.enable("jdtls")
+require('lspconfig').jdtls.setup {
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    local nmap = function(keys, func, desc)
+      vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'LSP: ' .. desc })
+    end
+
+    -- Standard LSP Keymaps (Added manually here)
+    nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+    nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+    nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+    nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+    -- Java Specific Features
+    local jdtls = require('jdtls')
+    nmap('<leader>oi', jdtls.organize_imports, 'Java: [O]rganize [I]mports')
+    nmap('<leader>ev', jdtls.extract_variable, 'Java: [E]xtract [V]ariable')
+    nmap('<leader>ec', jdtls.extract_constant, 'Java: [E]xtract [C]onstant')
+
+    -- Extract Method (Visual Mode)
+    vim.keymap.set('v', '<leader>em', [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
+      { buffer = bufnr, desc = 'LSP: Java: [E]xtract [M]ethod' })
+  end,
+}
+
 -- [[ highlight on yank ]]
 -- see `:help vim.highlight.o 2 + 2 = 4n_yank()`
 local highlight_group = vim.api.nvim_create_augroup('yankhighlight', { clear = true })
