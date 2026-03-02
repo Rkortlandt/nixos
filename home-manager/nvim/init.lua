@@ -258,7 +258,7 @@ require('lspconfig').jdtls.setup {
     nmap('<leader>ev', jdtls.extract_variable, 'Java: [E]xtract [V]ariable')
     nmap('<leader>ec', jdtls.extract_constant, 'Java: [E]xtract [C]onstant')
     nmap('<leader>bld', '<CMD>JdtCompile full<CR>', 'Java: [B]ui[ld] Project')
-    nmap('<leader>td', function() require('telescope.builtin').diagnostics({ severity_limit = "ERROR" }) end,
+    nmap('<leader>td', function() require('telescope.builtin').diagnostics({ bufnr = nil }) end,
       '[T]elescope [D]iagnostics (Errors)')
 
     -- Extract Method (Visual Mode)
