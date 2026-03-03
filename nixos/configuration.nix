@@ -165,7 +165,7 @@
 
 networking.firewall = {
   enable = true; # Make sure the firewall is enabled
-  allowedTCPPorts = [ 8080 12345 ]; # Add the port for your Go server here
+  allowedTCPPorts = [ 8080 12345 22 ]; # Add the port for your Go server here
   # You might have other ports listed here, like for SSH (22).
   # If so, add 8080 to the existing list, e.g., [ 22 8080 ].
 };
@@ -250,6 +250,15 @@ networking.firewall = {
 # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       extraGroups = ["wheel" "networkmanager" "audio" "input" "libvirtd" "tss" "docker" "qemu-libvirtd" "dialout"];
+    };
+
+    sshdev = {
+      initialPassword = "password";
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtGkfL+J88kgpqGz6BWG2hOiGhjClM+8osMiH66DbFi sernstes@DESKTOP-MVFR5OM"
+      ]; 
+      description = "Sean";
     };
   };
 nix.gc = {
