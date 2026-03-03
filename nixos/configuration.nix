@@ -213,6 +213,7 @@ networking.firewall = {
     socat
     jq
     libnotify
+    jetbrains.gateway
   ];
 
   services.openssh = {
