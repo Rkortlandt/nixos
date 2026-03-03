@@ -164,7 +164,7 @@ local telescope = {
       layout_strategy = 'vertical',
       layout_config = {
         vertical = {
-          preview_height = 0.6,
+          preview_height = 0.5,
           mirror = true, -- Set to true to flip preview to bottom
         },
         -- Adjust the width to fit your screen
@@ -186,7 +186,6 @@ local treesitter = {
   build = ":tsupdate",
   config = function()
     local configs = require("nvim-treesitter.configs")
-
     configs.setup({
       -- add languages to be installed here that you want installed for treesitter
       ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
@@ -236,6 +235,7 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
+  'junegunn/gv.vim',
   'xiyaowong/transparent.nvim',
   'nvim-lua/plenary.nvim',
   'theprimeagen/harpoon',
