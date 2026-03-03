@@ -240,6 +240,11 @@ networking.firewall = {
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
+  
+  fileSystems."/home/sshdev/5152_Rebuilt" = {
+    device = "/home/ss-rowan/Documents/codeProjects-Git/5152_Rebuilt";
+    options = [ "bind" ];
+  };
 
   users.users = {
     ss-rowan = {
@@ -260,6 +265,11 @@ networking.firewall = {
       ]; 
       description = "Sean";
     };
+  };
+
+  fileSystems."/home/sshdev/5152_project" = {
+    device = "/home/ss-rowan/Documents/codeProjects-Git/5152_Rebuilt";
+    options = [ "bind" ];
   };
 nix.gc = {
     automatic = true;
