@@ -246,6 +246,7 @@ networking.firewall = {
     options = [ "bind" ];
   };
 
+  users.groups.developers = {};
   users.users = {
     ss-rowan = {
       initialPassword = "password";
@@ -254,7 +255,7 @@ networking.firewall = {
       openssh.authorizedKeys.keys = [
 # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      extraGroups = ["wheel" "networkmanager" "audio" "input" "libvirtd" "tss" "docker" "qemu-libvirtd" "dialout"];
+      extraGroups = ["wheel" "networkmanager" "audio" "input" "libvirtd" "tss" "docker" "qemu-libvirtd" "dialout" "developers"];
     };
 
     sshdev = {
@@ -263,6 +264,7 @@ networking.firewall = {
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtGkfL+J88kgpqGz6BWG2hOiGhjClM+8osMiH66DbFi sernstes@DESKTOP-MVFR5OM"
       ]; 
+      extraGroups = ["developers"];
       description = "Sean";
     };
   };
