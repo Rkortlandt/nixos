@@ -269,6 +269,11 @@ networking.firewall = {
     device = "/home/ss-rowan/Documents/codeProjects-Git/5152_Rebuilt";
     options = [ "bind" ];
   };
+
+  fileSystems."/home/sshdev/JDKS" = {
+    device = "/home/ss-rowan/.jdks";
+    options = [ "bind" ];
+  }; 
 nix.gc = {
     automatic = true;
     dates = "weekly";
