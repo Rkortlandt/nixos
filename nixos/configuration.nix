@@ -241,11 +241,6 @@ networking.firewall = {
     LC_TIME = "en_US.UTF-8";
   };
   
-  fileSystems."/home/sshdev/5152_Rebuilt" = {
-    device = "/home/ss-rowan/Documents/codeProjects-Git/5152_Rebuilt";
-    options = [ "bind" ];
-  };
-
   users.groups.developers = {};
   users.users = {
     ss-rowan = {
