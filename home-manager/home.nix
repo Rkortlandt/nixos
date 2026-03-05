@@ -305,6 +305,7 @@ home.packages = with pkgs; [
   #Unstable
   java-language-server
   freecad
+  gitkraken
   musescore
   chromium
   cosmic-term
