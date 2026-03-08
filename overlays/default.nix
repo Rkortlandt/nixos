@@ -22,7 +22,12 @@
       # The 1.0.2 derivation uses patches that will almost certainly fail to apply 
       # to the 1.1 source code. We clear them out to start fresh.
       patches = [ 
-
+        (final.fetchpatch {
+          name = "nixos-pythonpath.patch";
+          # Fetching directly from the nixos-unstable branch
+          url = "https://raw.githubusercontent.com/NixOS/nixpkgs/nixos-unstable/pkgs/by-name/fr/freecad/0001-NIXOS-don-t-ignore-PYTHONPATH.patch";
+          hash = "sha256-PTSowNsb7f981DvZMUzZyREngHh3l8qqrokYO7Q5YtY="; 
+        })
       ]; 
 
       postPatch = "";
