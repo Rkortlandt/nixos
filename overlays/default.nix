@@ -8,20 +8,24 @@
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
     freecad = final.unstable.freecad.overrideAttrs (oldAttrs: rec {
-      version = "1.1.0"; # Update this to the exact release tag if different
+      version = "1.1rc3"; # Update this to the exact release tag if different
 
       src = final.fetchFromGitHub {
         owner = "FreeCAD";
         repo = "FreeCAD";
         tag = version;
         # We use fakeHash first. Nix will fail the build and print the correct one.
-        hash = final.lib.fakeHash; 
+        hash = "sha256-QtnGaUw4IHF50T534V74ip6+83DcDCV4PEwn+WDfq5k"; 
         fetchSubmodules = true;
       };
 
       # The 1.0.2 derivation uses patches that will almost certainly fail to apply 
       # to the 1.1 source code. We clear them out to start fresh.
-      patches = [ ]; 
+      patches = [ 
+
+      ]; 
+
+      postPatch = "";
     });
   };
 

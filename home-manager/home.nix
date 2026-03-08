@@ -301,10 +301,10 @@ home.packages = with pkgs; [
   nixd
   taskwarrior3
   unityhub
+  freecad
 ] ++ (with pkgs.unstable; [
   #Unstable
   java-language-server
-  freecad
   gitkraken
   musescore
   chromium
