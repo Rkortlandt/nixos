@@ -11,7 +11,11 @@
   config = mkIf cfg.enable {
     services.desktopManager.plasma6.enable = true;
     # services.displayManager.plasma-login-manager.enable = true;
-
+    services.displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+      # package = pkgs.kdePackages.sddm;
+    };
     environment.systemPackages = with pkgs; [
     ];
 
