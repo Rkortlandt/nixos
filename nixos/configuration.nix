@@ -14,6 +14,7 @@
       ../modules/nixos/i3.nix
       ../modules/nixos/boot.nix
       ../modules/nixos/cosmic.nix
+      ../modules/nixos/kde.nix
   ];
 
   nixpkgs = {
@@ -100,7 +101,10 @@
       modules.hyprland.enable = false;
       modules.i3.enable = true;
     };
-
+    kde.configuration = {
+      modules.hyprland.enable = false;
+      modules.kde.enable = true;
+    };
   };
 
 
