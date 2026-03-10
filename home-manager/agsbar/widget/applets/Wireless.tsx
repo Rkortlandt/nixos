@@ -76,7 +76,7 @@ export default function ConnectivityModule() {
                 <For each={createBinding(network.wifi, "accessPoints")}>
                   {(ap: AstalNetwork.AccessPoint, index) => (
                     <button
-                      visible={ap.ssid != null}
+                      visible={createBinding(ap, "ssid").as(v => v != null)}
                       onClicked={() => connect(ap)}
                       hexpand={true}
                     >

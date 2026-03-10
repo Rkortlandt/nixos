@@ -5,6 +5,10 @@ $tertiary-bg-color: #0EA16F;
 $secondary-bg-color: #172A7D;
 $primary-bg-color: #0F5880;
 
+* {
+  font-family: Impact;
+}
+
 window {
   background: transparent;
   color: $fg-color;
