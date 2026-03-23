@@ -298,10 +298,13 @@ home.packages = with pkgs; [
   mpg123
   fuzzel
   rustc
+  nil
   nixd
   taskwarrior3
   unityhub
   freecad
+  wine
+  octave
 ] ++ (with pkgs.unstable; [
   #Unstable
   java-language-server
