@@ -305,6 +305,7 @@ home.packages = with pkgs; [
   freecad
   wine
   octave
+  bottles
 ] ++ (with pkgs.unstable; [
   #Unstable
   java-language-server
