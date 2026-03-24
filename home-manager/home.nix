@@ -304,7 +304,7 @@ home.packages = with pkgs; [
   unityhub
   freecad
   wine
-  octave
+  octaveFull
   bottles
 ] ++ (with pkgs.unstable; [
   #Unstable
