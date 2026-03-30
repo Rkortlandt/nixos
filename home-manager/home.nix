@@ -12,7 +12,8 @@
   # You can import other home-manager modules here
   imports = [
     inputs.ags.homeManagerModules.default
-    ./bash
+    ./bash  
+    inputs.dms.homeModules.dank-material-shell
   ];
   
   nixpkgs = {
@@ -189,6 +190,11 @@
   };
 
   programs = {
+    dank-material-shell = {
+      enable = true;
+      enableSystemMonitoring = true;
+      dgop.package = inputs.dgop.packages.${pkgs.system}.default;
+    };
     ags = {
       enable = true;
       configDir = ./ags;

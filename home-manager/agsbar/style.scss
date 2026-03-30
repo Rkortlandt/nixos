@@ -267,3 +267,35 @@ scale trough:hover {
   margin-left: 2px;
   margin-right: 8px;
 }
+
+
+/* --- Scrolled Window Fixes --- */
+
+/* 1. Make the container backgrounds completely transparent */
+scrolledwindow,
+scrolledwindow viewport {
+  background-color: transparent;
+}
+
+/* 2. Completely nuke the overscroll rubber-banding and hidden-content shadows */
+scrolledwindow undershoot.top,
+scrolledwindow overshoot.top {
+  background: none;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: none;
+}
+
+/* Hide scrollbar entirely */
+scrollbar {
+  min-width: 0px;
+  min-height: 0px;
+  background: transparent;
+
+  slider,
+  trough {
+    background: transparent;
+    min-width: 0px;
+  }
+}
