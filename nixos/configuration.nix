@@ -109,6 +109,10 @@
         mesa               # OpenGL/Hardware acceleration
         libxkbcommon
         stdenv.cc.cc.lib # Often needed for standard C++ libraries
+        atk          # <-- The one you just hit
+        pango        # (Preemptive) Text rendering
+        cairo        # (Preemptive) 2D graphics
+        gdk-pixbuf   # (Preemptive) Image loading
         ];
   };
   programs.dconf.enable = true;
@@ -249,9 +253,7 @@ networking.firewall = {
   services.openssh = {
     enable = true;
     settings = {
-#Forbid root login through SSH.
       PermitRootLogin = "no";
-# Use keys only. Remove if you want to SSH using password (not recommended)
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
     };
