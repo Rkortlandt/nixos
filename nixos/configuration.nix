@@ -92,6 +92,7 @@
         gtk3
         webkitgtk_4_1
         xorg.libX11
+        xorg.libXext
         stdenv.cc.cc.lib # Often needed for standard C++ libraries
     ];
   };
