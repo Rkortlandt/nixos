@@ -83,8 +83,18 @@
       };
     };
   };
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      libsecret     # Fixes your current error
 
-  programs.nix-ld.enable = true; 
+        glib
+        gtk3
+        webkitgtk_4_1
+        xorg.libX11
+        stdenv.cc.cc.lib # Often needed for standard C++ libraries
+    ];
+  };
   programs.dconf.enable = true;
   modules.hyprland.enable = lib.mkDefault true;
   modules.gnome.enable = lib.mkDefault false;
