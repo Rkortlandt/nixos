@@ -87,7 +87,7 @@
     enable = true;
     libraries = with pkgs; [
       libsecret     # Fixes your current error
-
+      expat
         glib
         gtk3
         webkitgtk_4_1
