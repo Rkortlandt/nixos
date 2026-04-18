@@ -106,6 +106,7 @@
         xorg.libXfixes     # ...
         xorg.libXrandr     # ...
         xorg.libxcb        # X C Binding
+        freetype
         mesa               # OpenGL/Hardware acceleration
         libxkbcommon
         stdenv.cc.cc.lib # Often needed for standard C++ libraries
