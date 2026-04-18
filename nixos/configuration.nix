@@ -84,6 +84,10 @@
       };
     };
   };
+
+    nixpkgs.config.permittedInsecurePackages = [
+      "libsoup-2.74.3"
+    ];
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -107,6 +111,7 @@
         xorg.libXrandr     # ...
         xorg.libxcb        # X C Binding
         freetype
+        libsoup_2_4
         libpng
         mesa               # OpenGL/Hardware acceleration
         libxkbcommon

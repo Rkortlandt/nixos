@@ -2,6 +2,7 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-legacy.url = "github:nixos/nixpkgs/nixos-23.11";
     quickshell = {
