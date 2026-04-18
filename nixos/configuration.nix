@@ -93,6 +93,7 @@
         webkitgtk_4_1
         xorg.libX11
         xorg.libXext
+        xorg.libXxf86vm
         libxkbcommon
         stdenv.cc.cc.lib # Often needed for standard C++ libraries
     ];
