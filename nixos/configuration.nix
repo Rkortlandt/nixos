@@ -113,6 +113,7 @@
         freetype
         libsoup_2_4
         libpng
+        libjpeg
         mesa               # OpenGL/Hardware acceleration
         libxkbcommon
         stdenv.cc.cc.lib # Often needed for standard C++ libraries
