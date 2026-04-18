@@ -3,7 +3,7 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+    nixpkgs-legacy.url = "github:nixos/nixpkgs/nixos-23.11";
     quickshell = {
       # add ?ref=<tag> to track a tag
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
@@ -56,6 +56,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    nixpkgs-legacy,
     home-manager,
     nixos-hardware,
     split-monitor-workspaces,
@@ -75,6 +76,12 @@
       "aarch64-darwin"
       "x86_64-darwin"
     ];
+    system = "x86_64-linux";
+
+pkgs-legacy = import nixpkgs-legacy {
+      inherit system;
+      config.allowUnfree = true; # In case you need unfree legacy packages
+    };
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -87,9 +94,10 @@
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
 
+
     nixosConfigurations = {
       rowan-nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
+        specialArgs = {inherit inputs outputs pkgs-legacy; };
         modules = [
           {
           }

@@ -5,6 +5,7 @@
     config,
     pkgs,
     pkgs-unstable,
+    pkgs-legacy,
     ...
 }: {
   imports = [
@@ -90,7 +91,6 @@
         expat
         glib
         gtk3
-        webkitgtk_4_1
         xorg.libX11
         xorg.libXext
         xorg.libXxf86vm
@@ -115,7 +115,9 @@
         pango        # (Preemptive) Text rendering
         cairo        # (Preemptive) 2D graphics
         gdk-pixbuf   # (Preemptive) Image loading
-        ];
+        ] ++ ([
+          pkgs-legacy.webkitgtk
+        ]);
   };
   programs.dconf.enable = true;
   modules.hyprland.enable = lib.mkDefault true;
