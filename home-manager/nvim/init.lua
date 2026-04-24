@@ -105,6 +105,17 @@ local gitsigns = {
   },
 }
 
+
+local aerial = {
+  'stevearc/aerial.nvim',
+  opts = {},
+  -- Optional dependencies
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-tree/nvim-web-devicons"
+  },
+}
+
 local whichkey = { 'folke/which-key.nvim', opts = {} }
 
 local theme = {
@@ -231,6 +242,7 @@ require('lazy').setup({
   treesitter,
   wakatime,
   nvimtree,
+  aerial,
 
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
