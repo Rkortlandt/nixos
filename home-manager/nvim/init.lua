@@ -38,7 +38,6 @@ vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>', { silent = true })
 
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'open floating diagnostic message' })
@@ -305,6 +304,15 @@ require('lspconfig').jdtls.setup {
       { buffer = bufnr, desc = 'LSP: Java: [E]xtract [M]ethod' })
   end,
 }
+
+require("aerial").setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    -- Jump forwards/backwards with '{' and '}'
+    vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+  end,
+})
+-- You probably also want to set a keymap to toggle aerial
 
 -- [[ highlight on yank ]]
 -- see `:help vim.highlight.o 2 + 2 = 4n_yank()`
