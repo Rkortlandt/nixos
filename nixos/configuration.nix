@@ -125,6 +125,12 @@
           pkgs-legacy.webkitgtk
         ]);
   };
+
+  programs.steam = {
+    enable = true;
+  };
+
+
   programs.dconf.enable = true;
   modules.hyprland.enable = lib.mkDefault true;
   modules.gnome.enable = lib.mkDefault false;
