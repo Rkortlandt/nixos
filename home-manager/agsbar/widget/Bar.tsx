@@ -3,23 +3,18 @@ import GLib from "gi://GLib"
 import Astal from "gi://Astal?version=4.0"
 import Gtk from "gi://Gtk?version=4.0"
 import Gdk from "gi://Gdk?version=4.0"
-import AstalBattery from "gi://AstalBattery"
-import AstalPowerProfiles from "gi://AstalPowerProfiles"
 import AstalWp from "gi://AstalWp"
-import AstalNetwork from "gi://AstalNetwork"
 import AstalTray from "gi://AstalTray"
-import AstalMpris from "gi://AstalMpris"
-import AstalApps from "gi://AstalApps"
 import { For, With, createBinding, createState, onCleanup } from "ags"
 import { createPoll } from "ags/time"
-import { execAsync } from "ags/process"
 import { SpecialWorkspaces, Workspaces } from "./applets/Workspaces"
 import { Backlights } from "../modules/backlight";
-import Wp from "gi://Wp?version=0.5"
 import { BarMprisPlayer } from "./applets/Media"
 import { SystemInfo } from "./applets/SystemInfo"
 import ConnectivityModule from "./applets/Wireless"
 import { AudioOutput } from "./applets/Audio"
+
+// Import the calculator and its global state
 import { showCalculator, InlineCalculator } from "./applets/Calculator"
 
 function Tray() {
@@ -80,9 +75,6 @@ export function Mic() {
   </box >
 }
 
-
-
-
 function Clock({ format = "%l:%M" }) {
   const time = createPoll("", 1000, () => {
     return GLib.DateTime.new_now_local().format(format)?.trimStart()!
@@ -129,9 +121,6 @@ export default function Bar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
 
   onCleanup(() => {
-    // Root components (windows) are not automatically destroyed.
-    // When the monitor is disconnected from the system, this callback
-    // is run from the parent <For> which allows us to destroy the window
     win.destroy()
   })
 
@@ -145,20 +134,42 @@ export default function Bar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
       gdkmonitor={gdkmonitor}
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
       anchor={TOP | LEFT | RIGHT}
+      application={app}
+
+      // Keep our Wayland keyboard focus trick active here!
       keymode={showCalculator.as(show =>
         show ? Astal.Keymode.EXCLUSIVE : Astal.Keymode.NONE
       )}
-      application={app}
     >
       <centerbox>
+        {/* === LEFT SIDE === */}
         <box $type="start" spacing={4}>
-          <Workspaces />
+
+          {/* 1. Place the Calculator as the absolute leftmost element */}
           <InlineCalculator />
-          <AudioOutput />
-          <Mic />
-          <SpecialWorkspaces />
-          <SystemInfo />
+
+          {/* 2. Bind the visibility of everything else to hide when the Calculator shows */}
+          <revealer
+            revealChild={showCalculator.as(show => !show)}
+            transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
+          >
+            <box spacing={4}>
+              <Workspaces />
+              <AudioOutput />
+              <Mic />
+              <SpecialWorkspaces />
+              <SystemInfo />
+            </box>
+          </revealer>
+
         </box>
+
+        {/* === CENTER === */}
+        <box $type="center" spacing={4}>
+          {/* Currently empty, but reserves space in the middle if needed */}
+        </box>
+
+        {/* === RIGHT SIDE === */}
         <box $type="end" spacing={4}>
           <BarMprisPlayer />
           <ConnectivityModule />
