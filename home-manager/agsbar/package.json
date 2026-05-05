@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "ags": "*",
-    "gnim": "*",
+    "ags": "github:Aylur/ags",
     "gnim-utils": "github:retrozinndev/gnim-utils"
   },
   "prettier": {

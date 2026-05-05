@@ -20,6 +20,7 @@ import { BarMprisPlayer } from "./applets/Media"
 import { SystemInfo } from "./applets/SystemInfo"
 import ConnectivityModule from "./applets/Wireless"
 import { AudioOutput } from "./applets/Audio"
+import { showCalculator, InlineCalculator } from "./applets/Calculator"
 
 function Tray() {
   const tray = AstalTray.get_default()
@@ -144,11 +145,15 @@ export default function Bar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
       gdkmonitor={gdkmonitor}
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
       anchor={TOP | LEFT | RIGHT}
+      keymode={showCalculator.as(show =>
+        show ? Astal.Keymode.EXCLUSIVE : Astal.Keymode.NONE
+      )}
       application={app}
     >
       <centerbox>
         <box $type="start" spacing={4}>
           <Workspaces />
+          <InlineCalculator />
           <AudioOutput />
           <Mic />
           <SpecialWorkspaces />
