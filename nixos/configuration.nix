@@ -128,7 +128,14 @@
 
   programs.steam = {
     enable = true;
+    remotePlay.openFirewall = true; # Critical: Opens ports for streaming
+    dedicatedServer.openFirewall = true;
   };
+
+  hardware.graphics = {
+  enable = true;
+  enable32Bit = true; # Steam needs 32-bit libs for hardware decoding
+};
 
 
   programs.dconf.enable = true;

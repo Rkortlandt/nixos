@@ -299,3 +299,36 @@ scrollbar {
     min-width: 0px;
   }
 }
+
+/* Calculator Widget Styles */
+.calc-container {
+  border-radius: 15px;
+}
+
+.calc-icon {
+  color: white;
+  margin-right: 8px;
+}
+
+.calc-entry {
+  color: white;
+  font-size: 10px;
+  min-height: 10px;
+  border-radius: 15px;
+}
+
+.calc-history-btn {
+  border-radius: 15px;
+  padding: 0 8px;
+  min-height: 10px;
+}
+
+.calc-history-equation {
+  color: grey;
+  font-size: 10px;
+}
+
+.calc-history-result {
+  color: white;
+  font-size: 10px;
+}
