@@ -74,7 +74,7 @@
   gtk = {
    theme = {
       # The name pattern for Orchis with the black tweak is "Orchis-Green-Dark-Black"
-      name = "Orchis-Green-Dark-Black";
+      name = "Orchis-Green-Dark";
       
       package = (pkgs.orchis-theme.override {
         tweaks = [ "black" ];
