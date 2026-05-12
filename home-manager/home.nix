@@ -280,6 +280,7 @@ home.packages = with pkgs; [
   #Stable
   prismlauncher
   adw-gtk3
+  adwaita-icon-theme
   swaybg
   snapshot
   gimp
