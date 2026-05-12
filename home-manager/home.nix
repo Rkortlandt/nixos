@@ -88,8 +88,8 @@
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Classic";
     iconTheme = {
-     name = "candy-icons"; # Matches your Green Orchis theme
-      package = pkgs.candy-icons;
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
   };
 
