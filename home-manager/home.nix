@@ -87,8 +87,10 @@
     enable = true;
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Classic";
-    iconTheme.package = pkgs.adwaita-icon-theme;
-    iconTheme.name = "Adwaita";
+    iconTheme = {
+     name = "Tela-circle-green-dark"; # Matches your Green Orchis theme
+      package = pkgs.tela-circle-icon-theme;
+    };
   };
 
   qt = {
