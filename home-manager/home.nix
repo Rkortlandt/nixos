@@ -279,6 +279,7 @@
 home.packages = with pkgs; [
   #Stable
   prismlauncher
+  adw-gtk3
   swaybg
   snapshot
   gimp
