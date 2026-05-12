@@ -72,6 +72,10 @@
   };
 
   gtk = {
+    theme = {
+      name = "Orchis-Dark";
+      package = pkgs.orchis-theme;
+    };
     enable = true;
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Classic";
