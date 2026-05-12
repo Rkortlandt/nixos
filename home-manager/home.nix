@@ -72,10 +72,18 @@
   };
 
   gtk = {
-    theme = {
-      name = "Orchis-Dark";
-      package = pkgs.orchis-theme;
-    };
+   theme = {
+      # The name pattern for Orchis with the black tweak is "Orchis-Green-Dark-Black"
+      name = "Orchis-Green-Dark-Black";
+      
+      package = (pkgs.orchis-theme.override {
+        tweaks = [ "black" ];
+        border-radius = 10;
+      }).overrideAttrs (oldAttrs: {
+        # The derivation's install script uses "-t all" by default, 
+        # but we ensure the 'name' reflects the specific variant you want.
+      });
+    };     
     enable = true;
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Classic";
