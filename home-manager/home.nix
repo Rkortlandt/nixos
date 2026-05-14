@@ -276,6 +276,24 @@
      }; 
   };
  */
+
+systemd.user.services.auto-float = {
+  Unit = {
+    Description = "Hyprland Auto-Float Script";
+    After = [ "graphical-session.target" ];
+    PartOf = [ "graphical-session.target" ];
+  };
+
+  Service = {
+    ExecStart = "/home/ss-rowan/nixos/home-manager/hyprland/hypr/scripts/auto-float.sh";
+    Restart = "on-failure";
+  };
+
+  Install = {
+    WantedBy = [ "graphical-session.target" ];
+  };
+};
+
 home.packages = with pkgs; [
   #Stable
   prismlauncher

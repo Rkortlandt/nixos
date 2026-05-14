@@ -100,7 +100,7 @@ function MediaPlayer({ player }: { player: AstalMpris.Player }) {
 
 function BarMediaPlayer({ player, onClick }: { player: AstalMpris.Player; onClick: () => void }) {
   const playIcon = createBinding(player, "playbackStatus").as((s) =>
-    s === AstalMpris.PlaybackStatus.PLAYING ? "Pause" : "Play"
+    s === AstalMpris.PlaybackStatus.PLAYING ? "Pause" : "PlayFix"
   );
 
   const title = createBinding(player, "title").as((t) =>
