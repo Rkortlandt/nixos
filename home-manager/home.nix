@@ -363,6 +363,7 @@ home.packages = with pkgs; [
   vivaldi
 ]) ++ (with inputs; [
   zen-browser.packages."${system}".default
+  grab.packages."${system}".default
 ]);
   
   # Enable home-manager and git

@@ -6,10 +6,12 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-legacy.url = "github:nixos/nixpkgs/nixos-23.11";
     quickshell = {
-      # add ?ref=<tag> to track a tag
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    grab.url = "path:/home/ss-rowan/Documents/grab";
+    grab.inputs.nixpkgs.follows = "nixpkgs";
 
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
@@ -64,6 +66,7 @@
     grub2-themes,
     ags,
     zen-browser,
+    grab,
     ...
   } @ inputs: let
     inherit (self) outputs;
