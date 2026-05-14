@@ -10,12 +10,12 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-      ../modules/nixos/gnome.nix
-      ../modules/nixos/hyprland.nix
-      ../modules/nixos/i3.nix
-      ../modules/nixos/boot.nix
-      ../modules/nixos/cosmic.nix
-      ../modules/nixos/kde.nix
+      ../../modules/nixos/gnome.nix
+      ../../modules/nixos/hyprland.nix
+      ../../modules/nixos/i3.nix
+      ../../modules/nixos/boot.nix
+      ../../modules/nixos/cosmic.nix
+      ../../modules/nixos/kde.nix
   ];
 
   nixpkgs = {

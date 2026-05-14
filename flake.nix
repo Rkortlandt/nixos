@@ -106,7 +106,7 @@ pkgs-legacy = import nixpkgs-legacy {
           {
           }
           grub2-themes.nixosModules.default
-          ./nixos/configuration.nix
+          ./hosts/rowan-nixos/configuration.nix
         ];
       };
     };
