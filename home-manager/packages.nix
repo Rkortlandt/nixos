@@ -1,0 +1,73 @@
+{ pkgs, inputs, ... }:
+
+{
+  home.packages = with pkgs; [
+    prismlauncher
+    adw-gtk3
+    adwaita-icon-theme
+    swaybg
+    snapshot
+    gimp
+    nemo
+    obsidian
+    grim
+    slurp
+    qemu
+    bridge-utils
+    discord
+    btop
+    jdk21
+    gcc
+    gradle
+    python3
+    go
+    nodejs
+    air
+    libreoffice-qt
+    cargo
+    unzip
+    rclone
+    clipse
+    cliphist
+    blender
+    spotify
+    jetbrains.idea
+    jetbrains.rider
+    qalculate-gtk
+    libqalculate
+    slack
+    lua-language-server
+    hyprpicker
+    tofi
+    inkscape
+    dolphin-emu
+    mpg123
+    fuzzel
+    rustc
+    nil
+    nixd
+    taskwarrior3
+    unityhub
+    freecad
+    wine
+    octaveFull
+    bottles
+  ] ++ (with pkgs.unstable; [
+    jdt-language-server
+    gitkraken
+    musescore
+    chromium
+    cosmic-term
+    arduino
+    zig
+    android-studio
+    zed-editor
+    godot_4
+    bluetui
+    orca-slicer
+    vivaldi
+  ]) ++ (with inputs; [
+    zen-browser.packages."${system}".default
+    grab.packages."${system}".default
+  ]);
+}
