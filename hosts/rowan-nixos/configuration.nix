@@ -1,72 +1,64 @@
 {
   inputs,
-    outputs,
-    lib,
-    config,
-    pkgs,
-    pkgs-unstable,
-    pkgs-legacy,
-    ...
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
 }: {
   imports = [
     ./hardware-configuration.nix
-      ../../modules/nixos/gnome.nix
-      ../../modules/nixos/hyprland.nix
-      ../../modules/nixos/i3.nix
-      ../../modules/nixos/boot.nix
-      ../../modules/nixos/cosmic.nix
-      ../../modules/nixos/kde.nix
+
+    ../modules/core/users.nix
+    ../modules/core/security.nix
+    ../modules/core/networking.nix
+    ../modules/core/boot.nix
+    
+    ../modules/programs/nix-ld.nix
+    ../modules/programs/steam.nix
+
+    ../modules/desktop/hyprland.nix
+    ../modules/desktop/kde.nix
   ];
 
   nixpkgs = {
     overlays = [
-        outputs.overlays.additions
-        outputs.overlays.modifications
-        outputs.overlays.unstable-packages
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.unstable-packages
     ];
     config = {
       allowUnfree = true;
+      permittedInsecurePackages = [
+        "libsoup-2.74.3"
+      ];
     };
   };
 
-# This will add each flake input as a registry
-# To make nix3 commands consistent with your flake
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-
-# This will additionally add your inputs to the system's legacy channels
-# Making legacy nix commands consistent as well, awesome!
-  nix.nixPath = ["/etc/nix/path"];
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-     name = "nix/path/${name}";
-     value.source = value.flake;
-     })
-  config.nix.registry;
-
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-    auto-optimise-store = true;
+  nix = {
+    registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+    nixPath = ["/etc/nix/path"];
+    settings = {
+      experimental-features = "nix-command flakes";
+      auto-optimise-store = true;
+      trusted-users = [ "root" "@wheel" ];
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+    };
   };
-#Networking
-  networking.networkmanager.enable = true;
 
-# Hostname
+  environment.etc = lib.mapAttrs' (name: value: {
+    name = "nix/path/${name}";
+    value.source = value.flake;
+  }) config.nix.registry;
+
   networking.hostName = "rowan-nixos";
-
-# Bootloader 
 
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
-  security.polkit.enable = true;
-  security.rtkit.enable = true;
-#TPM
-  security.tpm2 = {
-    enable = true;
-    pkcs11.enable = true;
-    tctiEnvironment.enable = true;
-  };
-#Audio
   services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
@@ -85,91 +77,26 @@
     };
   };
 
-    nixpkgs.config.permittedInsecurePackages = [
-      "libsoup-2.74.3"
-    ];
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      libsecret     # Fixes your current error
-        expat
-        glib
-        gtk3
-        xorg.libX11
-        xorg.libXext
-        xorg.libXxf86vm
-        xorg.libSM        
-        xorg.libICE        # Almost always required alongside libSM
-        nss                # Network Security Services (Huge culprit for web-based UIs)
-        nspr               # Pairs closely with NSS
-        alsa-lib           # Web engines constantly look for audio, even if silent
-        dbus               # Inter-process communication
-        cups               # Printing (A classic Chromium/CEF quirk)
-        xorg.libXcomposite # Standard X11 rendering extensions...
-        xorg.libXdamage    # ...
-        xorg.libXfixes     # ...
-        xorg.libXrandr     # ...
-        xorg.libxcb        # X C Binding
-        freetype
-        libsoup_2_4
-        libpng
-        libjpeg
-        mesa               # OpenGL/Hardware acceleration
-        libxkbcommon
-        stdenv.cc.cc.lib # Often needed for standard C++ libraries
-        atk          # <-- The one you just hit
-        pango        # (Preemptive) Text rendering
-        cairo        # (Preemptive) 2D graphics
-        gdk-pixbuf   # (Preemptive) Image loading
-        ] ++ ([
-          pkgs-legacy.webkitgtk
-        ]);
-  };
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Critical: Opens ports for streaming
-    dedicatedServer.openFirewall = true;
-  };
-
-  hardware.graphics = {
-  enable = true;
-  enable32Bit = true; # Steam needs 32-bit libs for hardware decoding
-};
-
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   programs.dconf.enable = true;
-  modules.hyprland.enable = lib.mkDefault true;
-  modules.gnome.enable = lib.mkDefault false;
-  modules.i3.enable = lib.mkDefault false;
-  modules.cosmic.enable = lib.mkDefault false;
   programs.virt-manager.enable = true;
 
-  specialisation = { 
-    cosmic.configuration = {
-      modules.hyprland.enable = false;
-      modules.cosmic.enable = true;
-    };
-    i3.configuration = {
-      modules.hyprland.enable = false;
-      modules.i3.enable = true;
-    };
+  modules.hyprland.enable = lib.mkDefault true;
+
+  specialisation = {
     kde.configuration = {
       modules.hyprland.enable = false;
       modules.kde.enable = true;
     };
   };
 
-
   virtualisation.docker.enable = true;
-
-  services.n8n = {
-    enable = false;
-    openFirewall = true;
-  };
+  virtualisation.libvirtd.enable = true;
 
   services.fwupd.enable = true;
-  services.gvfs.enable = true;  
+  services.gvfs.enable = true;
   services.dbus.enable = true;
   services.printing.enable = true;
   services.upower.enable = true;
@@ -183,68 +110,17 @@
     powerKeyLongPress = "poweroff";
   };
 
- /*  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  }; */
-
-   # 1. Enable Avahi and NSS mDNS support
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true; # Enable Name Service Switch (NSS) support for mDNS
-    openFirewall = true; # Open firewall for Avahi mDNS traffic (port 5353)
-
-    # Publish services
-    publish = {
-      enable = true;
-      addresses = true; # Publish your computer's IP addresses
-      workstation = true; # Publish your workstation details
-      userServices = true; # Allow publishing user-defined services
-    };
-
-    # Define your custom service
-    extraServiceFiles = {
-      "my-local-service.service" = ''
-        <?xml version="1.0" standalone='no'?>
-        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-        <service-group>
-          <name replace-wildcards="yes">%h My Local Service</name>
-          <service>
-            <type>_http._tcp</type> <port>9002</port>
-            <txt-record>path=/</txt-record>
-            <txt-record>description=My application on port 9002</txt-record>
-          </service>
-        </service-group>
-      '';
-    };
-  };
-
-networking.firewall = {
-  enable = true; # Make sure the firewall is enabled
-  allowedTCPPorts = [ 8080 12345 22 ]; # Add the port for your Go server here
-  # You might have other ports listed here, like for SSH (22).
-  # If so, add 8080 to the existing list, e.g., [ 22 8080 ].
-};
-
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk  # For Thunar and other GTK applications
-        xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
     ];
     config.common = {
       default = ["hyprland" "gtk"];
     };
   };
 
-#Bluetooth
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-#Enable virtualization
-  virtualisation.libvirtd.enable = true;
-
-#Fonts
   fonts.packages = with pkgs; [
     font-awesome
     helvetica-neue-lt-std
@@ -256,11 +132,7 @@ networking.firewall = {
     gnome-bluetooth_1_0
     gh
     kicad-small
-    git
     firefox
-    tofi
-    swaybg
-    unzip
     neovim 
     ripgrep
     efibootmgr
@@ -273,18 +145,8 @@ networking.firewall = {
     jetbrains.gateway
   ];
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
-  };
-  
   time.timeZone = "America/Detroit";
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -296,29 +158,6 @@ networking.firewall = {
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-  
-  users.groups.developers = {};
-  users.users = {
-    ss-rowan = {
-      initialPassword = "password";
-      isNormalUser = true;
-      description = "Rowan Kortlandt";
-      openssh.authorizedKeys.keys = [
-# TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      ];
-      extraGroups = ["wheel" "networkmanager" "audio" "input" "libvirtd" "tss" "docker" "qemu-libvirtd" "dialout" "developers"];
-    };
-
-    sshdev = {
-      initialPassword = "password";
-      isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtGkfL+J88kgpqGz6BWG2hOiGhjClM+8osMiH66DbFi sernstes@DESKTOP-MVFR5OM"
-      ]; 
-      extraGroups = ["developers"];
-      description = "Sean";
-    };
-  };
 
   fileSystems."/home/sshdev/5152_project" = {
     device = "/home/ss-rowan/Documents/codeProjects-Git/5152_Rebuilt";
@@ -329,13 +168,6 @@ networking.firewall = {
     device = "/home/ss-rowan/.jdks";
     options = [ "bind" ];
   }; 
-nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
-  };
 
-
-# https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
 }

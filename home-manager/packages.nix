@@ -2,70 +2,88 @@
 
 {
   home.packages = with pkgs; [
-    prismlauncher
+    # Desktop & Wayland
     adw-gtk3
     adwaita-icon-theme
     swaybg
-    snapshot
-    gimp
-    nemo
-    obsidian
     grim
     slurp
+    hyprpicker
+    tofi
+    fuzzel
+    clipse
+    cliphist
+
+    # Core Utilities
+    nemo
+    btop
+    unzip
+    rclone
+    snapshot
+    qalculate-gtk
+    libqalculate
     qemu
     bridge-utils
-    discord
-    btop
-    jdk21
+
+    # Development
     gcc
-    gradle
+    jdk21
     python3
     go
     nodejs
-    air
-    libreoffice-qt
     cargo
-    unzip
-    rclone
-    clipse
-    cliphist
-    blender
-    spotify
-    jetbrains.idea
-    jetbrains.rider
-    qalculate-gtk
-    libqalculate
-    slack
-    lua-language-server
-    hyprpicker
-    tofi
-    inkscape
-    dolphin-emu
-    mpg123
-    fuzzel
     rustc
+    gradle
+    air
+    lua-language-server
     nil
     nixd
-    taskwarrior3
-    unityhub
+    jetbrains.idea
+    jetbrains.rider
+
+    # Creative & Design
+    gimp
+    inkscape
+    blender
     freecad
-    wine
+    spotify
+    mpg123
+
+    # Productivity & Communication
+    discord
+    slack
+    obsidian
+    taskwarrior3
+    libreoffice-qt
     octaveFull
+
+    # Gaming & Emulation
+    prismlauncher
+    dolphin-emu
+    unityhub
+    wine
     bottles
   ] ++ (with pkgs.unstable; [
-    jdt-language-server
-    gitkraken
-    musescore
-    chromium
+    # Desktop & Utilities
     cosmic-term
-    arduino
+    bluetui
+
+    # Development & Game Engines
     zig
+    arduino
     android-studio
     zed-editor
     godot_4
-    bluetui
-    orca-slicer
+    jdt-language-server
+    gitkraken
+
+    # Browsers 
+    chromium
     vivaldi
+
+    # etc
+    musescore
+    orca-slicer
   ]) ++ (with inputs; [
     zen-browser.packages."${system}".default
     grab.packages."${system}".default
