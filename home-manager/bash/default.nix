@@ -12,6 +12,7 @@
       "ignorespace"
     ];
     shellAliases = {
+      rm = "trash-put";
       cp = "cp -i";
       mv = "mv -i";
       mkdir = "mkdir -p";

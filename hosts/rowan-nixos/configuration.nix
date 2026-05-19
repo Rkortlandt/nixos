@@ -143,6 +143,7 @@
     jq
     libnotify
     jetbrains.gateway
+    trash-cli
   ];
 
   time.timeZone = "America/Detroit";
