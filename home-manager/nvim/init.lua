@@ -98,6 +98,9 @@ local llama = {
       show_info = false,
       keymap_fim_accept_full = "<Tab>",
     }
+
+    -- Force the suggestion text to show up as a distinct grey color
+    vim.api.nvim_set_hl(0, "LlamaSuggestion", { fg = "#808080", italic = true })
   end,
 }
 
