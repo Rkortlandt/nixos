@@ -30,6 +30,7 @@
     jdk21
     python3
     go
+    gopls
     nodejs
     cargo
     rustc
