@@ -64,10 +64,6 @@ local lspconfig = {
   -- lsp configuration & plugins
   'neovim/nvim-lspconfig',
   dependencies = {
-    -- automatically install lsps to stdpath for neovim
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
-
     -- useful status updates for lsp
     -- note: `opts = {}` is the same as calling `require('fidget').setup({})`
     { 'j-hui/fidget.nvim', opts = {} },
@@ -433,15 +429,16 @@ local on_attach = function(_, bufnr)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
 end
--- mason-lspconfig requires that these setup functions are called in this order before setting up the servers.
-require('mason').setup()
-require('mason-lspconfig').setup()
-
 require("neodev").setup({})
+
+-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 require('lspconfig').lua_ls.setup {
   cmd = { "lua-language-server" },
   on_attach = on_attach,
+  capabilities = capabilities,
 }
 
 -- Enable the following language servers
@@ -466,27 +463,14 @@ local servers = {
 
 }
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
--- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
-
-mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
-}
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end,
-}
+for server_name, config in pairs(servers) do
+  require('lspconfig')[server_name].setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = config,
+    filetypes = config.filetypes,
+  }
+end
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`

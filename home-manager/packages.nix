@@ -38,6 +38,7 @@
     lua-language-server
     nil
     nixd
+    delve
     jetbrains.idea
     jetbrains.rider
 
@@ -70,6 +71,8 @@
 
     # Development & Game Engines
     zig
+    zls
+    typescript-language-server
     arduino
     android-studio
     zed-editor
