@@ -93,13 +93,12 @@ local llama = {
   "ggml-org/llama.vim",
   init = function()
     vim.g.llama_config = {
-      endpoint_fim = "http://localhost:11434/api/generate",
-      model_fim = "codegemma:2b",
-      show_info = false,
+      endpoint_fim = "http://127.0.0.1:8012/infill",
+      show_info = true, -- Displays green performance metrics in the status bar
       keymap_fim_accept_full = "<Tab>",
     }
 
-    -- Force the suggestion text to show up as a distinct grey color
+    -- Fix any potential theme background clipping issues
     vim.api.nvim_set_hl(0, "LlamaSuggestion", { fg = "#808080", italic = true })
   end,
 }
