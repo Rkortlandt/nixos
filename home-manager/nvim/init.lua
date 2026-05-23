@@ -93,11 +93,10 @@ local llama = {
   "ggml-org/llama.vim",
   init = function()
     vim.g.llama_config = {
-      endpoint = "http://localhost:11434/api/generate",
-      model = "codegemma:2b",
+      endpoint_fim = "http://localhost:11434/api/generate",
+      model_fim = "codegemma:2b",
       show_info = false,
-      -- Map your preferred key to accept ghost-text suggestions
-      keymap_accept_full = "<Tab>",
+      keymap_fim_accept_full = "<Tab>",
     }
   end,
 }
