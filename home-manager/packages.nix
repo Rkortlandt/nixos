@@ -26,6 +26,7 @@
     bridge-utils
 
     # Development
+    llama-cpp
     gcc
     jdk21
     python3
