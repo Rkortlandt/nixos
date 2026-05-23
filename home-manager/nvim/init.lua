@@ -89,6 +89,19 @@ local autocmp = {
   },
 }
 
+local llama = {
+  "ggml-org/llama.vim",
+  init = function()
+    vim.g.llama_config = {
+      endpoint = "http://localhost:11434/api/generate",
+      model = "codegemma:2b",
+      show_info = false,
+      -- Map your preferred key to accept ghost-text suggestions
+      keymap_accept_full = "<Tab>",
+    }
+  end,
+}
+
 local gitsigns = {
   'lewis6991/gitsigns.nvim',
   opts = {
@@ -240,6 +253,7 @@ require('lazy').setup({
   wakatime,
   nvimtree,
   aerial,
+  llama,
 
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',

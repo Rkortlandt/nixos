@@ -42,6 +42,7 @@
     delve
     jetbrains.idea
     jetbrains.rider
+    ollama
 
     # Creative & Design
     gimp
