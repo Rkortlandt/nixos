@@ -62,7 +62,6 @@
     octaveFull
 
     # Gaming & Emulation
-    prismlauncher
     dolphin-emu
     unityhub
     wine
@@ -90,6 +89,7 @@
     # etc
     musescore
     orca-slicer
+    prismlauncher
   ]) ++ (with inputs; [
     zen-browser.packages."${system}".default
     grab.packages."${system}".default
