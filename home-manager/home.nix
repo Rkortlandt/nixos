@@ -65,6 +65,7 @@
       ".config/tofi".source = ./tofi;
       ".lib/jdk11".source = pkgs.jdk11;
       ".lib/jdk17".source = pkgs.jdk17;
+      ".lib/jdk25".source = pkgs.jdk25;
   };
 
   home.pointerCursor = {
