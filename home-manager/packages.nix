@@ -32,6 +32,7 @@
     python3
     go
     gopls
+		svelte-language-server
     nodejs
     cargo
     rustc
