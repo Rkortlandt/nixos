@@ -269,6 +269,20 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
 }, {})
 
+require('lspconfig').svelte.setup({
+  on_attach = function(client, bufnr)
+    -- Notify the Svelte language server when JS/TS files are saved
+    if client.name == 'svelte' then
+      vim.api.nvim_create_autocmd('BufWritePost', {
+        pattern = { '*.js', '*.ts' },
+        callback = function(ctx)
+          client:notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
+        end,
+      })
+    end
+  end,
+})
+
 require('lspconfig').jdtls.setup {
   capabilities = capabilities,
   -- Add the settings block here
