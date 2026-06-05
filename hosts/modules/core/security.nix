@@ -23,6 +23,8 @@
     tctiEnvironment.enable = true;
   };
 
+	networking.firewall.allowedTCPPorts = [ 5173 3000 ];
+
   # SSH
   services.openssh = {
     enable = true;
