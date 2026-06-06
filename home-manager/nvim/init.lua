@@ -20,10 +20,7 @@ vim.o.undofile = true
 -- case-insensitive searching unless \c or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
-
--- keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
-
 -- decrease update time
 vim.o.updatetime = 250
 vim.o.timeoutlen = 2000
@@ -33,21 +30,15 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- note: you should make sure your terminal supports this
 vim.o.termguicolors = true
-
+-- disable space bar
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>', { silent = true })
 
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'go to next diagnostic message' })
+-- error jumping
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'open floating diagnostic message' })
-vim.keymap.set('n', '<leader>en', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<leader>en', function() vim.diagnostic.jump({ count = 1, float=true}) end, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>ee', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'open diagnostics list' })
 
--- [[ install `lazy.nvim` plugin manager ]]
---    https://github.com/folke/lazy.nvim
---    `:help lazy.nvim.txt` for more info
+-- install lazy.nvim plugin manager 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.nystem {
@@ -61,20 +52,22 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- PLUGINS
+--
+-- 
+-- PLUGINS
 
 local lspconfig = {
   -- lsp configuration & plugins
   'neovim/nvim-lspconfig',
   dependencies = {
     -- useful status updates for lsp
-    -- note: `opts = {}` is the same as calling `require('fidget').setup({})`
     { 'j-hui/fidget.nvim', opts = {} },
     { 'folke/neodev.nvim', opts = {} },
   },
 }
 
 local autocmp = {
-  -- autocompletion
   'hrsh7th/nvim-cmp',
   dependencies = {
     -- snippet engine & its associated nvim-cmp source
@@ -116,7 +109,6 @@ local gitsigns = {
   },
 }
 
-
 local aerial = {
   'stevearc/aerial.nvim',
   opts = {},
@@ -138,9 +130,7 @@ local theme = {
 }
 
 local lualine = {
-  -- set lualine as statusline
   'nvim-lualine/lualine.nvim',
-  -- see `:help lualine.txt`
   opts = {
     options = {
       icons_enabled = true,
@@ -159,7 +149,11 @@ local indent = {
 }
 
 local comment = {
-  'numtostr/comment.nvim', opts = { toggler = { line = '<leader>/' }, opleader = { block = '<leader>/' } }
+  'numtostr/comment.nvim',
+  opts = {
+    toggler = { line = '<leader>/'},
+    opleader = { block = '<leader>/'}
+  }
 }
 
 local telescope = {
@@ -254,7 +248,7 @@ require('lazy').setup({
   wakatime,
   nvimtree,
   aerial,
-  llama,
+  -- llama,
 
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
@@ -269,77 +263,12 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
 }, {})
 
-require('lspconfig').svelte.setup({
-  on_attach = function(client, bufnr)
-    -- Notify the Svelte language server when JS/TS files are saved
-    if client.name == 'svelte' then
-      vim.api.nvim_create_autocmd('BufWritePost', {
-        pattern = { '*.js', '*.ts' },
-        callback = function(ctx)
-          client:notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
-        end,
-      })
-    end
-  end,
-})
-
-require('lspconfig').jdtls.setup {
-  capabilities = capabilities,
-  -- Add the settings block here
-  settings = {
-    java = {
-      completion = {
-        favoriteStaticMembers = {
-          "edu.wpi.first.units.Units.*",
-          -- Essential FRC Utilities
-          "edu.wpi.first.wpilibj.SmartDashboard.*",
-          "edu.wpi.first.wpilibj.util.Color.*",
-          -- Standard Testing Statics
-          "org.junit.jupiter.api.Assertions.*",
-          "org.mockito.Mockito.*",
-        },
-      },
-    },
-  },
-  on_attach = function(client, bufnr)
-    local nmap = function(keys, func, desc)
-      vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'LSP: ' .. desc })
-    end
-
-    -- Standard LSP Keymaps
-    nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-    nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-    nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-    nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-    nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-    -- Java Specific Features
-    local jdtls = require('jdtls')
-    nmap('<leader>oi', jdtls.organize_imports, 'Java: [O]rganize [I]mports')
-    nmap('<leader>ev', jdtls.extract_variable, 'Java: [E]xtract [V]ariable')
-    nmap('<leader>ec', jdtls.extract_constant, 'Java: [E]xtract [C]onstant')
-    nmap('<leader>bld', '<CMD>JdtCompile full<CR>', 'Java: [B]ui[ld] Project')
-    nmap('<leader>td', function() require('telescope.builtin').diagnostics({ bufnr = nil }) end,
-      '[T]elescope [D]iagnostics (Errors)')
-
-    -- Extract Method (Visual Mode)
-    vim.keymap.set('v', '<leader>em', [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
-      { buffer = bufnr, desc = 'LSP: Java: [E]xtract [M]ethod' })
-  end,
-}
-
 require("aerial").setup({
   -- optionally use on_attach to set keymaps when aerial has attached to a buffer
   on_attach = function(bufnr)
-    -- Jump forwards/backwards with '{' and '}'
     vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
   end,
 })
--- You probably also want to set a keymap to toggle aerial
 
 -- [[ highlight on yank ]]
 -- see `:help vim.highlight.o 2 + 2 = 4n_yank()`
@@ -413,95 +342,111 @@ vim.keymap.set('n', '<leader>sG', ':Livegrepgitroot<cr>', { desc = '[S]earch by 
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 vim.filetype.add({ extension = { templ = "templ" } })
--- [[ Configure Treesitter ]]
--- See `:help nvim-treesitter`
--- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 
 -- [[ Configure LSP ]]
---  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-end
 require("neodev").setup({})
 
+local client_capabilities = vim.lsp.protocol.make_client_capabilities()
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(client_capabilities)
+
+local function setup_lsp_keymaps(_, bufnr)
+  local function map_key(keys, func, desc)
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'LSP: ' .. desc })
+  end
+
+  map_key('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  map_key('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  map_key('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+  map_key('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  map_key('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+  map_key('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+  map_key('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  map_key('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  map_key('K', vim.lsp.buf.hover, 'Hover Documentation')
+  map_key('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  map_key('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  map_key('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  map_key('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  map_key('<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, '[W]orkspace [L]ist Folders')
+
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_) vim.lsp.buf.format() end, { desc = 'Format current buffer with LSP' })
+end
+
+require('lspconfig').svelte.setup({
+  capabilities = lsp_capabilities,
+  on_attach = function(client, bufnr)
+    setup_lsp_keymaps(client, bufnr)
+    if client.name == 'svelte' then
+      vim.api.nvim_create_autocmd('BufWritePost', {
+        pattern = { '*.js', '*.ts' },
+        callback = function(ctx)
+          client:notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
+        end,
+      })
+    end
+  end,
+})
+
+require('lspconfig').jdtls.setup({
+  capabilities = lsp_capabilities,
+  settings = {
+    java = {
+      completion = {
+        favoriteStaticMembers = {
+          "edu.wpi.first.units.Units.*",
+          "edu.wpi.first.wpilibj.SmartDashboard.*",
+          "edu.wpi.first.wpilibj.util.Color.*",
+          "org.junit.jupiter.api.Assertions.*",
+          "org.mockito.Mockito.*",
+        },
+      },
+    },
+  },
+  on_attach = function(client, bufnr)
+    setup_lsp_keymaps(client, bufnr)
+    
+    local function map_key(keys, func, desc)
+      vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'LSP: ' .. desc })
+    end
+
+    local jdtls_status, jdtls = pcall(require, 'jdtls')
+    if jdtls_status then
+      map_key('<leader>oi', jdtls.organize_imports, 'Java: [O]rganize [I]mports')
+      map_key('<leader>ev', jdtls.extract_variable, 'Java: [E]xtract [V]ariable')
+      map_key('<leader>ec', jdtls.extract_constant, 'Java: [E]xtract [C]onstant')
+      map_key('<leader>bld', '<CMD>JdtCompile full<CR>', 'Java: [B]ui[ld] Project')
+      map_key('<leader>td', function() require('telescope.builtin').diagnostics({ bufnr = nil }) end, '[T]elescope [D]iagnostics (Errors)')
+      vim.keymap.set('v', '<leader>em', [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]], { buffer = bufnr, desc = 'LSP: Java: [E]xtract [M]ethod' })
+    end
+  end,
+})
+
+require('lspconfig').lua_ls.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+})
+
+require('lspconfig').gopls.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+})
+
+require('lspconfig').templ.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+})
+
+require('lspconfig').htmx.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+  filetypes = { 'html', 'templ' },
+})
+
+-- (Keep your existing nvim-cmp, Telescope bindings, and autocmds down here)
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-require('lspconfig').lua_ls.setup {
-  cmd = { "lua-language-server" },
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
--- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
-local servers = {
-  -- clangd = {},
-  gopls = {},
-  templ = {},
-  htmx = {
-    filetypes = { 'html', 'templ' }
-  },
-
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
-}
-
-for server_name, config in pairs(servers) do
-  require('lspconfig')[server_name].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = config,
-    filetypes = config.filetypes,
-  }
-end
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
