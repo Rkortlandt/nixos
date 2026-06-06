@@ -68,10 +68,10 @@ services.tailscale.enable = true;
         "smb ports" = "445";
       };
       "dropzone" = {
-        "path" = "/home/your_username/tailscale_drop";
+        "path" = "/home/ss-rowan/tailscale_drop";
         "read only" = "no";
         "guest ok" = "yes";
-        "force user" = "your_username";
+        "force user" = "ss-rowan";
       };
     };
   };
