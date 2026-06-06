@@ -7,6 +7,7 @@
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 8080 12345 22 ];
+    trustedInterfaces = [ "tailscale0" ];
   };
 
   # Avahi and NSS mDNS support
