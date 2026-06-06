@@ -49,7 +49,32 @@
       options = "--delete-older-than 14d";
     };
   };
+services.tailscale.enable = true;
 
+  systemd.services.samba-smbd.after = [ "tailscaled.service" ];
+
+  services.samba = {
+    enable = true;
+    nmbd.enable = false;
+    winbindd.enable = false;
+    openFirewall = true;
+    settings = {
+      global = {
+        "interfaces" = "lo tailscale0";
+        "bind interfaces only" = "yes";
+        "security" = "user";
+        "map to guest" = "bad user";
+        "disable netbios" = "yes";
+        "smb ports" = "445";
+      };
+      "dropzone" = {
+        "path" = "/home/your_username/tailscale_drop";
+        "read only" = "no";
+        "guest ok" = "yes";
+        "force user" = "your_username";
+      };
+    };
+  };
 	programs.ladybird.enable = true;
 
   environment.etc = lib.mapAttrs' (name: value: {
