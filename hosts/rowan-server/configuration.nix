@@ -13,12 +13,7 @@
     ./modules/core/security.nix
     ./modules/core/networking.nix
     ./modules/core/boot.nix
-    
-    ./modules/programs/nix-ld.nix
-    ./modules/programs/steam.nix
-
-    ./modules/desktop/hyprland.nix
-    ./modules/desktop/kde.nix
+    ./modules/packages/
   ];
 
   nixpkgs = {
@@ -49,7 +44,7 @@
       options = "--delete-older-than 14d";
     };
   };
-services.tailscale.enable = true;
+  services.tailscale.enable = true;
 
   systemd.services.samba-smbd.after = [ "tailscaled.service" ];
 
@@ -73,14 +68,13 @@ services.tailscale.enable = true;
       };
     };
   };
-  programs.ladybird.enable = true;
 
   environment.etc = lib.mapAttrs' (name: value: {
     name = "nix/path/${name}";
     value.source = value.flake;
   }) config.nix.registry;
 
-  networking.hostName = "rowan-nixos";
+  networking.hostName = "rowan-server";
 
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
@@ -135,17 +129,6 @@ services.tailscale.enable = true;
     powerKeyLongPress = "poweroff";
   };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
-    ];
-    config.common = {
-      default = ["hyprland" "gtk"];
-    };
-  };
-
   fonts.packages = with pkgs; [
     font-awesome
     helvetica-neue-lt-std
@@ -156,18 +139,15 @@ services.tailscale.enable = true;
   environment.systemPackages = with pkgs; [
     gnome-bluetooth_1_0
     gh
-    kicad-small
     firefox
     neovim 
     ripgrep
     efibootmgr
-    inkscape
     lm_sensors
     wl-clipboard
     socat
     jq
     libnotify
-    jetbrains.gateway
     trash-cli
   ];
 
@@ -185,15 +165,5 @@ services.tailscale.enable = true;
     LC_TIME = "en_US.UTF-8";
   };
 
-  fileSystems."/home/sshdev/5152_project" = {
-    device = "/home/ss-rowan/Documents/codeProjects-Git/5152_Rebuilt";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/home/sshdev/JDKS" = {
-    device = "/home/ss-rowan/.jdks";
-    options = [ "bind" ];
-  }; 
-
-  system.stateVersion = "23.05";
+  system.stateVersion = "26.05";
 }

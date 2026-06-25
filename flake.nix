@@ -109,6 +109,12 @@ pkgs-legacy = import nixpkgs-legacy {
           ./hosts/rowan-nixos/configuration.nix
         ];
       };
+      rowan-server = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs pkgs-legacy; };
+        modules = [
+          ./hosts/rowan-server/configuration.nix
+        ];
+      };
     };
 
     homeConfigurations = {
