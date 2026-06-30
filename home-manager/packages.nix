@@ -61,6 +61,7 @@
     taskwarrior3
     libreoffice-qt
     octaveFull
+    thunderbird
 
     # Gaming & Emulation
     dolphin-emu
