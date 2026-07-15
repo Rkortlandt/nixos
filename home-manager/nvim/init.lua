@@ -35,10 +35,11 @@ vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>', { silent = true })
 
 -- error jumping
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'open floating diagnostic message' })
-vim.keymap.set('n', '<leader>en', function() vim.diagnostic.jump({ count = 1, float=true}) end, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<leader>en', function() vim.diagnostic.jump({ count = 1, float = true }) end,
+  { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>ee', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
--- install lazy.nvim plugin manager 
+-- install lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.nystem {
@@ -54,7 +55,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- PLUGINS
 --
--- 
+--
 -- PLUGINS
 
 local lspconfig = {
@@ -151,8 +152,8 @@ local indent = {
 local comment = {
   'numtostr/comment.nvim',
   opts = {
-    toggler = { line = '<leader>/'},
-    opleader = { block = '<leader>/'}
+    toggler = { line = '<leader>/' },
+    opleader = { block = '<leader>/' }
   }
 }
 
@@ -222,6 +223,16 @@ local wakatime = {
   lazy = false,
 }
 
+local vimtex = {
+  "lervag/vimtex",
+  lazy = false, -- we don't want to lazy load VimTeX
+  -- tag = "v2.15", -- uncomment to pin to a specific release
+  init = function()
+    -- VimTeX configuration goes here, e.g.
+    vim.g.vimtex_view_method = "zathura"
+  end
+}
+
 local nvimtree = {
   "nvim-tree/nvim-tree.lua",
   lazy = false,
@@ -248,6 +259,7 @@ require('lazy').setup({
   wakatime,
   nvimtree,
   aerial,
+  vimtex,
   -- llama,
 
   'tpope/vim-fugitive',
@@ -367,9 +379,11 @@ local function setup_lsp_keymaps(_, bufnr)
   map_key('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   map_key('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   map_key('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  map_key('<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, '[W]orkspace [L]ist Folders')
+  map_key('<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+    '[W]orkspace [L]ist Folders')
 
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_) vim.lsp.buf.format() end, { desc = 'Format current buffer with LSP' })
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_) vim.lsp.buf.format() end,
+    { desc = 'Format current buffer with LSP' })
 end
 
 require('lspconfig').svelte.setup({
@@ -404,7 +418,7 @@ require('lspconfig').jdtls.setup({
   },
   on_attach = function(client, bufnr)
     setup_lsp_keymaps(client, bufnr)
-    
+
     local function map_key(keys, func, desc)
       vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'LSP: ' .. desc })
     end
@@ -415,8 +429,10 @@ require('lspconfig').jdtls.setup({
       map_key('<leader>ev', jdtls.extract_variable, 'Java: [E]xtract [V]ariable')
       map_key('<leader>ec', jdtls.extract_constant, 'Java: [E]xtract [C]onstant')
       map_key('<leader>bld', '<CMD>JdtCompile full<CR>', 'Java: [B]ui[ld] Project')
-      map_key('<leader>td', function() require('telescope.builtin').diagnostics({ bufnr = nil }) end, '[T]elescope [D]iagnostics (Errors)')
-      vim.keymap.set('v', '<leader>em', [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]], { buffer = bufnr, desc = 'LSP: Java: [E]xtract [M]ethod' })
+      map_key('<leader>td', function() require('telescope.builtin').diagnostics({ bufnr = nil }) end,
+        '[T]elescope [D]iagnostics (Errors)')
+      vim.keymap.set('v', '<leader>em', [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
+        { buffer = bufnr, desc = 'LSP: Java: [E]xtract [M]ethod' })
     end
   end,
 })
