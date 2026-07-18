@@ -154,7 +154,6 @@ services.tailscale.enable = true;
   ];
 
   environment.systemPackages = with pkgs; [
-    gnome-bluetooth_1_0
     gh
     kicad-small
     firefox
@@ -184,16 +183,6 @@ services.tailscale.enable = true;
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-
-  fileSystems."/home/sshdev/5152_project" = {
-    device = "/home/ss-rowan/Documents/codeProjects-Git/5152_Rebuilt";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/home/sshdev/JDKS" = {
-    device = "/home/ss-rowan/.jdks";
-    options = [ "bind" ];
-  }; 
 
   system.stateVersion = "23.05";
 }

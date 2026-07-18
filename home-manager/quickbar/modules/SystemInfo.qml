@@ -5,23 +5,28 @@ Item {
     width: 100
     height: parent.height
 
-    // Fetch CPU Usage
+    Timer {
+        interval: 2000
+        running: true
+        repeat: true
+        onTriggered: cpuPoll.running = true
+    }
+
     Process {
         id: cpuPoll
         command: ["bash", "-c", "/path/to/scripts/system.sh --cpu-usage"]
         running: true
 
-        Timer {
-            interval: 2000
-            running: true
-            repeat: true
-            onTriggered: cpuPoll.running = true
+        property int usage: 0
+
+        // Hook up a collector to read the stdout data stream cleanly
+        stdout: StdioCollector {
+            onStreamFinished: {
+                cpuPoll.usage = parseInt(this.text.trim())
+            }
         }
 
-        property int usage: 0
-        onExited: {
-            usage = parseInt(stdout.trim())
-        }
+
     }
 
     Text {

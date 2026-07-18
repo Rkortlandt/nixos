@@ -5,11 +5,11 @@ import Quickshell.Wayland
 
 PanelWindow {
     id: window
-    
-    // Equivalent to namespace="my-bar" and exclusivitiy=EXCLUSIVE
-    WlrLayershell.namespace: "my-bar"
-    WlrLayershell.layer: WlrLayer.Top
-    WlrLayershell.anchor: WlrAnchor.Top | WlrAnchor.Left | WlrAnchor.Right
+    anchors {
+        top: true
+        left: true
+        right: true
+    } 
     exclusiveZone: height 
 
     height: 30
@@ -25,10 +25,8 @@ PanelWindow {
             Layout.alignment: Qt.AlignLeft
             spacing: 4
 
-            // Placeholders for your applets
             // InlineCalculator {}
             
-            // Replicating the Revealer logic (hiding when calculator shows)
             Row {
                 id: leftModules
                 spacing: 4
