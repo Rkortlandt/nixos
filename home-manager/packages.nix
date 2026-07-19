@@ -24,15 +24,16 @@
     libqalculate
     qemu
     bridge-utils
+    kitty
 
     # Development
-    llama-cpp
+    # llama-cpp
     gcc
     jdk21
     python3
     go
     gopls
-		svelte-language-server
+    svelte-language-server
     nodejs
     cargo
     rustc
@@ -65,23 +66,23 @@
 
     # Gaming & Emulation
     dolphin-emu
-    unityhub
+    # unityhub
     wine
     bottles
   ] ++ (with pkgs.unstable; [
     # Desktop & Utilities
-    cosmic-term
+    # cosmic-term
     bluetui
 
     # Development & Game Engines
     zig
     zls
     typescript-language-server
+    jdt-language-server
     arduino
     android-studio
     zed-editor
     godot_4
-    jdt-language-server
     gitkraken
 
     # Browsers 

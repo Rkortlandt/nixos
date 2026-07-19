@@ -25,6 +25,7 @@
     };
 
     environment.systemPackages = with pkgs; [
+      kitty
       dunst
       xdg-desktop-portal-hyprland
       brightnessctl

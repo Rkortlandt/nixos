@@ -7,7 +7,7 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
-    freecad = final.unstable.freecad.overrideAttrs (oldAttrs: rec {
+/*     freecad = final.unstable.freecad.overrideAttrs (oldAttrs: rec {
       version = "1.1rc3"; # Update this to the exact release tag if different
 
       src = final.fetchFromGitHub {
@@ -31,7 +31,7 @@
       ]; 
 
       postPatch = "";
-    });
+    }); */
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
