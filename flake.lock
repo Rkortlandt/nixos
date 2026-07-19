@@ -215,8 +215,8 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1777323221,
-        "narHash": "sha256-ArD3A3XZ5xYUkdV64pNDuKEH0WJGPPBRB0XJsEpcpjk=",
+        "lastModified": 1784473721,
+        "narHash": "sha256-pQ078mE5Wb51XOzk+dCZYxKRdcxz2KA+/GV3skIOheE=",
         "path": "/home/ss-rowan/Documents/grab",
         "type": "path"
       },
@@ -368,11 +368,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1784471717,
-        "narHash": "sha256-MxISYoJs4osw9kVRzzU9HEq47iCtlMdiUHVA8b1gyGc=",
+        "lastModified": 1784472564,
+        "narHash": "sha256-TmsR5ZQegX7XYD+yWxRj3C6NkVhORtQktrZj9GNsHfs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "15452443d8aff50fdc3155178a476b5156aefbd5",
+        "rev": "ac5b9bd5eac95673d1a6809b899c32663dc654f0",
         "type": "github"
       },
       "original": {
