@@ -34,10 +34,10 @@ vim.o.termguicolors = true
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>', { silent = true })
 
 -- error jumping
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'open floating diagnostic message' })
+vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, { desc = 'open floating diagnostic message' })
 vim.keymap.set('n', '<leader>en', function() vim.diagnostic.jump({ count = 1, float = true }) end,
   { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>ee', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+vim.keymap.set('n', '<leader>el', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- install lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -245,6 +245,20 @@ local nvimtree = {
   end,
 }
 
+local colorizer = {
+  "norcalli/nvim-colorizer.lua",
+  event = { "BufReadPre", "BufNewFile" },
+  config = function()
+    local colorizer = require("colorizer")
+
+    colorizer.setup({
+      "*",
+      "!asm",
+      "!bin",
+    })
+  end,
+}
+
 require('lazy').setup({
   lspconfig,
   autocmp,
@@ -260,6 +274,7 @@ require('lazy').setup({
   nvimtree,
   aerial,
   vimtex,
+  colorizer,
   -- llama,
 
   'tpope/vim-fugitive',
