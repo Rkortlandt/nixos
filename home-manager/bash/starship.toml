@@ -36,7 +36,7 @@ format = '[]($style)'
 
 [nix_shell]
 disabled = false
-format = '[ \udb81\uddc0 ](white bg:#0F5880)'
+format = '[ 󰗀 ](white bg:#0F5880)'
 
 [directory]
 style = "bg:#434C5E"
