@@ -3,9 +3,9 @@ format = """
 $directory\
 [](fg:#3B4252 bg:#0F5880)\
 $nix_shell\
-[](fg:#0F5880 bg:#4C566A)\
+[](fg:#0F5880 bg:#0c6da3)\
 $git_branch\
-[](fg:#4C566A bg:#CECECE)\
+[](fg:#0c6da3 bg:#0d77b1)\
 $c\
 $elixir\
 $elm\
@@ -16,7 +16,7 @@ $julia\
 $nodejs\
 $nim\
 $rust\
-[](fg:#CECECE bg:#E8E8E8)\
+[](fg:#0d77b1 bg:#E8E8E8)\
 $docker_context\
 [](fg:#E8E8E8 bg:#FFFFFF)\
 $time\
@@ -61,7 +61,7 @@ truncation_symbol = "…/"
 
 [c]
 symbol = " "
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [docker_context]
@@ -71,47 +71,47 @@ format = '[ $symbol $context ]($style) $path'
 
 [elixir]
 symbol = " "
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [elm]
 symbol = " "
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [git_branch]
-symbol = "󰊢 "
+symbol = ""
 style = "bg:#4C566A"
 format = '[ $symbol $branch ]($style)'
 
 [golang]
 symbol = " "
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [haskell]
 symbol = " "
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [java]
 symbol = " "
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [julia]
 symbol = "󰰇 "
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [nodejs]
 symbol = "󰎙 "
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [nim]
 symbol = " "
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [python]
@@ -120,7 +120,7 @@ format = '[(\($virtualenv\) )]($style)'
 
 [rust]
 symbol = "󱘗"
-style = "bg:#3F7723"
+style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [time]
