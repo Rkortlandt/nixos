@@ -80,9 +80,8 @@ style = "bg:#0D77B1"
 format = '[ $symbol ($version) ]($style)'
 
 [git_branch]
-symbol = ""
-style = "bg:#4C566A"
-format = '[ $symbol $branch ]($style)'
+style = "bg:#0c6da3"
+format = '[ $branch ]($style)'
 
 [golang]
 symbol = " "
