@@ -28,6 +28,7 @@
 
     # Development
     # llama-cpp
+    eza
     gcc
     jdk21
     python3

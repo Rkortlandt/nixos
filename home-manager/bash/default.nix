@@ -1,5 +1,8 @@
 { pkgs, lib, ... }:
 
+# eza --all --sort=type --icons=always
+# eza --long --no-user --header --created --time-style=relative --all --sort=type --icons=always
+
 {
   programs.bash = {
     enable = true;
@@ -25,9 +28,8 @@
       vim = "nvim";
       home = "cd ~";
       "cd.." = "cd ..";
-      la = "ls -ALh";
-      ls = "ls -aFh --color=always";
-      ll = "ls -Fls";
+      ls = "eza --all --sort=type --icons=always";
+      ll = "eza --long --no-user --header --created --time-style=relative --all --sort=type --icons=always";
       h = "history | grep";
       htop = "btop";
       top = "btop";

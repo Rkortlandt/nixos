@@ -41,7 +41,7 @@ format = '[ 󰗀  ](white bg:#0F5880)'
 [directory]
 style = "bg:#3B4252"
 format = "[ $path ]($style)"
-truncation_length = 3
+truncation_length = 6
 truncation_symbol = "…/"
 
 # Here is how you can shorten some long paths by text replacement
