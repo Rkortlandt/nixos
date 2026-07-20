@@ -36,10 +36,10 @@ format = '[]($style)'
 
 [nix_shell]
 disabled = false
-format = '[ 󰗀 ](white bg:#0F5880)'
+format = '[ 󰗀  ](white bg:#0F5880)'
 
 [directory]
-style = "bg:#434C5E"
+style = "bg:#3B4252"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -80,12 +80,12 @@ style = "bg:#3F7723"
 format = '[ $symbol ($version) ]($style)'
 
 [git_branch]
-symbol = ""
+symbol = "󰊢 "
 style = "bg:#4C566A"
 format = '[ $symbol $branch ]($style)'
 
 [golang]
-symbol = "Go"
+symbol = " "
 style = "bg:#3F7723"
 format = '[ $symbol ($version) ]($style)'
 
