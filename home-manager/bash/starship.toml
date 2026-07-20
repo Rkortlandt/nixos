@@ -1,6 +1,5 @@
 format = """
 [](#3B4252)\
-[](fg:#00a5b9 bg:#434C5E)\
 $directory\
 [](fg:#3B4252 bg:#0F5880)\
 $nix_shell\
@@ -37,10 +36,7 @@ format = '[]($style)'
 
 [nix_shell]
 disabled = false
-impure_msg = '[ ](bg:#b91400)'
-pure_msg = '[#00b971 ](green bold bg:#00b971)'
-unknown_msg = '[unknown shell](bold yellow bg:#00a5b9)'
-format = '[$state shell ](white bg:#00a5b9)'
+format = '[Shell](white bg:#0F4880)'
 
 [directory]
 style = "bg:#434C5E"
