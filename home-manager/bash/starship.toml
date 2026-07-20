@@ -1,7 +1,5 @@
 format = """
 [](#3B4252)\
-$python\
-$username\
 [](fg:#3B4252 bg:#00a5b9)\
 $nix_shell\
 [](fg:#00a5b9 bg:#434C5E)\
@@ -35,7 +33,7 @@ command_timeout = 5000
 show_always = true
 style_user = "bg:#3B4252"
 style_root = "bg:#DF2500"
-format = '[   ]($style)'
+format = '[]($style)'
 
 [nix_shell]
 disabled = false
