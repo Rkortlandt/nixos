@@ -1,9 +1,9 @@
 format = """
 [](#3B4252)\
-[](fg:#3B4252 bg:#00a5b9)\
-$nix_shell\
 [](fg:#00a5b9 bg:#434C5E)\
 $directory\
+[](fg:#3B4252 bg:#0F5880)\
+$nix_shell\
 [](fg:#434C5E bg:#4C566A)\
 $git_branch\
 [](fg:#4C566A bg:#CECECE)\
