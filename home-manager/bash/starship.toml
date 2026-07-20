@@ -3,7 +3,7 @@ format = """
 $directory\
 [](fg:#3B4252 bg:#0F5880)\
 $nix_shell\
-[](fg:#434C5E bg:#4C566A)\
+[](fg:#0F5880 bg:#4C566A)\
 $git_branch\
 [](fg:#4C566A bg:#CECECE)\
 $c\
@@ -36,7 +36,7 @@ format = '[]($style)'
 
 [nix_shell]
 disabled = false
-format = '[Shell](white bg:#0F4880)'
+format = '[ \udb81\uddc0 ](white bg:#0F5880)'
 
 [directory]
 style = "bg:#434C5E"
