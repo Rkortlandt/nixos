@@ -16,11 +16,11 @@ $julia\
 $nodejs\
 $nim\
 $rust\
-[](fg:#0d77b1 bg:#E8E8E8)\
+[](fg:#0d77b1 bg:#04af4b)\
 $docker_context\
-[](fg:#E8E8E8 bg:#FFFFFF)\
+[](fg:#04af4b bg:#03883b)\
 $time\
-[ ](fg:#FFFFFF)\
+[ ](fg:#03883b)\
 \n[  󱞩 ](fg:#FFFFFF)\
 """
 command_timeout = 5000
@@ -125,5 +125,5 @@ format = '[ $symbol ($version) ]($style)'
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-style = "bg:#FFFFFF fg:#3B4252"
+style = "bg:#03883b fg:#ffffff"
 format = '[$time]($style)'
