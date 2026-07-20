@@ -37,7 +37,7 @@ export function SystemInfo() {
   );
 
   return (
-    <menubutton css="background: transparent">
+    <button css="background: transparent">
       <box>
         <label label={createBinding(battery, "percentage").as((p) => `${Math.floor(p * 100)}%`)} />
         <image
@@ -46,26 +46,19 @@ export function SystemInfo() {
           css="padding-left: 3px"
         />
       </box>
-      <popover hasArrow={false}>
-        <box orientation={Gtk.Orientation.VERTICAL} spacing={4} css="min-width: 250px">
+      <revealer>
+        <box>
           <box>
             <button class="primary-bg margin menu-btn"><image pixelSize={27} iconName="Cpu" /></button>
             <label css="color: white; font-weight: bold;" label={cpu.as((cpu) => ` ${cpu}%`)} />
-            <slider
-              hexpand
-              value={cpu}
-              max={100}
-            />
           </box>
           <box>
             <button class="primary-bg margin menu-btn"><image pixelSize={27} iconName="Ram" /></button>
             <label css="color: white; font-weight: bold;" label={ram.as((ram) => ` ${ram}%`)} />
-            <slider
-              hexpand
-              value={ram}
-              max={100}
-            />
           </box>
+        </box>
+      </revealer>
+      <revealer>
           <box>
             <button class="primary-bg margin menu-btn"><image pixelSize={27} iconName="Temp" /></button>
             <label css="color: white; font-weight: bold;" label={temp.as((temp) => ` ${temp}%`)} />
@@ -75,8 +68,7 @@ export function SystemInfo() {
               max={200}
             />
           </box>
-        </box>
-      </popover>
-    </menubutton>
+      </revealer>
+    </button>
   )
 }

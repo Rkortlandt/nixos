@@ -34,13 +34,13 @@
     python3
     go
     gopls
-    svelte-language-server
     nodejs
     cargo
     rustc
     gradle
     air
     lua-language-server
+    svelte-language-server
     nil
     nixd
     delve

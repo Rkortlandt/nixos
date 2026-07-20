@@ -473,6 +473,11 @@ require('lspconfig').htmx.setup({
   filetypes = { 'html', 'templ' },
 })
 
+require('lspconfig').ts_ls.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+})
+
 -- (Keep your existing nvim-cmp, Telescope bindings, and autocmds down here)
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
