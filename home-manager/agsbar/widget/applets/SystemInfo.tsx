@@ -42,7 +42,7 @@ export function SystemInfo() {
   );
 
   return (
-    <button css="background: transparent" onClicked={() => {
+    <button css="background: transparent; border: transparent;" onClicked={() => {
       if (state() == "closed") {
         setState("cpumem")
       } else if (state() == "cpumem") {
@@ -64,23 +64,30 @@ export function SystemInfo() {
           <box>
             <box>
               <label css="color: white; font-weight: bold;" label={cpu.as((cpu) => ` ${cpu}%`)} />
-              <button class="margin menu-btn"><image pixelSize={27} iconName="Cpu" /></button>
+              <image
+                pixelSize={27}
+                iconName="Cpu"
+                css="padding-left: 3px"
+              />
             </box>
             <box>
               <label css="color: white; font-weight: bold;" label={ram.as((ram) => ` ${ram}%`)} />
-              <button class=" margin menu-btn"><image pixelSize={27} iconName="Ram" /></button>
+              <image
+                pixelSize={27}
+                iconName="Ram"
+                css="padding-left: 3px"
+              />
             </box>
           </box>
         </revealer>
         <revealer revealChild={cpumemActive} transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}>
           <box>
-            <label css="color: white; font-weight: bold;" label={temp.as((temp) => ` ${temp}%`)} />
-            <button class=" margin menu-btn"><image pixelSize={27} iconName="Temp" /></button>
-            { /* <slider
-              hexpand
-              value={temp}
-              max={200}
-            /> */}
+            <label css="color: white; font-weight: bold;" label={temp.as((temp) => ` ${temp}°`)} />
+            <image
+              pixelSize={27}
+              iconName="Temp"
+              css="padding-left: 3px"
+            />
           </box>
         </revealer>
       </box>
