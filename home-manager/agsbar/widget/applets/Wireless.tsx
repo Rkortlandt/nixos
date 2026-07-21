@@ -39,7 +39,7 @@ export default function ConnectivityModule() {
   );
 
   return (
-    <menubutton class="connectivity-module" popover={menuPopover}>
+    <menubutton class="connectivity-module" popover={menuPopover as any}>
       <box spacing={6}>
         <With value={createBinding(network, "wifi")}>
           {(wifi: AstalNetwork.Wifi | null) => (
@@ -57,6 +57,10 @@ function WifiList({ network, visible }: { network: AstalNetwork.Network, visible
   const [passwordPrompt, setPasswordPrompt] = createState<string | null>(null);
 
   async function connect(ap: AstalNetwork.AccessPoint, password?: string) {
+    if (ap.ssid == null) {
+      return
+    }
+
     setConnectingTo(ap.ssid);
     try {
       if (password) {
@@ -72,45 +76,69 @@ function WifiList({ network, visible }: { network: AstalNetwork.Network, visible
     }
   }
 
+  var isWifiAvalible = createBinding(network, "wifi");
+
+  var getAPs = (wifi: AstalNetwork.Wifi) => createBinding(wifi, "accessPoints").as(aps => {
+    const uniqueAps = new Map<string, AstalNetwork.AccessPoint>();
+    aps.forEach(ap => {
+      if (!ap.ssid) return;
+      const existing = uniqueAps.get(ap.ssid);
+      if (!existing || ap.strength > existing.strength) uniqueAps.set(ap.ssid, ap);
+    });
+    return Array.from(uniqueAps.values()).sort((a, b) =>
+      a.ssid === wifi.ssid ? -1 : b.ssid === wifi.ssid ? 1 : b.strength - a.strength
+    );
+  })
+
+  var handleAPclick = (wifi: AstalNetwork.Wifi, ap: AstalNetwork.AccessPoint) => {
+    if (wifi.ssid === ap.ssid && wifi.activeConnection != null) {
+      execAsync(["nmcli", "device", "disconnect", wifi.device?.interface ?? "wlan0"])
+    } else {
+      connect(ap)
+    }
+  }
+
   return (
-    <box visible={visible} orientation={Gtk.Orientation.VERTICAL} spacing={8}>
-      <With value={createBinding(network, "wifi")}>
+    <box
+      visible={visible}
+      orientation={Gtk.Orientation.VERTICAL}
+      spacing={8}
+    >
+      <With value={isWifiAvalible}>
         {(wifi: AstalNetwork.Wifi | null) => wifi ? (
-          <Gtk.ScrolledWindow heightRequest={220} hscrollbarPolicy={Gtk.PolicyType.NEVER}>
+          <Gtk.ScrolledWindow
+            heightRequest={220}
+            hscrollbarPolicy={Gtk.PolicyType.NEVER}
+          >
             <box orientation={Gtk.Orientation.VERTICAL}>
-              <For each={createBinding(wifi, "accessPoints").as(aps => {
-                const uniqueAps = new Map<string, AstalNetwork.AccessPoint>();
-                aps.forEach(ap => {
-                  if (!ap.ssid) return;
-                  const existing = uniqueAps.get(ap.ssid);
-                  if (!existing || ap.strength > existing.strength) uniqueAps.set(ap.ssid, ap);
-                });
-                return Array.from(uniqueAps.values()).sort((a, b) =>
-                  a.ssid === wifi.ssid ? -1 : b.ssid === wifi.ssid ? 1 : b.strength - a.strength
-                );
-              })}>
-                {(ap: AstalNetwork.AccessPoint) => (
-                  <box orientation={Gtk.Orientation.VERTICAL} spacing={2}>
-                    <button
-                      onClicked={() => wifi.ssid === ap.ssid ? execAsync(["nmcli", "device", "disconnect", wifi.device?.interface ?? "wlan0"]) : connect(ap)}
-                      class={createBinding(wifi, "ssid").as(ssid => ssid === ap.ssid ? "primary-bg" : "")}
-                    >
-                      <box spacing={8}>
-                        <image iconName={ap.iconName} />
-                        <label label={ap.ssid} />
-                        <box hexpand={true} />
-                        <label label="Connecting..." visible={connectingTo.as(s => s === ap.ssid)} css="opacity: 0.6; font-size: 0.9em;" />
-                        <image iconName="object-select-symbolic" visible={createBinding(wifi, "ssid").as(s => s === ap.ssid)} />
-                      </box>
-                    </button>
-                    <revealer revealChild={passwordPrompt.as(s => s === ap.ssid)} transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}>
-                      <entry
-                        placeholderText="Password..." visibility={false}
-                        onActivate={(self) => { connect(ap, self.text); self.text = ""; setPasswordPrompt(null); }}
-                      />
-                    </revealer>
-                  </box>
-                )}
+              <For each={getAPs(wifi)}>
+                {(ap: AstalNetwork.AccessPoint) => {
+                  if (ap.ssid == null) {
+                    return <box><label label="This AP broke TS. Not suprising honestly" /></box>
+                  }
+                  return (
+                    <box orientation={Gtk.Orientation.VERTICAL} spacing={2}>
+                      <button
+                        onClicked={() => handleAPclick(wifi, ap)}
+                        class={createBinding(wifi, "active_access_point").as(active => active != null && active.ssid === ap.ssid ? "primary-bg" : "")}
+                      >
+                        <box spacing={8}>
+                          <image iconName={ap.iconName} />
+                          <label label={ap.ssid} />
+                          <box hexpand={true} />
+                          <label label="Connecting..." visible={connectingTo.as(s => s === ap.ssid)} css="opacity: 0.6; font-size: 0.9em;" />
+                          <image iconName="object-select-symbolic" visible={createBinding(wifi, "active_access_point").as(active => active != null && active.ssid === ap.ssid)} />
+                        </box>
+                      </button>
+                      <revealer revealChild={passwordPrompt.as(s => s === ap.ssid)} transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}>
+                        <entry
+                          placeholderText="Password..." visibility={false}
+                          onActivate={(self) => { connect(ap, self.text); self.text = ""; setPasswordPrompt(null); }}
+                        />
+                      </revealer>
+                    </box>
+                  )
+                }}
               </For>
             </box>
           </Gtk.ScrolledWindow>

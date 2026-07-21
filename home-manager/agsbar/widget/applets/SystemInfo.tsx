@@ -1,9 +1,14 @@
 import { Gtk } from "ags/gtk4";
 import { createPoll } from "ags/time";
 import AstalBattery from "gi://AstalBattery?version=0.1";
-import { createBinding, } from "gnim";
+import { createBinding, createComputed, createState, } from "gnim";
 
 export function SystemInfo() {
+  type states = "closed" | "temp" | "cpumem"
+
+  var [state, setState] = createState("closed");
+  var tempActive = createComputed(() => state() == "temp")
+  var cpumemActive = createComputed(() => state() == "cpumem")
 
   function getBatteryIcon(percent: number): string {
     if (battery.charging) {
@@ -37,38 +42,48 @@ export function SystemInfo() {
   );
 
   return (
-    <button css="background: transparent">
+    <button css="background: transparent" onClicked={() => {
+      if (state() == "closed") {
+        setState("cpumem")
+      } else if (state() == "cpumem") {
+        setState("temp")
+      } else if (state() == "temp") {
+        setState("closed")
+      }
+    }}>
       <box>
-        <label label={createBinding(battery, "percentage").as((p) => `${Math.floor(p * 100)}%`)} />
-        <image
-          iconName={createBinding(battery, "batteryIconName").as(() => getBatteryIcon(battery.percentage))}
-          pixelSize={27}
-          css="padding-left: 3px"
-        />
-      </box>
-      <revealer>
         <box>
-          <box>
-            <button class="primary-bg margin menu-btn"><image pixelSize={27} iconName="Cpu" /></button>
-            <label css="color: white; font-weight: bold;" label={cpu.as((cpu) => ` ${cpu}%`)} />
-          </box>
-          <box>
-            <button class="primary-bg margin menu-btn"><image pixelSize={27} iconName="Ram" /></button>
-            <label css="color: white; font-weight: bold;" label={ram.as((ram) => ` ${ram}%`)} />
-          </box>
+          <label label={createBinding(battery, "percentage").as((p) => `${Math.floor(p * 100)}%`)} />
+          <image
+            iconName={createBinding(battery, "batteryIconName").as(() => getBatteryIcon(battery.percentage))}
+            pixelSize={27}
+            css="padding-left: 3px"
+          />
         </box>
-      </revealer>
-      <revealer>
+        <revealer revealChild={tempActive} transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}>
           <box>
-            <button class="primary-bg margin menu-btn"><image pixelSize={27} iconName="Temp" /></button>
+            <box>
+              <label css="color: white; font-weight: bold;" label={cpu.as((cpu) => ` ${cpu}%`)} />
+              <button class="margin menu-btn"><image pixelSize={27} iconName="Cpu" /></button>
+            </box>
+            <box>
+              <label css="color: white; font-weight: bold;" label={ram.as((ram) => ` ${ram}%`)} />
+              <button class=" margin menu-btn"><image pixelSize={27} iconName="Ram" /></button>
+            </box>
+          </box>
+        </revealer>
+        <revealer revealChild={cpumemActive} transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}>
+          <box>
             <label css="color: white; font-weight: bold;" label={temp.as((temp) => ` ${temp}%`)} />
-            <slider
+            <button class=" margin menu-btn"><image pixelSize={27} iconName="Temp" /></button>
+            { /* <slider
               hexpand
               value={temp}
               max={200}
-            />
+            /> */}
           </box>
-      </revealer>
+        </revealer>
+      </box>
     </button>
   )
 }
