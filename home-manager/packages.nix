@@ -85,6 +85,7 @@
     zed-editor
     godot_4
     gitkraken
+    antigravity-cli
 
     # Browsers 
     chromium
