@@ -173,6 +173,7 @@
       xorg.xcbutilrenderutil
       
       libsecret
+      webkitgtk_4_1
     ];
   };
 }
