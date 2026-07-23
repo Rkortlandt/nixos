@@ -174,6 +174,7 @@
       
       libsecret
       webkitgtk_4_1
+      pkgs-legacy.webkitgtk
     ];
   };
 }
