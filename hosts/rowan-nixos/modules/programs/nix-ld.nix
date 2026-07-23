@@ -177,6 +177,7 @@
       pkgs-legacy.webkitgtk
       pkgs-legacy.libsoup
       libjpeg
+      libjpeg8
     ];
   };
 }
