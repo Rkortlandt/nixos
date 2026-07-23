@@ -176,6 +176,7 @@
       webkitgtk_4_1
       pkgs-legacy.webkitgtk
       pkgs-legacy.libsoup
+      pkgs-legacy.libjpeg
     ];
   };
 }
