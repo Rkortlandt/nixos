@@ -172,6 +172,7 @@
       xorg.xcbutilkeysyms
       xorg.xcbutilrenderutil
       
+      libsecret
     ];
   };
 }
