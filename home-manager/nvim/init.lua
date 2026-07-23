@@ -265,7 +265,11 @@ local garmin_monkeyc = {
   config = function()
     require('garmin-monkeyc').setup({
       capabilities = require('cmp_nvim_lsp').default_capabilities(),
-      on_attach = setup_lsp_keymaps,
+      on_attach = function(client, bufnr)
+        if setup_lsp_keymaps then
+          setup_lsp_keymaps(client, bufnr)
+        end
+      end,
       type_check_level = 'Default',
       optimization_level = 'Default',
       function_completion = 'snippet',
