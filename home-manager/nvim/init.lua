@@ -273,6 +273,7 @@ local garmin_monkeyc = {
       type_check_level = 'Default',
       optimization_level = 'Default',
       function_completion = 'snippet',
+      developer_key = "~/.garmin/developer_key.der",
     })
   end,
 }
