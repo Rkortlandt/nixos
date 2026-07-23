@@ -259,6 +259,20 @@ local colorizer = {
   end,
 }
 
+local garmin_monkeyc = {
+  'bombsimon/garmin-monkeyc.nvim',
+  ft = { 'monkeyc', 'jungle' },
+  config = function()
+    require('garmin-monkeyc').setup({
+      capabilities = require('cmp_nvim_lsp').default_capabilities(),
+      on_attach = setup_lsp_keymaps,
+      type_check_level = 'Default',
+      optimization_level = 'Default',
+      function_completion = 'snippet',
+    })
+  end,
+}
+
 require('lazy').setup({
   lspconfig,
   autocmp,
@@ -275,6 +289,7 @@ require('lazy').setup({
   aerial,
   vimtex,
   colorizer,
+  garmin_monkeyc,
   -- llama,
 
   'tpope/vim-fugitive',
