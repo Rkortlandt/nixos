@@ -41,6 +41,7 @@
     air
     lua-language-server
     svelte-language-server
+    vscode-json-languageserver
     nil
     nixd
     delve

@@ -472,6 +472,11 @@ require('lspconfig').jdtls.setup({
   end,
 })
 
+require('lspconfig').jsonls.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+})
+
 require('lspconfig').lua_ls.setup({
   capabilities = lsp_capabilities,
   on_attach = setup_lsp_keymaps,
