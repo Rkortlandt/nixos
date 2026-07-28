@@ -147,7 +147,7 @@
       urgency_critical = {
         background = "#000000";
         foreground = "#dd5633";
-        timeout = 0;
+        timeout = 20;
       };
 
       shortcuts = {
@@ -249,6 +249,10 @@
         git_protocol = "ssh";
         editor = "nvim";
       };
+    };
+
+    tmux = {
+      enable = true;
     };
   };
  
