@@ -6,7 +6,7 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 8080 12345 22 ];
+    allowedTCPPorts = [ 8080 12345 22 8090 5173 ];
     trustedInterfaces = [ "tailscale0" ];
   };
 
