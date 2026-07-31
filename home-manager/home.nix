@@ -255,11 +255,6 @@
       enable = true;
       mouse = true;
       baseIndex = 1;
-      extraConfig = ''
-        set -g status-style bg=#default fg=#cdd6f4
-        setw -g window-status-current-style bg=#89b4fa,fg=#11111b,bold
-        setw -g window-status-style bg=#313244,fg=#cdd6f4
-      '';
     };
   };
  
