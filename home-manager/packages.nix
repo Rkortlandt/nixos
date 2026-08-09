@@ -25,6 +25,7 @@
     qemu
     bridge-utils
     kitty
+    localsend
 
     # Development
     # llama-cpp
