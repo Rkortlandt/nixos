@@ -10,6 +10,7 @@
       description = "Rowan Kortlandt";
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
+"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID6zPteKNM0yNqzg7yKD6d8EVVU9h8KonpAAhCOjDGK4 rkortlandt@gmail.com"
       ];
       extraGroups = [
         "wheel" 
