@@ -11,7 +11,7 @@
     programs = {
       hyprland.enable = true;
     };
-
+/* 
     services.greetd = {
       enable = true;
       restart = true;
@@ -21,6 +21,15 @@
           user = "ss-rowan";
         };
         default_session = initial_session;
+      };
+    }; */
+    services.displayManager = {
+      ly = {
+        enable = true;
+        settings = {
+          animation = "none"; # Options: doom, matrix, pipe, fire, none
+            clear_password = true;
+        };
       };
     };
 
