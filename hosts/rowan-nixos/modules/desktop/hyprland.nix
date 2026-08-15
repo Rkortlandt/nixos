@@ -27,8 +27,7 @@
       ly = {
         enable = true;
         settings = {
-          animation = "none"; # Options: doom, matrix, pipe, fire, none
-            clear_password = true;
+          animation = "1";
         };
       };
     };
