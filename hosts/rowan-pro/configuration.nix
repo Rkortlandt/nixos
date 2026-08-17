@@ -53,7 +53,7 @@ services.tailscale.enable = true;
 
   systemd.services.samba-smbd.after = [ "tailscaled.service" ];
 
-  services.samba = {
+ /*  services.samba = {
     enable = true;
     nmbd.enable = false;
     winbindd.enable = false;
@@ -73,16 +73,14 @@ services.tailscale.enable = true;
       };
     };
   };
-  programs.ladybird.enable = true;
+  programs.ladybird.enable = true; */
 
   environment.etc = lib.mapAttrs' (name: value: {
     name = "nix/path/${name}";
     value.source = value.flake;
   }) config.nix.registry;
 
-  networking.hostName = "rowan-nixos";
-
-  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  networking.hostName = "rowan-proart";
 
   services.pulseaudio.enable = false;
   services.pipewire = {
@@ -92,14 +90,6 @@ services.tailscale.enable = true;
     pulse.enable = true;
     jack.enable = true;
     wireplumber.enable = true;
-    extraConfig.pipewire."92-low-latency" = {
-      "context.properties" = {
-        "default.clock.rate" = 44100;
-        "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 512;
-        "default.clock.max-quantum" = 512;
-      };
-    };
   };
 
   hardware.bluetooth.enable = true;
@@ -184,5 +174,5 @@ services.tailscale.enable = true;
     LC_TIME = "en_US.UTF-8";
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "26.05";
 }

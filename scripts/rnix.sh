@@ -14,8 +14,8 @@ if [ "$CURRENT_HOSTNAME" = "rowan-nixos" ]; then
     FLAKE_CONFIG="rowan-nixos"
 elif [ "$CURRENT_HOSTNAME" = "rowan-server" ]; then
     FLAKE_CONFIG="rowan-server"
-elif [ "$CURRENT_HOSTNAME" = "rowan-pro" ]; then
-    FLAKE_CONFIG="rowan-pro"
+elif [ "$CURRENT_HOSTNAME" = "nixos" ]; then
+    FLAKE_CONFIG="rowan-proart"
 else 
     echo -e "\033[1;31m[ERROR]\033[0m Unknown hostname: $CURRENT_HOSTNAME"
     popd > /dev/null || exit
