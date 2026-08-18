@@ -104,36 +104,24 @@ local aicmp = {
     backend = "ollama",
     model = "qwen2.5-coder:7b",
     url = "http://localhost:11434",
+    request_body = {
+      options = {
+        temperature = 0.2,
+        top_p = 0.95,
+      }
+    },
+    tokens_to_clear = { "<|im_end|>", "<|endoftext|>" },
     lsp = {
-      bin_path = vim.fn.exepath("llm-ls") or "llm-ls",
+      bin_path = vim.fn.exepath("llm-ls"),
     },
     tokenizer = {
       repository = "Qwen/Qwen2.5-Coder-7B",
     },
     context_window = 4096,
-    request_body = {
-      raw = true,
-      options = {
-        temperature = 0.2,
-        top_p = 0.95,
-        num_predict = 60,
-        stop = {
-          "<|endoftext|>",
-          "<|file_separator|>",
-          "<|fim_prefix|>",
-          "<|fim_suffix|>",
-          "<|fim_middle|>"
-        },
-      },
-    },
-    tokens = {
-      fim_pre = "<|fim_prefix|>",
-      fim_suf = "<|fim_suffix|>",
-      fim_mid = "<|fim_middle|>",
-    },
-  },
+    enable_suggestions_on_startup = true,
+    enable_suggestions_on_files = "*",
+  }
 }
-
 
 local gitsigns = {
   'lewis6991/gitsigns.nvim',
