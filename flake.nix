@@ -10,9 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    grab.url = "path:/home/ss-rowan/Documents/grab";
-    grab.inputs.nixpkgs.follows = "nixpkgs";
-
+#    grab.url = "path:/home/ss-rowan/Documents/grab";
+#    grab.inputs.nixpkgs.follows = "nixpkgs";
+#
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -66,7 +66,6 @@
     grub2-themes,
     ags,
     zen-browser,
-    grab,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -119,6 +118,7 @@ pkgs-legacy = import nixpkgs-legacy {
       rowan-proart = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs pkgs-legacy; };
         modules = [
+          grub2-themes.nixosModules.default
           ./hosts/rowan-pro/configuration.nix
         ];
       };
@@ -134,6 +134,16 @@ pkgs-legacy = import nixpkgs-legacy {
           ./home-manager/home.nix
         ];
       };
+      "ss-pro@rowan-proart" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs; 
+        };
+        modules = [
+          ./home-manager/home.nix
+        ];
+      };
+ 
     };
   };
 }

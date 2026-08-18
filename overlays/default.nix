@@ -29,9 +29,15 @@
           hash = "sha256-PTSowNsb7f981DvZMUzZyREngHh3l8qqrokYO7Q5YtY="; 
         })
       ]; 
+      
 
       postPatch = "";
     }); */
+/*     helvetica-neue-lt-std = prev.helvetica-neue-lt-std.overrideAttrs (old: {
+      src = ./helvetica-neue-lt-std.zip;
+nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ prev.unzip ];
+   });*/
+
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

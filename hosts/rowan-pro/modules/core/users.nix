@@ -4,7 +4,7 @@
   users.groups.developers = {};
 
   users.users = {
-    ss-rowan = {
+    ss-pro = {
       initialPassword = "password";
       isNormalUser = true;
       description = "Rowan Kortlandt";

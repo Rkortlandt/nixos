@@ -50,8 +50,8 @@
   };
 
   home = {
-    username = "ss-rowan";
-    homeDirectory = "/home/ss-rowan";
+    username = "ss-pro";
+    homeDirectory = "/home/ss-pro";
   };
 
   home.file = {
