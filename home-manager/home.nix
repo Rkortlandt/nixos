@@ -62,6 +62,7 @@
       ".config/waybar".source = ./hyprland/waybar;
       ".config/kitty".source = ./kitty;
       ".config/starship.toml".source = ./bash/starship.toml;
+      ".config/nvim".source = ./nvim;
       ".config/tofi".source = ./tofi;
       ".lib/jdk11".source = pkgs.jdk11;
       ".lib/jdk17".source = pkgs.jdk17;
