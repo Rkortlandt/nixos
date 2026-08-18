@@ -97,6 +97,7 @@ local autocmp = {
   end,
 } ]]
 
+
 local aicmp = {
   "huggingface/llm.nvim",
   opts = {
@@ -108,6 +109,11 @@ local aicmp = {
         temperature = 0.2,
         top_p = 0.95,
       },
+    },
+    tokens = {
+      fim_pre = "<|fim_prefix|>",
+      fim_suf = "<|fim_suffix|>",
+      fim_mid = "<|fim_middle|>",
     },
   },
 }
