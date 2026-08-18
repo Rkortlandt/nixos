@@ -10,8 +10,7 @@
 # Usually this includes a global "enable" option which defaults to false.
 
   };
-
-  config = {
+ config = {
     powerManagement.powertop.enable = true;
     services.power-profiles-daemon.enable = false;
     services.thermald.enable = true;
@@ -35,4 +34,4 @@
     environment.systemPackages = with pkgs; [
     ];
   };
-}
+ }

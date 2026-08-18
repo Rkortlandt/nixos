@@ -13,6 +13,7 @@
     ./modules/core/security.nix
     ./modules/core/networking.nix
     ./modules/core/boot.nix
+    ./modules/core/performance.nix
     
     ./modules/programs/nix-ld.nix
     ./modules/programs/steam.nix

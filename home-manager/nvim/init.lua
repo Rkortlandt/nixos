@@ -108,6 +108,7 @@ local aicmp = {
       options = {
         temperature = 0.2,
         top_p = 0.95,
+
       }
     },
     tokens_to_clear = { "<|im_end|>", "<|endoftext|>" },
