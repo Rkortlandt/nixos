@@ -83,7 +83,7 @@ local autocmp = {
   },
 }
 
---[[ local llama = {
+local llama = {
   "ggml-org/llama.vim",
   init = function()
     vim.g.llama_config = {
@@ -95,7 +95,7 @@ local autocmp = {
     -- Fix any potential theme background clipping issues
     vim.api.nvim_set_hl(0, "LlamaSuggestion", { fg = "#808080", italic = true })
   end,
-} ]]
+}
 
 local gitsigns = {
   'lewis6991/gitsigns.nvim',
@@ -295,7 +295,7 @@ require('lazy').setup({
   vimtex,
   colorizer,
   garmin_monkeyc,
-  -- llama,
+  llama,
 
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
