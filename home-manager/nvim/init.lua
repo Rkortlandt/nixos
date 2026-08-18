@@ -17,6 +17,7 @@ vim.o.breakindent = true
 
 vim.o.undofile = true
 
+
 -- case-insensitive searching unless \c or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -243,11 +244,11 @@ local treesitter = {
     })
   end
 }
-
+--[[
 local wakatime = {
   "wakatime/vim-wakatime",
   lazy = false,
-}
+} ]]
 
 local vimtex = {
   "lervag/vimtex",
@@ -315,7 +316,7 @@ require('lazy').setup({
   telescope,
   comment,
   treesitter,
-  wakatime,
+  -- wakatime,
   nvimtree,
   aerial,
   vimtex,

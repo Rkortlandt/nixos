@@ -22,6 +22,8 @@
         "qemu-libvirtd" 
         "dialout" 
         "developers"
+        "render"
+        "video"
       ];
     };
 

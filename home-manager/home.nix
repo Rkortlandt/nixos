@@ -17,6 +17,8 @@
     ./packages.nix
   ];
   
+
+
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -94,6 +96,11 @@
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
+  };
+
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda"; # Use "rocm" if you have an AMD GPU
   };
 
   qt = {

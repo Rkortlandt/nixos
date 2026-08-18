@@ -82,6 +82,21 @@ services.tailscale.enable = true;
 
   networking.hostName = "rowan-proart";
 
+
+  hardware.graphics.enable = true; 
+
+services.xserver.videoDrivers = [ "nvidia" ];
+
+hardware.nvidia = {
+  modesetting.enable = true;
+  
+  powerManagement.enable = false; 
+
+  open = true;
+
+  package = config.boot.kernelPackages.nvidiaPackages.stable;
+};
+
   services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
