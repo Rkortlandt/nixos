@@ -98,7 +98,6 @@ local autocmp = {
   end,
 } ]]
 
-
 local aicmp = {
   "huggingface/llm.nvim",
   opts = {
@@ -120,9 +119,8 @@ local aicmp = {
       fim_mid = "<|fim_middle|>",
     },
   },
-
-
 }
+
 
 local gitsigns = {
   'lewis6991/gitsigns.nvim',
