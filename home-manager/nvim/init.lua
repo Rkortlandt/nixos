@@ -83,7 +83,7 @@ local autocmp = {
   },
 }
 
-local llama = {
+--[[ local llama = {
   "ggml-org/llama.vim",
   init = function()
     vim.g.llama_config = {
@@ -95,6 +95,21 @@ local llama = {
     -- Fix any potential theme background clipping issues
     vim.api.nvim_set_hl(0, "LlamaSuggestion", { fg = "#808080", italic = true })
   end,
+} ]]
+
+local aicmp = {
+  "huggingface/llm.nvim",
+  opts = {
+    backend = "ollama",
+    model = "qwen2.5-coder:7b",
+    url = "http://localhost:11434",
+    request_body = {
+      options = {
+        temperature = 0.2,
+        top_p = 0.95,
+      },
+    },
+  },
 }
 
 local gitsigns = {
@@ -295,8 +310,8 @@ require('lazy').setup({
   vimtex,
   colorizer,
   garmin_monkeyc,
-  llama,
-
+  -- llama,
+  aicmp,
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
