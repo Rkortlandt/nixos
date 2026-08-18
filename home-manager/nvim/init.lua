@@ -107,10 +107,23 @@ local aicmp = {
     lsp = {
       bin_path = vim.fn.exepath("llm-ls") or "llm-ls",
     },
+    tokenizer = {
+      repository = "Qwen/Qwen2.5-Coder-7B",
+    },
+    context_window = 4096,
     request_body = {
+      raw = true,
       options = {
         temperature = 0.2,
         top_p = 0.95,
+        num_predict = 60,
+        stop = {
+          "<|endoftext|>",
+          "<|file_separator|>",
+          "<|fim_prefix|>",
+          "<|fim_suffix|>",
+          "<|fim_middle|>"
+        },
       },
     },
     tokens = {
