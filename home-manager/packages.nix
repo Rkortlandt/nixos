@@ -49,6 +49,7 @@
     jetbrains.idea
     jetbrains.rider
     ollama
+    llm-ls
 
     # Creative & Design
     gimp

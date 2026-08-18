@@ -104,6 +104,9 @@ local aicmp = {
     backend = "ollama",
     model = "qwen2.5-coder:7b",
     url = "http://localhost:11434",
+    lsp = {
+      bin_path = vim.fn.exepath("llm-ls") or "llm-ls",
+    },
     request_body = {
       options = {
         temperature = 0.2,
@@ -116,6 +119,8 @@ local aicmp = {
       fim_mid = "<|fim_middle|>",
     },
   },
+
+
 }
 
 local gitsigns = {
