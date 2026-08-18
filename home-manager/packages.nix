@@ -55,7 +55,7 @@
     inkscape
     blender
     freecad
-    spotify
+    # spotify
     mpg123
 
     # Productivity & Communication
