@@ -4,13 +4,20 @@
     "strict": true,
     "module": "ES2022",
     "target": "ES2020",
-    "lib": ["ES2023"],
+    "lib": [
+      "ES2023"
+    ],
     "moduleResolution": "Bundler",
+    "skipLibCheck": true,
     "jsx": "react-jsx",
     "jsxImportSource": "ags/gtk4"
   },
   "include": [
     "**/*.ts",
     "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "result"
   ]
 }

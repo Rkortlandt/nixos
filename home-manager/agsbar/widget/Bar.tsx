@@ -5,7 +5,7 @@ import Gtk from "gi://Gtk?version=4.0"
 import Gdk from "gi://Gdk?version=4.0"
 import AstalWp from "gi://AstalWp"
 import AstalTray from "gi://AstalTray"
-import { For, With, createBinding, createState, onCleanup } from "ags"
+import { For, With, createBinding, createComputed, createState, onCleanup } from "ags"
 import { createPoll } from "ags/time"
 import { SpecialWorkspaces, Workspaces } from "./applets/Workspaces"
 import { Backlights } from "../modules/backlight";
@@ -88,32 +88,100 @@ function Clock({ format = "%l:%M" }) {
 }
 
 function Backlight() {
-  return <With value={createBinding(Backlights.getDefault(), "default")}>
-    {(bklight: Backlights.Backlight | null) => bklight &&
-      <Gtk.Button onClicked={() => {
-        bklight.brightness = bklight.maxBrightness
-      }}
-        class={"backlight"}>
-        <box>
-          <image
-            iconName={"Brightness"}
-            pixelSize={22}
-          />
-          <label label={createBinding(bklight, "brightness").as(() => {
-            var brightness = Math.ceil((bklight.brightness / bklight.maxBrightness) * 100).toString() + "%";
-            return brightness;
-          })} />
-          <Gtk.EventControllerScroll $={(self) => self.set_flags(Gtk.EventControllerScrollFlags.VERTICAL)}
-            onScroll={(_, __, dy) => {
-              var newBrightness = (Math.max(.01, Math.min(1, (bklight.brightness / bklight.maxBrightness) - (dy / 200)))) * bklight.maxBrightness
-              bklight.brightness = Math.floor(newBrightness);
-              return true;
-            }}
-          />
-        </box>
-      </Gtk.Button>
+  const backlights = Backlights.getDefault();
+  const [mode, setMode] = createState<"screen" | "kbd">("screen");
+
+  let kbdAccumulator = 0;
+  let lastKbdStepTime = 0;
+
+  const toggleMode = () => {
+    if (backlights.kbdAvailable && backlights.defaultKbd) {
+      setMode(mode.get() === "screen" ? "kbd" : "screen");
+      kbdAccumulator = 0;
     }
-  </With>
+  };
+
+  const handleScroll = (dy: number) => {
+    const currentMode = mode.get();
+    const target = currentMode === "kbd" ? backlights.defaultKbd : backlights.default;
+    if (!target) return true;
+
+    if (currentMode === "kbd" || target.maxBrightness <= 10) {
+      // Keyboard backlight: accumulator threshold of 3.0 + 120ms throttle
+      // Ensures exactly 1 controlled step per deliberate scroll
+      kbdAccumulator += dy;
+      const threshold = 3.0;
+      const now = Date.now();
+
+      if (Math.abs(kbdAccumulator) >= threshold && now - lastKbdStepTime > 120) {
+        const direction = kbdAccumulator > 0 ? -1 : 1; // dy > 0 is scroll down (decrease), dy < 0 is scroll up (increase)
+        target.brightness = Math.max(0, Math.min(target.maxBrightness, target.brightness + direction));
+        kbdAccumulator = 0;
+        lastKbdStepTime = now;
+      }
+    } else {
+      // Screen brightness: gentle dy / 400 (~0.25% per delta unit) for smooth, controlled adjustments
+      const currentPct = target.brightness / target.maxBrightness;
+      const newPct = Math.max(0.01, Math.min(1.0, currentPct - (dy / 400)));
+      target.brightness = Math.round(newPct * target.maxBrightness);
+    }
+    return true;
+  };
+
+  const screenBk = backlights.default;
+  const kbdBk = backlights.defaultKbd;
+
+  const screenBrightness = screenBk ? createBinding(screenBk, "brightness") : createState(0)[0];
+  const kbdBrightness = kbdBk ? createBinding(kbdBk, "brightness") : createState(0)[0];
+
+  const labelText = createComputed(
+    [
+      mode,
+      screenBrightness,
+      kbdBrightness,
+      createBinding(backlights, "default"),
+      createBinding(backlights, "defaultKbd"),
+    ],
+    (m) => {
+      const target = m === "kbd" ? backlights.defaultKbd : backlights.default;
+      if (!target || target.maxBrightness <= 0) return "";
+      const pct = Math.ceil((target.brightness / target.maxBrightness) * 100);
+      return `${pct}%`;
+    }
+  );
+
+  const iconName = mode.as(m => m === "kbd" ? "Keyboard-Brightness" : "Brightness");
+
+  const isVisible = createComputed(
+    [createBinding(backlights, "available"), createBinding(backlights, "kbdAvailable")],
+    (screenAvail, kbdAvail) => Boolean(screenAvail || kbdAvail)
+  );
+
+  return (
+    <button
+      class="backlight"
+      visible={isVisible}
+      onClicked={toggleMode}
+      tooltipText={createComputed(
+        [mode, createBinding(backlights, "kbdAvailable")],
+        (m, hasKbd) => {
+          if (!hasKbd) return "Screen Brightness";
+          return m === "screen"
+            ? "Screen Brightness (Click for Keyboard Backlight)"
+            : "Keyboard Backlight (Click for Screen Brightness)";
+        }
+      )}
+    >
+      <box spacing={4}>
+        <image iconName={iconName} pixelSize={22} />
+        <label label={labelText} />
+        <Gtk.EventControllerScroll
+          $={(self) => self.set_flags(Gtk.EventControllerScrollFlags.VERTICAL)}
+          onScroll={(_, __, dy) => handleScroll(dy)}
+        />
+      </box>
+    </button>
+  );
 }
 
 export default function Bar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {

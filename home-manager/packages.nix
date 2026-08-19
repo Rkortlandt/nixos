@@ -99,6 +99,7 @@
     prismlauncher
   ]) ++ (with inputs; [
     zen-browser.packages."${system}".default
+    quickshell.packages."${system}".default
     #grab.packages."${system}".default
   ]);
 }

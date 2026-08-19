@@ -1,5 +1,5 @@
 import { monitorFile, readFile } from "ags/file";
-import { exec } from "ags/process";
+import { execAsync } from "ags/process";
 import GObject, { getter, ParamSpec, register, setter, signal } from "ags/gobject";
 
 import Gio from "gi://Gio?version=2.0";
@@ -24,75 +24,113 @@ export namespace Backlights {
   class _Backlights extends GObject.Object {
 
     #backlights: Array<Backlight> = [];
+    #kbdBacklights: Array<Backlight> = [];
     #default: Backlight | null = null;
+    #defaultKbd: Backlight | null = null;
     #available: boolean = false;
-
+    #kbdAvailable: boolean = false;
 
     @getter(Array as unknown as ParamSpec<Array<Backlight>>)
     get backlights() { return this.#backlights; }
 
+    @getter(Array as unknown as ParamSpec<Array<Backlight>>)
+    get kbdBacklights() { return this.#kbdBacklights; }
+
     @getter(BacklightParamSpec)
     get default() { return this.#default!; }
 
-    /** true if there are any backlights available */
+    @getter(BacklightParamSpec)
+    get defaultKbd() { return this.#defaultKbd!; }
+
+    /** true if there are any screen backlights available */
     @getter(Boolean)
     get available() { return this.#available; }
 
-    public scan(): Array<Backlight> {
-      const dir = Gio.File.new_for_path(`/sys/class/backlight`),
-        backlights: Array<Backlight> = [];
+    /** true if there are any keyboard backlights available */
+    @getter(Boolean)
+    get kbdAvailable() { return this.#kbdAvailable; }
 
-      let fileEnum: Gio.FileEnumerator;
+    public scan(): void {
+      for (const bk of this.#backlights) {
+        bk.destroy();
+      }
+      for (const bk of this.#kbdBacklights) {
+        bk.destroy();
+      }
+
+      // 1. Scan Screen Backlights (/sys/class/backlight)
+      const screenDir = Gio.File.new_for_path(`/sys/class/backlight`);
+      const screenBacklights: Array<Backlight> = [];
 
       try {
-        fileEnum = dir.enumerate_children("standard::*", Gio.FileQueryInfoFlags.NONE, null);
+        const fileEnum = screenDir.enumerate_children("standard::*", Gio.FileQueryInfoFlags.NONE, null);
         for (const backlight of fileEnum) {
           try {
-            backlights.push(new Backlight(backlight.get_name()));
+            screenBacklights.push(new Backlight(backlight.get_name(), "backlight"));
           } catch (_) { }
         }
-      } catch (_) {
-        return [];
+      } catch (_) { }
+
+      const screenAvailable = screenBacklights.length > 0;
+      if (this.#available !== screenAvailable) {
+        this.#available = screenAvailable;
+        this.notify("available");
       }
 
-      if (backlights.length < 1) {
-        if (this.#available) {
-          this.#available = false;
-          this.notify("available");
-        }
+      this.#default = screenAvailable ? screenBacklights[0] : null;
+      this.notify("default");
 
-        this.#default = null;
-        this.notify("default");
-      }
-
-      if (backlights.length > 0) {
-        if (this.#backlights.length < 1) {
-          this.#available = true;
-          this.notify("available");
-        }
-
-        if (!this.#default || !backlights.filter(bk => bk.path === this.#default?.path)[0]) {
-          this.#default = backlights[0];
-          this.notify("default");
-        }
-      }
-
-      this.#backlights = backlights;
+      this.#backlights = screenBacklights;
       this.notify("backlights");
 
-      return backlights;
+      // 2. Scan Keyboard Backlights (/sys/class/leds)
+      const ledsDir = Gio.File.new_for_path(`/sys/class/leds`);
+      const kbdList: Array<Backlight> = [];
+
+      try {
+        const fileEnum = ledsDir.enumerate_children("standard::*", Gio.FileQueryInfoFlags.NONE, null);
+        for (const led of fileEnum) {
+          const name = led.get_name();
+          if (name.includes("kbd_backlight") || name.includes("kbd") || name.includes("keyboard")) {
+            try {
+              kbdList.push(new Backlight(name, "leds"));
+            } catch (_) { }
+          }
+        }
+      } catch (_) { }
+
+      const kbdAvailable = kbdList.length > 0;
+      if (this.#kbdAvailable !== kbdAvailable) {
+        this.#kbdAvailable = kbdAvailable;
+        this.notify("kbd-available");
+      }
+
+      this.#defaultKbd = kbdAvailable ? kbdList[0] : null;
+      this.notify("default-kbd");
+
+      this.#kbdBacklights = kbdList;
+      this.notify("kbd-backlights");
     }
 
     public setDefault(bk: Backlight): void {
-      this.#default = bk;
-      this.notify("default");
+      if (bk.type === "keyboard") {
+        this.#defaultKbd = bk;
+        this.notify("default-kbd");
+      } else {
+        this.#default = bk;
+        this.notify("default");
+      }
     }
 
     constructor(scan: boolean = true) {
       super();
+      instance = this;
       scan && this.scan();
     }
   }
+
+  export type DeviceClass = "backlight" | "leds";
+  export type DeviceType = "screen" | "keyboard";
 
   @register({ GTypeName: "Backlight" })
   class _Backlight extends GObject.Object {
@@ -102,6 +140,8 @@ export namespace Backlights {
     };
 
     readonly #name: string;
+    readonly #deviceClass: DeviceClass;
+    readonly #type: DeviceType;
     #path: string;
     #maxBrightness: number;
     #monitor: Gio.FileMonitor;
@@ -124,53 +164,76 @@ export namespace Backlights {
     @getter(String)
     get path() { return this.#path; }
 
+    @getter(String)
+    get deviceClass() { return this.#deviceClass; }
+
+    @getter(String)
+    get type() { return this.#type; }
+
     @getter(Boolean)
-    get isDefault() { return this.path === getDefault().default?.path; }
+    get isDefault() {
+      return this.#type === "keyboard"
+        ? this.path === getDefault().defaultKbd?.path
+        : this.path === getDefault().default?.path;
+    }
 
     /**
      * The "internal" brightness value, which updates instantly.
      * Changes are debounced before being written to the system.
      */
     @getter(Number)
-    get brightness() { return this.#internalBrightness; };
+    get brightness() { return this.#internalBrightness; }
     @setter(Number)
     set brightness(level: number) {
+      const clamped = Math.max(0, Math.min(this.#maxBrightness, Math.round(level)));
       // Don't do anything if the value is already set
-      if (level === this.#internalBrightness)
+      if (clamped === this.#internalBrightness)
         return;
 
       // Update internal value and notify UI instantly
-      this.#internalBrightness = level;
+      this.#internalBrightness = clamped;
       this.notify("brightness");
-      this.emit("brightness-changed", level);
+      this.emit("brightness-changed", clamped);
 
       // Cancel any pending write operation
-      if (this.#writeTimer > 0)
+      if (this.#writeTimer > 0) {
         GLib.source_remove(this.#writeTimer);
+        this.#writeTimer = 0;
+      }
 
-      // Schedule a new write operation
-      this.#writeTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
+      // If discrete/keyboard (low maxBrightness), write immediately
+      // If screen backlight, debounce with short 25ms delay
+      if (this.#maxBrightness <= 10) {
         this.writeBrightness(this.#internalBrightness);
-        this.#writeTimer = 0; // Clear the timer ID
-        return GLib.SOURCE_REMOVE; // Stop timer from repeating
-      });
+      } else {
+        this.#writeTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 25, () => {
+          this.writeBrightness(this.#internalBrightness);
+          this.#writeTimer = 0;
+          return GLib.SOURCE_REMOVE;
+        });
+      }
     }
 
     @getter(Number)
-    get maxBrightness() { return this.#maxBrightness; };
+    get maxBrightness() { return this.#maxBrightness; }
 
 
-    constructor(name: string = "intel_backlight") {
+    constructor(name: string = "intel_backlight", deviceClass: DeviceClass = "backlight") {
       super();
 
-      if (!Gio.File.new_for_path(`/sys/class/backlight/${name}/brightness`).query_exists(null))
-        throw new Error(`Brightness: Couldn't find brightness for "${name}"`);
-
-      this.#conn = getDefault().connect("notify::default", () =>
-        this.notify("is-default"));
-
       this.#name = name;
-      this.#path = `/sys/class/backlight/${name}`;
+      this.#deviceClass = deviceClass;
+      this.#type = deviceClass === "leds" || name.includes("kbd") ? "keyboard" : "screen";
+      this.#path = `/sys/class/${deviceClass}/${name}`;
+
+      if (!Gio.File.new_for_path(`${this.#path}/brightness`).query_exists(null))
+        throw new Error(`Brightness: Couldn't find brightness for "${name}" in ${this.#path}`);
+
+      this.#conn = getDefault().connect(
+        this.#type === "keyboard" ? "notify::default-kbd" : "notify::default",
+        () => this.notify("is-default")
+      );
+
       this.notify("path");
       this.#maxBrightness = Number.parseInt(readFile(`${this.#path}/max_brightness`));
       this.notify("max-brightness");
@@ -180,7 +243,7 @@ export namespace Backlights {
       this.#internalBrightness = this.#systemBrightness;
 
 
-      this.#monitor = monitorFile(`/sys/class/backlight/${name}/brightness`, () => {
+      this.#monitor = monitorFile(`${this.#path}/brightness`, () => {
         // System file changed (e.g., hardware keys)
         const newBrightness = this.readBrightness();
 
@@ -214,12 +277,10 @@ export namespace Backlights {
       return this.#systemBrightness ?? this.#maxBrightness ?? 0;
     }
 
-    private writeBrightness(level: number): boolean {
+    private async writeBrightness(level: number): Promise<boolean> {
       try {
-        // Update system brightness optimistically
-        // The file monitor will correct this if it fails
         this.#systemBrightness = level;
-        exec(`brightnessctl -d ${this.#name} s ${level}`);
+        await execAsync(["brightnessctl", "-d", this.#name, "s", `${level}`]);
         return true;
       } catch (e) {
         console.error(`Backlight: Couldn't set brightness for "${this.#name}". Stderr: ${e}`);
@@ -228,27 +289,18 @@ export namespace Backlights {
       return false;
     }
 
-    vfunc_dispose(): void {
-      this.#monitor.cancel();
-      getDefault().disconnect(this.#conn);
+    public destroy(): void {
+      this.#monitor?.cancel();
+      if (this.#conn && instance) {
+        instance.disconnect(this.#conn);
+        this.#conn = 0;
+      }
 
       // Ensure timer is cleaned up
-      if (this.#writeTimer > 0)
+      if (this.#writeTimer > 0) {
         GLib.source_remove(this.#writeTimer);
-    }
-
-    public emit<Signal extends keyof typeof this.$signals>(
-      signal: Signal,
-      ...args: Parameters<(typeof this.$signals)[Signal]>
-    ): void {
-      super.emit(signal, ...args);
-    }
-
-    public connect<Signal extends keyof typeof this.$signals>(
-      signal: Signal,
-      callback: (self: typeof this, ...args: Parameters<(typeof this.$signals)[Signal]>) => ReturnType<(typeof this.$signals)[Signal]>
-    ): number {
-      return super.connect(signal, callback);
+        this.#writeTimer = 0;
+      }
     }
   }
 

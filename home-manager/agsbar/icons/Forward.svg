@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="15.999999"
-   height="16"
-   viewBox="0 0 4.2333331 4.2333334"
+   width="16"
+   height="15.999999"
+   viewBox="0 0 4.2333334 4.2333331"
    version="1.1"
    id="svg1"
    xml:space="preserve"
@@ -12,7 +12,7 @@
    xmlns:svg="http://www.w3.org/2000/svg"><defs
      id="defs1"><marker
        style="overflow:visible"
-       id="ArrowWideRounded_reversed"
+       id="ArrowWideRounded_reversed-5-9"
        refX="0"
        refY="0"
        orient="auto"
@@ -21,14 +21,14 @@
        viewBox="0 0 1 1"
        preserveAspectRatio="xMidYMid"><g
          transform="scale(-1)"
-         id="g4"><path
+         id="g4-6-3"><path
            style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
            d="M 3,-3 0,0 3,3"
            transform="rotate(180,0.125,0)"
-           id="path4" /></g></marker></defs><g
+           id="path4-2-6" /></g></marker></defs><g
      id="layer1"
-     transform="translate(-224.93396,-21.966051)"
+     transform="translate(-230.01443,-27.392778)"
      style="display:inline"><path
-       style="fill:none;stroke:#066406;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#ArrowWideRounded_reversed)"
-       d="m 227.05062,23.235359 v 1.694713"
-       id="path1" /></g></svg>
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#ArrowWideRounded_reversed-5-9)"
+       d="m 232.75108,29.509446 -1.23997,1e-6"
+       id="path1-2-6" /></g></svg>

@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="4.2333331mm"
-   height="4.2333336mm"
-   viewBox="0 0 4.2333331 4.2333336"
+   width="15.999999"
+   height="16"
+   viewBox="0 0 4.2333331 4.2333334"
    version="1.1"
    id="svg1"
    xml:space="preserve"
@@ -12,22 +12,20 @@
    xmlns:svg="http://www.w3.org/2000/svg"><defs
      id="defs1" /><g
      id="layer1"
-     transform="translate(-220.00001,-21.966045)"
-     style="display:inline"><g
-       id="g22"
-       transform="matrix(1.0707506,0,0,0.95754764,-15.551119,0.86065527)"><ellipse
-         style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.182704;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-         id="path18-7"
-         cx="221.03952"
-         cy="25.197863"
-         rx="0.32507586"
-         ry="0.23632652" /><ellipse
-         style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.182704;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-         id="path18-7-2"
-         cx="222.42647"
-         cy="24.870184"
-         rx="0.32507586"
-         ry="0.23632652" /><path
-         style="fill:none;stroke:#ffffff;stroke-width:0.182704;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-         d="M 221.36367,25.176662 V 23.29148 l 1.39047,-0.112515 v 1.70179"
-         id="path20" /></g></g></svg>
+     transform="translate(-220.00001,-21.966051)"
+     style="display:inline"><ellipse
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path18-7"
+       cx="221.12708"
+       cy="24.98881"
+       rx="0.34807518"
+       ry="0.22629389" /><ellipse
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path18-7-2"
+       cx="222.61215"
+       cy="24.675041"
+       rx="0.34807518"
+       ry="0.22629389" /><path
+       style="fill:none;stroke:#ffffff;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 221.47416,24.968509 v -1.805152 l 1.48885,-0.107738 v 1.629545"
+       id="path20" /></g></svg>
