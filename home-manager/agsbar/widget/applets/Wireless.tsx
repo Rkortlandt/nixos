@@ -112,7 +112,7 @@ export default function ConnectivityModule() {
 
   return (
     <menubutton class="connectivity-module menu-btn" popover={menuPopover as any}>
-      <box spacing={6} css="padding: 0 4px;">
+      <box spacing={6} css="padding: 0 4px; background: transparent">
         <image iconName={networkIcon} pixelSize={22} />
         <image iconName={createBinding(bluetooth, "is_powered").as(p => p ? "Bluetooth" : "Bluetooth-Disabled")} pixelSize={22} />
       </box>
@@ -143,6 +143,10 @@ function WifiList({ network, visible }: { network: AstalNetwork.Network, visible
   ], (s, m) => Boolean(s || m));
 
   async function toggleWifi() {
+    if (wifi == null) {
+      return
+    }
+
     const newState = !wifi.enabled;
     wifi.enabled = newState;
     try {

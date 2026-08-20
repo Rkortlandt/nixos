@@ -4,12 +4,24 @@
   # Networking
   networking.networkmanager.enable = true;
 
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 8080 12345 22 8090 5173 53317 ];
-    allowedUDPPorts = [ 53317 ];
-    trustedInterfaces = [ "tailscale0" ];
+  networking = {
+    firewall = {
+      enable = true; 
+      allowedTCPPorts = [ 8080 12345 22 8090 5173 53317 ];
+      allowedUDPPorts = [ 53317 ];
+      trustedInterfaces = [ "tailscale0" "thunderbolt0"];
+    };
+    interfaces.thunderbolt0 = {
+      ipv4.addresses = [{
+        address = "10.0.50.1";
+        prefixLength = 24;
+      }];
+    };
   };
+
+
+  boot.kernelModules = [ "thunderbolt-net" ];
+  services.hardware.bolt.enable = true;
 
   # Avahi and NSS mDNS support
   services.avahi = {

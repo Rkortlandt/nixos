@@ -1,1 +1,1 @@
-exec /home/ss-rowan/nixos/home-manager/agsbar/result/bin/agsbar
+exec /home/ss-pro/nixos/home-manager/agsbar/result/bin/agsbar

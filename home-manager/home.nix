@@ -301,8 +301,26 @@ systemd.user.services.auto-float = {
   };
 
   Service = {
-    ExecStart = "/home/ss-rowan/nixos/home-manager/hyprland/hypr/scripts/auto-float.sh";
+    ExecStart = "${config.home.homeDirectory}/nixos/home-manager/hyprland/hypr/scripts/auto-float.sh";
     Restart = "on-failure";
+  };
+
+  Install = {
+    WantedBy = [ "graphical-session.target" ];
+  };
+};
+
+systemd.user.services.hypr-refresh-rate = {
+  Unit = {
+    Description = "Hyprland Adaptive Refresh Rate & Battery Auto-Switching Service";
+    After = [ "graphical-session.target" ];
+    PartOf = [ "graphical-session.target" ];
+  };
+
+  Service = {
+    ExecStart = "${config.home.homeDirectory}/nixos/home-manager/hyprland/hypr/scripts/refresh-rate.sh daemon";
+    Restart = "on-failure";
+    RestartSec = "3";
   };
 
   Install = {

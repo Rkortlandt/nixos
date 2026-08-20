@@ -13,6 +13,7 @@ import { BarMprisPlayer } from "./applets/Media"
 import { SystemInfo } from "./applets/SystemInfo"
 import ConnectivityModule from "./applets/Wireless"
 import { AudioOutput } from "./applets/Audio"
+import { RefreshRate } from "./applets/RefreshRate"
 
 // Import the calculator and its global state
 import { showCalculator, InlineCalculator } from "./applets/Calculator"
@@ -241,6 +242,7 @@ export default function Bar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
         <box $type="end" spacing={4}>
           <BarMprisPlayer />
           <ConnectivityModule />
+          <RefreshRate />
           <Backlight />
           <Clock />
         </box>
