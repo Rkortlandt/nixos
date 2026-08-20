@@ -98,7 +98,7 @@ local autocmp = {
   end,
 } ]]
 
-local aicmp = {
+--[[ local aicmp = {
   "huggingface/llm.nvim",
   opts = {
     backend = "ollama",
@@ -122,7 +122,7 @@ local aicmp = {
     enable_suggestions_on_startup = true,
     enable_suggestions_on_files = "*",
   }
-}
+} ]]
 
 local gitsigns = {
   'lewis6991/gitsigns.nvim',
@@ -323,7 +323,7 @@ require('lazy').setup({
   colorizer,
   garmin_monkeyc,
   -- llama,
-  aicmp,
+  -- aicmp,
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
