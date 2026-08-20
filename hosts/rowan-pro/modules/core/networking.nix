@@ -19,8 +19,14 @@
     };
   };
 
+  boot.kernelParams = [
+  "pci=noaer"
+  "pcie_pme=nomsi"
+  "thunderbolt.dyndbg=+p" # enables verbose debug logs in dmesg
+];
 
-  boot.kernelModules = [ "thunderbolt-net" ];
+
+  boot.kernelModules = [ "thunderbolt-net" "thunderbolt" ];
   services.hardware.bolt.enable = true;
 
   # Avahi and NSS mDNS support
