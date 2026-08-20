@@ -18,7 +18,7 @@
       settings = rec {
         initial_session = {
           command = "${pkgs.tuigreet}/bin/tuigreet --asterisks --user-menu --time --r --cmd Hyprland";
-          user = "ss-rowan";
+          user = "ss-pro";
         };
         default_session = initial_session;
       };

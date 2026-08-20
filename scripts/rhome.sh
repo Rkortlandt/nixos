@@ -12,9 +12,13 @@ TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 echo -e "\033[1;34m[STAGE 2/4]\033[0m Running Git add..."
 git add .
 
-echo -e "\033[1;34m[STAGE 3/4]\033[0m Starting Home Manager Switch..."
+CURRENT_USER=$(whoami)
+CURRENT_HOSTNAME=$(hostname)
+FLAKE_TARGET="${CURRENT_USER}@${CURRENT_HOSTNAME}"
+
+echo -e "\033[1;34m[STAGE 3/4]\033[0m Starting Home Manager Switch for #$FLAKE_TARGET..."
 systemd-inhibit --who="Home Manager" --why="Updating Config" --mode=block \
-  home-manager switch --flake .#ss-rowan@rowan-nixos 2>&1 | tee "$TEMP_LOG"
+  home-manager switch --flake .#"$FLAKE_TARGET" 2>&1 | tee "$TEMP_LOG"
 
 if [ ${PIPESTATUS[0]} -eq 0 ]; then
     FINAL_LOG="logs/home_${TIMESTAMP}_SUCCESS.log"
