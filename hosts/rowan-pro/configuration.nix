@@ -175,6 +175,7 @@ hardware.nvidia = {
     libnotify
     jetbrains.gateway
     trash-cli
+    OVMFFull
   ];
 
 
