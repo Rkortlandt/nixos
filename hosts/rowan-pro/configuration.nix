@@ -20,6 +20,7 @@
 
     ./modules/desktop/hyprland.nix
     ./modules/desktop/kde.nix
+    ./modules/programs/vm.nix
   ];
 
   nixpkgs = {
@@ -174,9 +175,9 @@ hardware.nvidia = {
     libnotify
     jetbrains.gateway
     trash-cli
-    quickemu
-    qemu
   ];
+
+
 
   time.timeZone = "America/Detroit";
   i18n.defaultLocale = "en_US.UTF-8";
