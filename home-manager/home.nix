@@ -166,7 +166,7 @@
   };
 
  services.udiskie = {
-   enable = true;
+   enable = false;
 # The 'settings' attribute set is automatically translated into the
 # ~/.config/udiskie/config.yml file for you.
    settings = {
