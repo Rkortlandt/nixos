@@ -209,21 +209,6 @@ daemon_mode() {
                 auto_rate || true
             fi
         done
-    else
-        # Fallback polling loop if udevadm not available
-        local last_state=""
-        while true; do
-            local current_state="ac"
-            if is_on_battery; then
-                current_state="bat"
-            fi
-
-            if [ "$current_state" != "$last_state" ]; then
-                last_state="$current_state"
-                auto_rate || true
-            fi
-            sleep 3
-        done
     fi
 }
 
