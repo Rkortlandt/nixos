@@ -73,7 +73,7 @@ services.tailscale.enable = true;
       };
     };
   };
-  programs.ladybird.enable = true;
+  # programs.ladybird.enable = true;
 
   environment.etc = lib.mapAttrs' (name: value: {
     name = "nix/path/${name}";

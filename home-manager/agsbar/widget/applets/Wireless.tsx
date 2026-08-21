@@ -157,6 +157,9 @@ function WifiList({ network, visible }: { network: AstalNetwork.Network, visible
   async function scanWifi() {
     setManualScanning(true);
     try {
+      if (wifi == null) {
+        return;
+      }
       wifi.scan();
       await execAsync(["nmcli", "device", "wifi", "rescan"]);
     } catch (e) {

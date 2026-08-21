@@ -338,3 +338,228 @@ scrollbar {
   color: white;
   font-size: 10px;
 }
+
+/* ========================================= */
+/* Settings Menu Popover & Quick Settings   */
+/* ========================================= */
+
+.settings-menu-btn {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.settings-menu {
+  padding: 14px;
+  background-color: black;
+  border-radius: 18px;
+}
+
+.settings-header {
+  padding-bottom: 2px;
+}
+
+.settings-date {
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+}
+
+.settings-subdate {
+  font-size: 11px;
+  color: #888888;
+}
+
+.settings-separator {
+  min-height: 1px;
+  background-color: rgba(255, 255, 255, 0.12);
+  margin: 2px 0;
+}
+
+.setting-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.setting-card-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: #888888;
+  letter-spacing: 0.5px;
+}
+
+.setting-card-badge {
+  font-size: 10px;
+  font-weight: bold;
+  color: #0EA16F;
+  background-color: rgba(14, 161, 111, 0.15);
+  border-radius: 8px;
+  padding: 2px 6px;
+}
+
+/* Squircle Style Refresh Rate Toggle */
+.squircle-toggle {
+  border-radius: 14px;
+  padding: 10px 12px;
+  background-color: rgba(20, 20, 20, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.squircle-toggle:hover {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(40, 40, 40, 0.9);
+}
+
+.squircle-toggle.active-high {
+  background: linear-gradient(135deg, rgba(15, 88, 128, 0.85), rgba(14, 161, 111, 0.85));
+  border: 1px solid rgba(14, 161, 111, 0.6);
+}
+
+.squircle-toggle.active-auto {
+  background: linear-gradient(135deg, rgba(23, 42, 125, 0.85), rgba(15, 88, 128, 0.85));
+  border: 1px solid rgba(15, 88, 128, 0.6);
+}
+
+.squircle-toggle.active-low {
+  background-color: rgba(25, 25, 25, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.squircle-icon-container {
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.squircle-badge {
+  border-radius: 10px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.squircle-badge.high {
+  background-color: #0EA16F;
+  color: white;
+}
+
+.squircle-badge.auto {
+  background-color: #0F5880;
+  color: white;
+}
+
+.squircle-badge.low {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #cccccc;
+}
+
+/* Squircle Segmented Pills */
+.squircle-pill-container {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  padding: 3px;
+}
+
+.squircle-pill {
+  border-radius: 10px;
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  font-size: 11px;
+  color: #aaaaaa;
+}
+
+.squircle-pill:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: none;
+}
+
+.squircle-pill.active {
+  background-color: #0F5880;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
+/* Stepped Slider for Keyboard Backlight */
+scale.stepped-slider {
+  padding: 4px 0 10px 0;
+  background: transparent;
+}
+
+scale.stepped-slider trough {
+  min-height: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+scale.stepped-slider highlight {
+  background: linear-gradient(90deg, #0F5880, #0EA16F);
+  border-radius: 4px;
+}
+
+scale.stepped-slider slider {
+  min-height: 18px;
+  min-width: 18px;
+  border-radius: 9px;
+  background-color: #ffffff;
+  border: 2px solid #0EA16F;
+  margin: -5px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+scale.stepped-slider slider:hover {
+  background-color: #f0f0f0;
+  border-color: #ffffff;
+}
+
+scale.stepped-slider mark {
+  margin-top: 4px;
+}
+
+scale.stepped-slider mark indicator {
+  min-height: 5px;
+  min-width: 2px;
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+scale.stepped-slider mark label {
+  font-size: 10px;
+  color: #aaaaaa;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+/* Stop Buttons Row */
+.squircle-stops-container {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  padding: 3px;
+}
+
+.squircle-stop {
+  border-radius: 10px;
+  padding: 6px 0;
+  background: transparent;
+  border: none;
+  font-size: 11px;
+  color: #888888;
+}
+
+.squircle-stop:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: none;
+}
+
+.squircle-stop.active {
+  background-color: #0EA16F;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+

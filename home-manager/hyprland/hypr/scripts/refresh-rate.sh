@@ -2,9 +2,12 @@
 
 # Adaptive Hyprland Refresh Rate Script
 # Toggles or sets refresh rate on the main display dynamically (adaptively detecting resolution, scale, position, and available modes).
-# Supports battery-aware auto switching and a background daemon.
+# Supports battery-aware auto switching and udev rule integration.
 
 set -euo pipefail
+
+# Ensure standard user/system paths are available (especially when run via udev/runuser)
+export PATH="${HOME:-/home/$(id -un)}/.nix-profile/bin:/etc/profiles/per-user/$(id -un)/bin:/run/current-system/sw/bin:${PATH:-/bin:/usr/bin}"
 
 # Ensure HYPRLAND_INSTANCE_SIGNATURE is set and valid
 find_hyprland_instance() {
@@ -67,39 +70,56 @@ get_monitor_info() {
 
 # Check whether system is on battery power
 is_on_battery() {
-    # Check AC adapters in sysfs
+    # 1. Check any Mains / AC / USB power supply for online status
+    for ps in /sys/class/power_supply/*; do
+        if [ -f "$ps/type" ] && [ -f "$ps/online" ]; then
+            local type
+            type=$(cat "$ps/type" 2>/dev/null || echo "")
+            if [ "$type" = "Mains" ] || [ "$type" = "USB" ]; then
+                if [ "$(cat "$ps/online" 2>/dev/null || echo 0)" -eq 1 ]; then
+                    return 1 # AC / USB-PD connected (not on battery)
+                fi
+            fi
+        fi
+    done
+
+    # 2. Check AC adapters by name in sysfs
     for ac in /sys/class/power_supply/AC* /sys/class/power_supply/ACAD* /sys/class/power_supply/ADP*; do
         if [ -f "$ac/online" ]; then
-            if [ "$(cat "$ac/online")" -eq 1 ]; then
+            if [ "$(cat "$ac/online" 2>/dev/null || echo 0)" -eq 1 ]; then
                 return 1 # Plugged in (not on battery)
             fi
         fi
     done
 
-    # Check battery discharging status
+    # 3. Check battery discharging status
     for bat in /sys/class/power_supply/BAT*; do
         if [ -f "$bat/status" ]; then
-            if [ "$(cat "$bat/status")" = "Discharging" ]; then
+            local status
+            status=$(cat "$bat/status" 2>/dev/null || echo "")
+            if [ "$status" = "Discharging" ]; then
                 return 0 # On battery
             fi
         fi
     done
 
-    return 1
+    # Default to battery if no AC is online
+    return 0
 }
 
 # Apply refresh rate to monitor
 set_refresh_rate() {
     local target_hz="$1"
+    local force="${2:-false}"
     local info
-    info=$(get_monitor_info)
+    info=$(get_monitor_info || echo "")
     
     if [ -z "$info" ]; then
         echo "Error: Could not retrieve monitor information from Hyprland" >&2
         return 1
     fi
 
-    local name width height scale x y vrr
+    local name width height scale x y vrr current_hz
     name=$(echo "$info" | jq -r '.name')
     width=$(echo "$info" | jq -r '.width')
     height=$(echo "$info" | jq -r '.height')
@@ -107,6 +127,13 @@ set_refresh_rate() {
     x=$(echo "$info" | jq -r '.x')
     y=$(echo "$info" | jq -r '.y')
     vrr=$(echo "$info" | jq -r '.vrr')
+    current_hz=$(echo "$info" | jq -r '.refreshRate | round')
+
+    # Avoid redundant rate switches and notification spam
+    if [ "$force" != "true" ] && [ "$current_hz" -eq "$target_hz" ]; then
+        echo "Display ${name} is already at ${target_hz}Hz"
+        return 0
+    fi
 
     local mon_rule="${name},${width}x${height}@${target_hz},${x}x${y},${scale}"
     if [ "$vrr" = "true" ] || [ "$vrr" = "1" ]; then
@@ -117,13 +144,13 @@ set_refresh_rate() {
 
     # Notify via hyprctl notify if available
     hyprctl notify 1 2000 "rgb(0EA16F)" "Display: ${name} set to ${target_hz}Hz" >/dev/null 2>&1 || true
-    echo "Set ${name} to ${target_hz}Hz (${width}x${height} scale ${scale})"
+    echo "Set ${name} from ${current_hz}Hz to ${target_hz}Hz (${width}x${height} scale ${scale})"
 }
 
 # Toggle between lowest and highest available refresh rates
 toggle_rate() {
     local info
-    info=$(get_monitor_info)
+    info=$(get_monitor_info || echo "")
 
     if [ -z "$info" ]; then
         echo "Error: Could not retrieve monitor information from Hyprland" >&2
@@ -151,19 +178,20 @@ toggle_rate() {
         target_hz="$max_hz"
     fi
 
-    set_refresh_rate "$target_hz"
+    set_refresh_rate "$target_hz" "true"
 }
 
 # Auto mode: set rate based on power state (battery vs AC)
 auto_rate() {
     local info
-    info=$(get_monitor_info)
+    info=$(get_monitor_info || echo "")
 
     if [ -z "$info" ]; then
         return 1
     fi
 
-    local min_hz max_hz rates_count
+    local min_hz max_hz rates_count current_hz
+    current_hz=$(echo "$info" | jq -r '.refreshRate | round')
     rates_count=$(echo "$info" | jq -r '.availableRates | length')
 
     if [ "$rates_count" -gt 1 ]; then
@@ -174,12 +202,19 @@ auto_rate() {
         max_hz=120
     fi
 
+    local target_hz
     if is_on_battery; then
-        echo "System is on battery: setting ${min_hz}Hz"
-        set_refresh_rate "$min_hz"
+        target_hz="$min_hz"
+        echo "System is on battery: target ${target_hz}Hz (current: ${current_hz}Hz)"
     else
-        echo "System is on AC power: setting ${max_hz}Hz"
-        set_refresh_rate "$max_hz"
+        target_hz="$max_hz"
+        echo "System is on AC power: target ${target_hz}Hz (current: ${current_hz}Hz)"
+    fi
+
+    if [ "$current_hz" -ne "$target_hz" ]; then
+        set_refresh_rate "$target_hz" "false"
+    else
+        echo "Refresh rate already optimal (${current_hz}Hz)"
     fi
 }
 
@@ -194,21 +229,39 @@ get_current_rate() {
     fi
 }
 
-# Run background daemon monitoring power events
-daemon_mode() {
-    echo "Starting Hyprland Adaptive Refresh Rate Daemon..."
-    # Apply on start
-    auto_rate || true
+# Handler when invoked via udev rule (can be called as root or user)
+udev_handler() {
+    if [ "$(id -u)" -eq 0 ]; then
+        # Running as root from udev rule: find all user Hyprland sessions
+        for user_dir in /run/user/*; do
+            [ -d "$user_dir" ] || continue
+            local uid
+            uid=$(basename "$user_dir")
+            case "$uid" in
+                ''|*[!0-9]*) continue ;;
+            esac
 
-    # Listen to power_supply udev events if udevadm exists
-    if command -v udevadm >/dev/null 2>&1; then
-        udevadm monitor --subsystem-match=power_supply --udev 2>/dev/null | while read -r line; do
-            if echo "$line" | grep -q "change"; then
-                # Debounce slight event bursts
-                sleep 0.5
-                auto_rate || true
+            local user_name
+            user_name=$(id -nu "$uid" 2>/dev/null || true)
+            [ -n "$user_name" ] || continue
+
+            local user_hypr="$user_dir/hypr"
+            if [ -d "$user_hypr" ]; then
+                for inst in "$user_hypr"/*; do
+                    if [ -S "$inst/.socket.sock" ]; then
+                        local inst_sig
+                        inst_sig=$(basename "$inst")
+                        su -s /bin/sh "$user_name" -c "
+                            export XDG_RUNTIME_DIR='$user_dir'
+                            export HYPRLAND_INSTANCE_SIGNATURE='$inst_sig'
+                            \"$0\" auto
+                        " </dev/null >/dev/null 2>&1 || true
+                    fi
+                done
             fi
         done
+    else
+        auto_rate
     fi
 }
 
@@ -226,22 +279,22 @@ case "${1:-toggle}" in
     get-json)
         get_monitor_info
         ;;
-    daemon)
-        daemon_mode
+    udev|udev-trigger)
+        udev_handler
         ;;
     60|120|[0-9]*)
-        set_refresh_rate "$1"
+        set_refresh_rate "$1" "true"
         ;;
     set)
         if [ -n "${2:-}" ]; then
-            set_refresh_rate "$2"
+            set_refresh_rate "$2" "true"
         else
             echo "Usage: $0 set <hz>" >&2
             exit 1
         fi
         ;;
     *)
-        echo "Usage: $0 {toggle|auto|get|get-json|daemon|<hz>|set <hz>}" >&2
+        echo "Usage: $0 {toggle|auto|get|get-json|udev|<hz>|set <hz>}" >&2
         exit 1
         ;;
 esac

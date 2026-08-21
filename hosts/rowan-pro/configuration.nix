@@ -174,6 +174,8 @@ hardware.nvidia = {
     libnotify
     jetbrains.gateway
     trash-cli
+    quickemu
+    qemu
   ];
 
   time.timeZone = "America/Detroit";

@@ -278,12 +278,53 @@ export namespace Backlights {
     }
 
     private async writeBrightness(level: number): Promise<boolean> {
+      this.#systemBrightness = level;
+
+      // 1. Try brightnessctl first
       try {
-        this.#systemBrightness = level;
         await execAsync(["brightnessctl", "-d", this.#name, "s", `${level}`]);
         return true;
+      } catch (_) {
+        // brightnessctl failed or had permission denied, fall back to login1
+      }
+
+      // 2. Fall back to systemd-logind via DBus (which has permissions to set brightness)
+      try {
+        const bus = Gio.bus_get_sync(Gio.BusType.SYSTEM, null);
+        const sessions = bus.call_sync(
+          "org.freedesktop.login1",
+          "/org/freedesktop/login1",
+          "org.freedesktop.login1.Manager",
+          "ListSessions",
+          null,
+          null,
+          Gio.DBusCallFlags.NONE,
+          -1,
+          null
+        );
+        const arr = sessions.get_child_value(0);
+        for (let i = 0; i < arr.n_children(); i++) {
+          const item = arr.get_child_value(i);
+          const spath = item.get_child_value(4).get_string()[0];
+          try {
+            bus.call_sync(
+              "org.freedesktop.login1",
+              spath,
+              "org.freedesktop.login1.Session",
+              "SetBrightness",
+              new GLib.Variant("(ssu)", [this.#deviceClass, this.#name, level]),
+              null,
+              Gio.DBusCallFlags.NONE,
+              -1,
+              null
+            );
+            return true;
+          } catch (_) {
+            // continue searching for active session
+          }
+        }
       } catch (e) {
-        console.error(`Backlight: Couldn't set brightness for "${this.#name}". Stderr: ${e}`);
+        console.error(`Backlight: Couldn't set brightness for "${this.#name}" via login1. Error: ${e}`);
       }
 
       return false;

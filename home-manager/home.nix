@@ -310,23 +310,7 @@ systemd.user.services.auto-float = {
   };
 };
 
-systemd.user.services.hypr-refresh-rate = {
-  Unit = {
-    Description = "Hyprland Adaptive Refresh Rate & Battery Auto-Switching Service";
-    After = [ "graphical-session.target" ];
-    PartOf = [ "graphical-session.target" ];
-  };
 
-  Service = {
-    ExecStart = "${config.home.homeDirectory}/nixos/home-manager/hyprland/hypr/scripts/refresh-rate.sh daemon";
-    Restart = "on-failure";
-    RestartSec = "3";
-  };
-
-  Install = {
-    WantedBy = [ "graphical-session.target" ];
-  };
-};
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
