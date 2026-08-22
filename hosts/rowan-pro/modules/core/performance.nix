@@ -11,9 +11,9 @@
 
   };
  config = {
-    powerManagement.powertop.enable = true;
+    powerManagement.powertop.enable = false;
     services.power-profiles-daemon.enable = false;
-    services.thermald.enable = true;
+    services.thermald.enable = false;
     services.tlp = {
       enable = true;
       settings = {
@@ -28,6 +28,9 @@
 
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 60;
+
+        # Prevent TLP from autosuspending I2C / touchpad drivers
+        RUNTIME_PM_DRIVER_DENYLIST = "i2c_designware i2c_hid_acpi hid_multitouch";
       };
     };
 
