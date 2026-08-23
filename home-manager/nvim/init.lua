@@ -98,7 +98,7 @@ local autocmp = {
   end,
 } ]]
 
---[[ local aicmp = {
+local aicmp = {
   "huggingface/llm.nvim",
   opts = {
     backend = "ollama",
@@ -122,7 +122,7 @@ local autocmp = {
     enable_suggestions_on_startup = true,
     enable_suggestions_on_files = "*",
   }
-} ]]
+}
 
 local gitsigns = {
   'lewis6991/gitsigns.nvim',
