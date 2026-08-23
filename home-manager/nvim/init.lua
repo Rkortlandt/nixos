@@ -102,7 +102,7 @@ local aicmp = {
   "huggingface/llm.nvim",
   opts = {
     backend = "ollama",
-    model = "qwen2.5-coder:7b",
+    model = "qwen2.5-coder:7b-base",
     url = "http://localhost:11434",
     request_body = {
       options = {
@@ -116,7 +116,7 @@ local aicmp = {
       bin_path = vim.fn.exepath("llm-ls"),
     },
     tokenizer = {
-      repository = "Qwen/Qwen2.5-Coder-7B",
+      repository = "Qwen/Qwen2.5-Coder-7B-Base",
     },
     context_window = 4096,
     enable_suggestions_on_startup = true,
