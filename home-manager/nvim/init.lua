@@ -323,7 +323,7 @@ require('lazy').setup({
   colorizer,
   garmin_monkeyc,
   -- llama,
-  -- aicmp,
+  aicmp,
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
