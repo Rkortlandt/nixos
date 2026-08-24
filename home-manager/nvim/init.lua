@@ -505,6 +505,10 @@ require('lspconfig').jdtls.setup({
   end,
 })
 
+require('lspconfig').nixd.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+})
 
 require('lspconfig').jsonls.setup({
   capabilities = lsp_capabilities,
@@ -545,6 +549,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
+-- adding in nix snippets
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()

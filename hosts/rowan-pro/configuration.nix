@@ -98,7 +98,6 @@ hardware.nvidia = {
 
   package = config.boot.kernelPackages.nvidiaPackages.stable;
 };
-
   services.udev.extraRules = ''
     # Prevent AMD I2C DesignWare controller from autosuspending (fixes ASUS touchpad lockup)
     ACTION=="add", SUBSYSTEM=="platform", KERNELS=="AMDI0010:*", ATTR{power/control}="on"
