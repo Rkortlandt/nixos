@@ -102,7 +102,7 @@ local aicmp = {
   "huggingface/llm.nvim",
   opts = {
     backend = "ollama",
-    model = "qwen2.5-coder:7b",
+    model = "qwen2.5-coder:7b-base",
     url = "http://localhost:11434",
     request_body = {
       options = {
@@ -504,6 +504,7 @@ require('lspconfig').jdtls.setup({
     end
   end,
 })
+
 
 require('lspconfig').jsonls.setup({
   capabilities = lsp_capabilities,
