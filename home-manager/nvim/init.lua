@@ -108,16 +108,15 @@ local aicmp = {
       options = {
         temperature = 0.2,
         top_p = 0.95,
-
       }
     },
     fim = {
       enabled = true,
-      prefix = "<|fim_begin|>",
-      middle = "<|fim_end|>",
-      suffix = "<|fim_hole|>",
+      prefix = "<｜fim▁begin｜>",
+      middle = "<｜fim▁end｜>",
+      suffix = "<｜fim▁hole｜>"
     },
-    tokens_to_clear = { "<|EOT|>", "<｜end▁of▁sentence｜>" },
+    tokens_to_clear = { "<｜end▁of▁sentence｜>" },
     lsp = {
       bin_path = vim.fn.exepath("llm-ls"),
       cmd_env = { LLM_LOG_LEVEL = "DEBUG" },
