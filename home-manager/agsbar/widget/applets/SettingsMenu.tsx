@@ -6,6 +6,7 @@ import { createBinding, createComputed, createState } from "ags";
 import { createPoll } from "ags/time";
 import { execAsync } from "ags/process";
 import { Backlights } from "../../modules/backlight";
+import AstalPowerProfiles from "gi://AstalPowerProfiles?version=0.1";
 
 const SCRIPT_PATH = "/home/ss-pro/nixos/home-manager/hyprland/hypr/scripts/refresh-rate.sh";
 

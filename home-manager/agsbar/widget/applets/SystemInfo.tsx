@@ -29,7 +29,7 @@ export function SystemInfo() {
     (out) => parseInt(out)
   );
 
-  const ram = createPoll(0, 10000, `${SRC}/scripts/system.sh --ram-usage`,
+  const ram = createPoll(0, 2000, `${SRC}/scripts/system.sh --ram-usage`,
     (out) => parseInt(out)
   );
 

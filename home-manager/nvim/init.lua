@@ -102,7 +102,7 @@ local aicmp = {
   "huggingface/llm.nvim",
   opts = {
     backend = "ollama",
-    model = "qwen2.5-coder:7b-base",
+    model = "deepseek-coder:1.3b-base",
     url = "http://localhost:11434",
     request_body = {
       options = {
@@ -113,16 +113,17 @@ local aicmp = {
     },
     fim = {
       enabled = true,
-      prefix = "<|fim_prefix|>",
-      middle = "<|fim_middle|>",
-      suffix = "<|fim_suffix|>",
+      prefix = "<|fim_begin|>",
+      middle = "<|fim_end|>",
+      suffix = "<|fim_hole|>",
     },
+    tokens_to_clear = { "<|EOT|>", "<｜end▁of▁sentence｜>" },
     lsp = {
       bin_path = vim.fn.exepath("llm-ls"),
       cmd_env = { LLM_LOG_LEVEL = "DEBUG" },
     },
     tokenizer = {
-      repository = "Qwen/Qwen2.5-Coder-7B",
+      repository = "deepseek-ai/deepseek-coder-1.3b-base",
     },
     context_window = 4096,
     enable_suggestions_on_startup = true,
