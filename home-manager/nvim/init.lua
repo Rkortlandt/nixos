@@ -130,7 +130,20 @@ local aicmp = {
     context_window = 4096,
     enable_suggestions_on_startup = true,
     enable_suggestions_on_files = "*",
-  }
+  },
+  config = function(_, opts)
+    require("llm").setup(opts)
+
+    vim.keymap.set("i", "<Tab>", function()
+      local completion = require("llm.completion")
+      if completion.shown_suggestion ~= nil then
+        completion.complete()
+      else
+        local tab_key_code = vim.api.nvim_replace_termcodes("<Tab>", true, false, true)
+        vim.api.nvim_feedkeys(tab_key_code, "n", false)
+      end
+    end, { expr = false, silent = true })
+  end,
 }
 
 local gitsigns = {

@@ -49,57 +49,63 @@ export namespace RefreshRate {
       const lines = output.split("\n");
       for (const line of lines) {
         const match = line.match(/"name":\s*"(\w+)"/);
-
-        return
-      }
-
-
-      constructor(name: string = "intel_backlight", deviceClass: DeviceClass = "backlight") {
-        super();
-
-        this.#name = name;
-        this.#deviceClass = deviceClass;
-        this.#type = deviceClass === "leds" || name.includes("kbd") ? "keyboard" : "screen";
-        this.#path = `/sys/class/${deviceClass}/${name}`;
-
-        if (!Gio.File.new_for_path(`${this.#path}/brightness`).query_exists(null))
-          throw new Error(`Brightness: Couldn't find brightness for "${name}" in ${this.#path}`);
-
-        this.#conn = getDefault().connect(
-          this.#type === "keyboard" ? "notify::default-kbd" : "notify::default",
-          () => this.notify("is-default")
-        );
-
-        this.notify("path");
-        this.#maxBrightness = Number.parseInt(readFile(`${this.#path}/max_brightness`));
-        this.notify("max-brightness");
-
-        // Read initial brightness and set both internal and system values
-        this.#systemBrightness = Number.parseInt(readFile(`${this.#path}/brightness`));
-        this.#internalBrightness = this.#systemBrightness;
+        if (match) {
+          if (match[1] === "eDP-1") {
+            const refreshRate = Number.parseInt(line);
+            if (refreshRate > 1) {
+              refreshRates.push(hertz);
+              break;
 
 
-        this.#monitor = monitorFile(`${this.#path}/brightness`, () => {
-          // System file changed (e.g., hardware keys)
-          const newBrightness = this.readBrightness();
+            }
 
-          // Only update if the value has actually changed
-          if (this.#systemBrightness === newBrightness)
-            return;
 
-          // Cancel any pending UI-driven write
-          if (this.#writeTimer > 0) {
-            GLib.source_remove(this.#writeTimer);
-            this.#writeTimer = 0;
-          }
+            constructor(name: string = "intel_backlight", deviceClass: DeviceClass = "backlight") {
+              super();
 
-          // Sync both system and internal values
-          this.#systemBrightness = newBrightness;
-          this.#internalBrightness = newBrightness;
-          this.notify("brightness");
-          this.emit("brightness-changed", this.brightness);
-        });
-      }
+              this.#name = name;
+              this.#deviceClass = deviceClass;
+              this.#type = deviceClass === "leds" || name.includes("kbd") ? "keyboard" : "screen";
+              this.#path = `/sys/class/${deviceClass}/${name}`;
+
+              if (!Gio.File.new_for_path(`${this.#path}/brightness`).query_exists(null))
+                throw new Error(`Brightness: Couldn't find brightness for "${name}" in ${this.#path}`);
+
+              this.#conn = getDefault().connect(
+                this.#type === "keyboard" ? "notify::default-kbd" : "notify::default",
+                () => this.notify("is-default")
+              );
+
+              this.notify("path");
+              this.#maxBrightness = Number.parseInt(readFile(`${this.#path}/max_brightness`));
+              this.notify("max-brightness");
+
+              // Read initial brightness and set both internal and system values
+              this.#systemBrightness = Number.parseInt(readFile(`${this.#path}/brightness`));
+              this.#internalBrightness = this.#systemBrightness;
+
+
+              this.#monitor = monitorFile(`${this.#path}/brightness`, () => {
+                // System file changed (e.g., hardware keys)
+                const newBrightness = this.readBrightness();
+
+                // Only update if the value has actually changed
+                if (this.#systemBrightness === newBrightness)
+                  return;
+
+                // Cancel any pending UI-driven write
+                if (this.#writeTimer > 0) {
+                  GLib.source_remove(this.#writeTimer);
+                  this.#writeTimer = 0;
+                }
+
+                // Sync both system and internal values
+                this.#systemBrightness = newBrightness;
+                this.#internalBrightness = newBrightness;
+                this.notify("brightness");
+                this.emit("brightness-changed", this.brightness);
+              });
+            }
 
     private readBrightness(): number {
       try {
