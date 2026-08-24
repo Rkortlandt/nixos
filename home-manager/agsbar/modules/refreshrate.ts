@@ -1,5 +1,5 @@
 import { monitorFile, readFile } from "ags/file";
-import { execAsync } from "ags/process";
+import { exec, execAsync } from "ags/process";
 import GObject, { getter, ParamSpec, register, setter, signal } from "ags/gobject";
 
 import Gio from "gi://Gio?version=2.0";
@@ -45,67 +45,73 @@ export namespace RefreshRate {
       // Get Main Display RefreshRates from eDP-1 from hyprlan
       const refreshRates: number[] = [];
 
-      const output = execAsync(["hyprctl", "monitors"]).stdout;
+      const output = exec(["hyprctl", "monitors"]);
       const lines = output.split("\n");
+
       for (const line of lines) {
-        const match = line.match(/"name":\s*"(\w+)"/);
-        if (match) {
-          if (match[1] === "eDP-1") {
-            const refreshRate = Number.parseInt(line);
-            if (refreshRate > 1) {
-              refreshRates.push(hertz);
-              break;
+        // TODO Parse need to extract the availbile modes from the eDP-1 monitor but there may be multiple monitors
+        // Monitor eDP-1 (ID 0):
+        /* 	2880x1800@120.00000 at 0x0
+          description: Samsung Display Corp. ATNA60CL10-0
+          make: Samsung Display Corp.
+          model: ATNA60CL10-0 
+          physical size (mm): 340x220
+          serial: 
+          active workspace: 3 (3)
+          special workspace: 0 ()
+          reserved: 0 31 0 0
+          scale: 2.00 
+          ...
+          availableModes: 1920x1080@60.00Hz 1920x1080@74.97Hz 1920x1080@60.00Hz 1920x1080@59.94Hz 1920x1080@50.00Hz 1680x1050@59.88Hz 1280x1024@75.03Hz 1280x1024@60.02Hz 1440x900@59.90Hz 1280x960@60.00Hz 1280x800@59.91Hz 1152x864@75.00Hz 1280x720@60.00Hz 1280x720@60.00Hz 1280x720@59.94Hz 1280x720@50.00Hz 1024x768@75.03Hz 1024x768@70.07Hz 1024x768@60.00Hz 832x624@74.55Hz 800x600@75.00Hz 800x600@72.19Hz 800x600@60.32Hz 800x600@56.25Hz 720x576@50.00Hz 720x480@60.00Hz 720x480@60.00Hz 720x480@59.94Hz 720x480@59.94Hz 720x480@59.94Hz 640x480@75.00Hz 640x480@72.81Hz 640x480@66.67Hz 640x480@60.00Hz 640x480@59.94Hz 640x480@59.94Hz 720x400@70.08Hz
+          */
+
+      }
+      constructor(name: string = "intel_backlight", deviceClass: DeviceClass = "backlight") {
+        super();
+
+        this.#name = name;
+        this.#deviceClass = deviceClass;
+        this.#type = deviceClass === "leds" || name.includes("kbd") ? "keyboard" : "screen";
+        this.#path = `/sys/class/${deviceClass}/${name}`;
+
+        if (!Gio.File.new_for_path(`${this.#path}/brightness`).query_exists(null))
+          throw new Error(`Brightness: Couldn't find brightness for "${name}" in ${this.#path}`);
+
+        this.#conn = getDefault().connect(
+          this.#type === "keyboard" ? "notify::default-kbd" : "notify::default",
+          () => this.notify("is-default")
+        );
+
+        this.notify("path");
+        this.#maxBrightness = Number.parseInt(readFile(`${this.#path}/max_brightness`));
+        this.notify("max-brightness");
+
+        // Read initial brightness and set both internal and system values
+        this.#systemBrightness = Number.parseInt(readFile(`${this.#path}/brightness`));
+        this.#internalBrightness = this.#systemBrightness;
 
 
-            }
+        this.#monitor = monitorFile(`${this.#path}/brightness`, () => {
+          // System file changed (e.g., hardware keys)
+          const newBrightness = this.readBrightness();
 
+          // Only update if the value has actually changed
+          if (this.#systemBrightness === newBrightness)
+            return;
 
-            constructor(name: string = "intel_backlight", deviceClass: DeviceClass = "backlight") {
-              super();
+          // Cancel any pending UI-driven write
+          if (this.#writeTimer > 0) {
+            GLib.source_remove(this.#writeTimer);
+            this.#writeTimer = 0;
+          }
 
-              this.#name = name;
-              this.#deviceClass = deviceClass;
-              this.#type = deviceClass === "leds" || name.includes("kbd") ? "keyboard" : "screen";
-              this.#path = `/sys/class/${deviceClass}/${name}`;
-
-              if (!Gio.File.new_for_path(`${this.#path}/brightness`).query_exists(null))
-                throw new Error(`Brightness: Couldn't find brightness for "${name}" in ${this.#path}`);
-
-              this.#conn = getDefault().connect(
-                this.#type === "keyboard" ? "notify::default-kbd" : "notify::default",
-                () => this.notify("is-default")
-              );
-
-              this.notify("path");
-              this.#maxBrightness = Number.parseInt(readFile(`${this.#path}/max_brightness`));
-              this.notify("max-brightness");
-
-              // Read initial brightness and set both internal and system values
-              this.#systemBrightness = Number.parseInt(readFile(`${this.#path}/brightness`));
-              this.#internalBrightness = this.#systemBrightness;
-
-
-              this.#monitor = monitorFile(`${this.#path}/brightness`, () => {
-                // System file changed (e.g., hardware keys)
-                const newBrightness = this.readBrightness();
-
-                // Only update if the value has actually changed
-                if (this.#systemBrightness === newBrightness)
-                  return;
-
-                // Cancel any pending UI-driven write
-                if (this.#writeTimer > 0) {
-                  GLib.source_remove(this.#writeTimer);
-                  this.#writeTimer = 0;
-                }
-
-                // Sync both system and internal values
-                this.#systemBrightness = newBrightness;
-                this.#internalBrightness = newBrightness;
-                this.notify("brightness");
-                this.emit("brightness-changed", this.brightness);
-              });
-            }
+          // Sync both system and internal values
+          this.#systemBrightness = newBrightness;
+          this.#internalBrightness = newBrightness;
+          this.notify("brightness");
+          this.emit("brightness-changed", this.brightness);
+        });
+      }
 
     private readBrightness(): number {
       try {

@@ -89,20 +89,6 @@ services.tailscale.enable = true;
 
 services.xserver.videoDrivers = [ "nvidia" ];
 
-hardware.nvidia = {
-  modesetting.enable = true;
-  
-  powerManagement.enable = false; 
-
-  open = true;
-
-  package = config.boot.kernelPackages.nvidiaPackages.stable;
-};
-  services.udev.extraRules = ''
-    # Prevent AMD I2C DesignWare controller from autosuspending (fixes ASUS touchpad lockup)
-    ACTION=="add", SUBSYSTEM=="platform", KERNELS=="AMDI0010:*", ATTR{power/control}="on"
-  '';
-
   services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
@@ -135,17 +121,7 @@ hardware.nvidia = {
   services.gvfs.enable = true;
   services.dbus.enable = true;
   services.printing.enable = true;
-  services.upower.enable = true;
   services.envfs.enable = true;
-
-  services.logind.settings.Login = {
-    lidSwitch = "suspend-then-hibernate";
-    lidSwitchDocked = "hybrid-sleep";
-    lidSwitchExternalPower = "hybrid-sleep";
-    powerKey = "hibernate";
-    powerKeyLongPress = "poweroff";
-  };
-
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [

@@ -427,6 +427,36 @@ scrollbar {
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+.squircle-toggle.active-saver {
+  background: linear-gradient(135deg, rgba(14, 161, 111, 0.75), rgba(15, 88, 128, 0.65));
+  border: 1px solid rgba(14, 161, 111, 0.6);
+}
+
+.squircle-toggle.active-balanced {
+  background: linear-gradient(135deg, rgba(23, 42, 125, 0.85), rgba(15, 88, 128, 0.85));
+  border: 1px solid rgba(15, 88, 128, 0.6);
+}
+
+.squircle-toggle.active-performance {
+  background: linear-gradient(135deg, rgba(175, 45, 45, 0.85), rgba(220, 95, 40, 0.85));
+  border: 1px solid rgba(220, 95, 40, 0.6);
+}
+
+.setting-card-badge.saver {
+  color: #0EA16F;
+  background-color: rgba(14, 161, 111, 0.15);
+}
+
+.setting-card-badge.balanced {
+  color: #38A3D8;
+  background-color: rgba(15, 88, 128, 0.25);
+}
+
+.setting-card-badge.performance {
+  color: #FF7B72;
+  background-color: rgba(229, 83, 75, 0.2);
+}
+
 .squircle-icon-container {
   background-color: rgba(0, 0, 0, 0.35);
   border-radius: 10px;
@@ -453,6 +483,21 @@ scrollbar {
 .squircle-badge.low {
   background-color: rgba(255, 255, 255, 0.15);
   color: #cccccc;
+}
+
+.squircle-badge.saver {
+  background-color: #0EA16F;
+  color: white;
+}
+
+.squircle-badge.balanced {
+  background-color: #0F5880;
+  color: white;
+}
+
+.squircle-badge.performance {
+  background: linear-gradient(135deg, #E5534B, #E67E22);
+  color: white;
 }
 
 /* Squircle Segmented Pills */
@@ -482,6 +527,24 @@ scrollbar {
   color: white;
   font-weight: bold;
   border: none;
+}
+
+.squircle-pill.active.saver {
+  background-color: #0EA16F;
+  color: white;
+  font-weight: bold;
+}
+
+.squircle-pill.active.balanced {
+  background-color: #0F5880;
+  color: white;
+  font-weight: bold;
+}
+
+.squircle-pill.active.performance {
+  background: linear-gradient(135deg, #E5534B, #E67E22);
+  color: white;
+  font-weight: bold;
 }
 
 /* Stepped Slider for Keyboard Backlight */

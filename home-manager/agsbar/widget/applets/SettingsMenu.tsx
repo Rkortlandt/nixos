@@ -254,6 +254,201 @@ function KeyboardBrightnessStopsSlider() {
   );
 }
 
+function PowerProfilesSquircleControl() {
+  const powerprofiles = AstalPowerProfiles.get_default();
+  const activeProfile = createBinding(powerprofiles, "activeProfile");
+
+  const setProfile = (profile: string) => {
+    try {
+      powerprofiles.set_active_profile(profile);
+    } catch (e) {
+      console.error(`Failed to set power profile to ${profile}:`, e);
+    }
+  };
+
+  const cycleProfile = () => {
+    try {
+      const profiles = powerprofiles.get_profiles().map((p) => p.profile);
+      const list = profiles.length > 0 ? profiles : ["power-saver", "balanced", "performance"];
+      const current = powerprofiles.activeProfile || "balanced";
+      const idx = list.indexOf(current);
+      const next = list[(idx + 1) % list.length];
+      powerprofiles.set_active_profile(next);
+    } catch (e) {
+      console.error("Failed to cycle power profile:", e);
+    }
+  };
+
+  const formatLabel = (profile: string) => {
+    switch (profile) {
+      case "power-saver":
+        return "Power Saver";
+      case "performance":
+        return "Performance";
+      case "balanced":
+      default:
+        return "Balanced";
+    }
+  };
+
+  const formatShort = (profile: string) => {
+    switch (profile) {
+      case "power-saver":
+        return "Saver";
+      case "performance":
+        return "Perf";
+      case "balanced":
+      default:
+        return "Balanced";
+    }
+  };
+
+  const formatSubtitle = (profile: string) => {
+    const degraded = powerprofiles.performanceDegraded;
+    if (profile === "performance" && degraded) {
+      return `Performance • Degraded (${degraded})`;
+    }
+    switch (profile) {
+      case "power-saver":
+        return "Maximum Battery Life";
+      case "performance":
+        return "Maximum Speed & Responsiveness";
+      case "balanced":
+      default:
+        return "Standard Performance & Power";
+    }
+  };
+
+  const cardClass = activeProfile.as((profile) => {
+    switch (profile) {
+      case "power-saver":
+        return "squircle-toggle active-saver";
+      case "performance":
+        return "squircle-toggle active-performance";
+      case "balanced":
+      default:
+        return "squircle-toggle active-balanced";
+    }
+  });
+
+  const badgeClass = activeProfile.as((profile) => {
+    switch (profile) {
+      case "power-saver":
+        return "setting-card-badge saver";
+      case "performance":
+        return "setting-card-badge performance";
+      case "balanced":
+      default:
+        return "setting-card-badge balanced";
+    }
+  });
+
+  const squircleBadgeClass = activeProfile.as((profile) => {
+    switch (profile) {
+      case "power-saver":
+        return "squircle-badge saver";
+      case "performance":
+        return "squircle-badge performance";
+      case "balanced":
+      default:
+        return "squircle-badge balanced";
+    }
+  });
+
+  const squircleBadgeText = activeProfile.as((profile) => {
+    switch (profile) {
+      case "power-saver":
+        return "SAVER";
+      case "performance":
+        return "PERF";
+      case "balanced":
+      default:
+        return "BALANCED";
+    }
+  });
+
+  const iconNameBinding = createComputed(
+    [activeProfile, createBinding(powerprofiles, "iconName")],
+    (profile, icon) => {
+      if (icon) return icon;
+      switch (profile) {
+        case "power-saver":
+          return "power-profile-power-saver-symbolic";
+        case "performance":
+          return "power-profile-performance-symbolic";
+        case "balanced":
+        default:
+          return "power-profile-balanced-symbolic";
+      }
+    }
+  );
+
+  const availableProfiles = (() => {
+    try {
+      const daemonProfiles = powerprofiles.get_profiles().map((p) => p.profile);
+      if (daemonProfiles && daemonProfiles.length > 0) {
+        return daemonProfiles;
+      }
+    } catch (e) {
+      // Fall back to standard profiles
+    }
+    return ["power-saver", "balanced", "performance"];
+  })();
+
+  return (
+    <box orientation={Gtk.Orientation.VERTICAL} class="setting-card" spacing={10}>
+      <box spacing={6}>
+        <image iconName="Battery-High" pixelSize={18} />
+        <label label="POWER PROFILE" class="setting-card-title" hexpand={true} halign={Gtk.Align.START} />
+        <label
+          label={squircleBadgeText}
+          class={badgeClass}
+        />
+      </box>
+
+      {/* Main Squircle Toggle Button */}
+      <button
+        class={cardClass}
+        onClicked={cycleProfile}
+        tooltipText="Click to cycle power profile"
+      >
+        <box spacing={12} css="padding: 2px 4px;">
+          <box class="squircle-icon-container" halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER}>
+            <image iconName={iconNameBinding} pixelSize={22} />
+          </box>
+          <box orientation={Gtk.Orientation.VERTICAL} hexpand={true} valign={Gtk.Align.CENTER} spacing={2}>
+            <label label={activeProfile.as(formatLabel)} halign={Gtk.Align.START} css="font-size: 13px; font-weight: bold;" />
+            <label label={activeProfile.as(formatSubtitle)} halign={Gtk.Align.START} css="font-size: 11px; opacity: 0.75;" />
+          </box>
+          <box valign={Gtk.Align.CENTER}>
+            <label
+              label={squircleBadgeText}
+              class={squircleBadgeClass}
+            />
+          </box>
+        </box>
+      </button>
+
+      {/* Squircle Segmented Selector Pills */}
+      <box class="squircle-pill-container" homogeneous={true} spacing={4}>
+        {availableProfiles.map((id) => (
+          <button
+            class={activeProfile.as((cur) =>
+              cur === id
+                ? `squircle-pill active ${id === "power-saver" ? "saver" : id === "performance" ? "performance" : "balanced"}`
+                : "squircle-pill"
+            )}
+            onClicked={() => setProfile(id)}
+            tooltipText={`Set ${formatLabel(id)} Profile`}
+          >
+            <label label={formatShort(id)} />
+          </button>
+        ))}
+      </box>
+    </box>
+  );
+}
+
 export function SettingsMenu() {
   const time = createPoll("", 1000, () => {
     return GLib.DateTime.new_now_local().format("%l:%M")?.trimStart()!;
@@ -279,6 +474,9 @@ export function SettingsMenu() {
 
         {/* Squircle Style Refresh Rate Toggle */}
         <RefreshRateSquircleToggle />
+
+        {/* Squircle Style Power Profiles Control */}
+        <PowerProfilesSquircleControl />
 
         {/* Stepped Slider Keyboard Brightness with Stops */}
         <KeyboardBrightnessStopsSlider />
