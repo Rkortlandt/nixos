@@ -104,10 +104,13 @@ local aicmp = {
     backend = "ollama",
     model = "deepseek-coder:1.3b-base",
     url = "http://localhost:11434",
+    debounce_ms = 150,
     request_body = {
       options = {
         temperature = 0.2,
         top_p = 0.95,
+        num_predict = 264,
+        stop = { "\n\n", "<｜fim▁hole｜>", "<｜end▁of▁sentence｜>", "<｜fim▁begin｜>", "<｜fim▁end｜>" },
       }
     },
     fim = {
@@ -116,7 +119,7 @@ local aicmp = {
       middle = "<｜fim▁end｜>",
       suffix = "<｜fim▁hole｜>"
     },
-    tokens_to_clear = { "<｜end▁of▁sentence｜>" },
+    tokens_to_clear = { "<｜end▁of▁sentence｜>", "<｜fim▁end｜>" },
     lsp = {
       bin_path = vim.fn.exepath("llm-ls"),
       cmd_env = { LLM_LOG_LEVEL = "DEBUG" },
