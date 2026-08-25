@@ -538,3 +538,20 @@ scale.stepped-slider mark label {
   border: none;
 }
 
+/* Battery Detailed Status in Settings Menu */
+.battery-status-card {
+  padding: 4px 2px;
+}
+
+.battery-text-grey {
+  font-size: 13px;
+  color: #888888;
+  font-weight: 500;
+}
+
+.battery-text-white {
+  font-size: 13px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
