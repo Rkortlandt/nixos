@@ -1,10 +1,52 @@
-import { monitorFile, readFile } from "ags/file";
-import { exec, execAsync } from "ags/process";
-import GObject, { getter, ParamSpec, register, setter, signal } from "ags/gobject";
+import { execAsync } from "ags/process";
+import GObject, { getter, register, setter } from "ags/gobject";
+import AstalHyprland from "gi://AstalHyprland?version=0.1";
+import GLib from "gi://GLib?version=2.0";
 
-import Gio from "gi://Gio?version=2.0";
-import GLib from "gi://GLib?version=2.0"; // <-- Added for timer
+export interface HyprlandWorkspace {
+  id: number;
+  name: string;
+}
 
+export interface HyprlandMonitor {
+  id: number;
+  name: string;
+  description: string;
+  make: string;
+  model: string;
+  serial: string;
+  width: number;
+  height: number;
+  physicalWidth: number;
+  physicalHeight: number;
+  refreshRate: number;
+  x: number;
+  y: number;
+  activeWorkspace: HyprlandWorkspace;
+  specialWorkspace: HyprlandWorkspace;
+  reserved: [number, number, number, number];
+  scale: number;
+  transform: number;
+  focused: boolean;
+  dpmsStatus: boolean;
+  vrr: boolean;
+  solitary: string;
+  solitaryBlockedBy: string[];
+  activelyTearing: boolean;
+  tearingBlockedBy: string[];
+  directScanoutTo: string;
+  directScanoutBlockedBy: string[];
+  disabled: boolean;
+  currentFormat: string;
+  mirrorOf: string;
+  availableModes: string[];
+  colorManagementPreset: string;
+  sdrBrightness: number;
+  sdrSaturation: number;
+  sdrMinLuminance: number;
+  sdrMaxLuminance: number;
+  hardwareCursorsInUse: boolean;
+}
 
 export namespace RefreshRate {
   let instance: _RefreshRate;
@@ -18,183 +60,183 @@ export namespace RefreshRate {
 
   @register({ GTypeName: "RefreshRate" })
   class _RefreshRate extends GObject.Object {
-    declare $signals: GObject.Object.SignalSignatures & {
-      "refresh-rate-changed": (value: number) => void
-    };
+    #refreshRate: number = -1;
+    #availableRefreshRates: number[] = [];
+    #hyprlandSignalId: number = 0;
+    #pollTimer: number = 0;
+    #applyChain: Promise<void> = Promise.resolve();
 
-    #refreshRate: number;
+    constructor() {
+      super();
 
-    @signal(Number) brightnessChanged(_: number): void { };
+      const hyprland = AstalHyprland.get_default();
+      this.#hyprlandSignalId = hyprland.connect("event", (_self, event: string) => {
+        if (
+          event.startsWith("monitoradded") ||
+          event.startsWith("monitorremoved") ||
+          event.startsWith("focusedmon") ||
+          event.startsWith("configreloaded")
+        ) {
+          this.handleExternalEvent();
+        }
+      });
 
-    @getter(String)
-    get refreshRate() { return this.#refreshRate; }
+      this.updateCurrentRefreshRate();
+      this.updateRefreshRates();
+
+      // Poll periodically to catch external keyword changes that emit no socket2 events
+      this.#pollTimer = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 2, () => {
+        this.updateCurrentRefreshRate();
+        return GLib.SOURCE_CONTINUE;
+      });
+    }
+
+    private async handleExternalEvent(): Promise<void> {
+      // Re-sync both the current rate AND the list of available rates off a
+      // single hyprctl call, since a hotplug/reconfig can change either.
+      try {
+        const monitors = await this.fetchMonitors();
+
+        this.#availableRefreshRates = this.parseAvailableRefreshRates(monitors);
+        this.notify("available-refresh-rates");
+
+        const hyprlandRefreshRate = this.parseCurrentRefreshRate(monitors);
+        if (hyprlandRefreshRate !== this.#refreshRate) {
+          this.#refreshRate = hyprlandRefreshRate;
+          this.notify("refresh-rate");
+        }
+      } catch {
+        this.#availableRefreshRates = [];
+        this.notify("available-refresh-rates");
+        this.#refreshRate = -1;
+        this.notify("refresh-rate");
+      }
+    }
 
     @setter(Number)
     set refreshRate(hertz: number) {
-      if (hertz != 60 && hertz != 120) {
-        return
+      if (!this.#availableRefreshRates.includes(hertz)) {
+        console.error("Unapplicable refresh rate");
+        return;
       }
 
-      this.#refreshRate = hertz;
-      this.notify("refresh-rate");
-      this.emit("refresh-rate-changed", hertz);
+      this.#applyChain = this.#applyChain
+        .then(() => this.applyRefreshRate(hertz))
+        .catch((error) => console.error("Could not sync refresh rate state", error));
     }
 
     @getter(Number)
-    get avalibleRefreshRates() {
-      // Get Main Display RefreshRates from eDP-1 from hyprlan
-      const refreshRates: number[] = [];
-
-      const output = exec(["hyprctl", "monitors"]);
-      const lines = output.split("\n");
-
-      for (const line of lines) {
-        // TODO Parse need to extract the availbile modes from the eDP-1 monitor but there may be multiple monitors
-        // Monitor eDP-1 (ID 0):
-        /* 	2880x1800@120.00000 at 0x0
-          description: Samsung Display Corp. ATNA60CL10-0
-          make: Samsung Display Corp.
-          model: ATNA60CL10-0 
-          physical size (mm): 340x220
-          serial: 
-          active workspace: 3 (3)
-          special workspace: 0 ()
-          reserved: 0 31 0 0
-          scale: 2.00 
-          ...
-          availableModes: 1920x1080@60.00Hz 1920x1080@74.97Hz 1920x1080@60.00Hz 1920x1080@59.94Hz 1920x1080@50.00Hz 1680x1050@59.88Hz 1280x1024@75.03Hz 1280x1024@60.02Hz 1440x900@59.90Hz 1280x960@60.00Hz 1280x800@59.91Hz 1152x864@75.00Hz 1280x720@60.00Hz 1280x720@60.00Hz 1280x720@59.94Hz 1280x720@50.00Hz 1024x768@75.03Hz 1024x768@70.07Hz 1024x768@60.00Hz 832x624@74.55Hz 800x600@75.00Hz 800x600@72.19Hz 800x600@60.32Hz 800x600@56.25Hz 720x576@50.00Hz 720x480@60.00Hz 720x480@60.00Hz 720x480@59.94Hz 720x480@59.94Hz 720x480@59.94Hz 640x480@75.00Hz 640x480@72.81Hz 640x480@66.67Hz 640x480@60.00Hz 640x480@59.94Hz 640x480@59.94Hz 720x400@70.08Hz
-          */
-
-      }
-      constructor(name: string = "intel_backlight", deviceClass: DeviceClass = "backlight") {
-        super();
-
-        this.#name = name;
-        this.#deviceClass = deviceClass;
-        this.#type = deviceClass === "leds" || name.includes("kbd") ? "keyboard" : "screen";
-        this.#path = `/sys/class/${deviceClass}/${name}`;
-
-        if (!Gio.File.new_for_path(`${this.#path}/brightness`).query_exists(null))
-          throw new Error(`Brightness: Couldn't find brightness for "${name}" in ${this.#path}`);
-
-        this.#conn = getDefault().connect(
-          this.#type === "keyboard" ? "notify::default-kbd" : "notify::default",
-          () => this.notify("is-default")
-        );
-
-        this.notify("path");
-        this.#maxBrightness = Number.parseInt(readFile(`${this.#path}/max_brightness`));
-        this.notify("max-brightness");
-
-        // Read initial brightness and set both internal and system values
-        this.#systemBrightness = Number.parseInt(readFile(`${this.#path}/brightness`));
-        this.#internalBrightness = this.#systemBrightness;
-
-
-        this.#monitor = monitorFile(`${this.#path}/brightness`, () => {
-          // System file changed (e.g., hardware keys)
-          const newBrightness = this.readBrightness();
-
-          // Only update if the value has actually changed
-          if (this.#systemBrightness === newBrightness)
-            return;
-
-          // Cancel any pending UI-driven write
-          if (this.#writeTimer > 0) {
-            GLib.source_remove(this.#writeTimer);
-            this.#writeTimer = 0;
-          }
-
-          // Sync both system and internal values
-          this.#systemBrightness = newBrightness;
-          this.#internalBrightness = newBrightness;
-          this.notify("brightness");
-          this.emit("brightness-changed", this.brightness);
-        });
-      }
-
-    private readBrightness(): number {
-      try {
-        const brightness = Number.parseInt(readFile(`${this.#path}/brightness`));
-        return brightness;
-      } catch (e) {
-        console.error(`Backlight: An error occurred while reading brightness from "${this.#name}"`);
-      }
-
-      // Fallback to the last known *system* brightness
-      return this.#systemBrightness ?? this.#maxBrightness ?? 0;
+    get refreshRate() {
+      return this.#refreshRate;
     }
 
-    private async writeBrightness(level: number): Promise<boolean> {
-      this.#systemBrightness = level;
+    @getter(Array)
+    get availableRefreshRates() {
+      return this.#availableRefreshRates;
+    }
 
-      // 1. Try brightnessctl first
+    private async fetchMonitors(): Promise<HyprlandMonitor[]> {
+      const output = await execAsync(["hyprctl", "monitors", "-j"]);
+      return JSON.parse(output) as HyprlandMonitor[];
+    }
+
+    async updateRefreshRates(): Promise<void> {
       try {
-        await execAsync(["brightnessctl", "-d", this.#name, "s", `${level}`]);
-        return true;
-      } catch (_) {
-        // brightnessctl failed or had permission denied, fall back to login1
+        const monitors = await this.fetchMonitors();
+        this.#availableRefreshRates = this.parseAvailableRefreshRates(monitors);
+      } catch {
+        this.#availableRefreshRates = [];
       }
 
-      // 2. Fall back to systemd-logind via DBus (which has permissions to set brightness)
+      this.notify("available-refresh-rates");
+    }
+
+    parseAvailableRefreshRates(hyprctlOut: HyprlandMonitor[]): number[] {
+      const eDP1 = this.findPrimaryDisplay(hyprctlOut);
+      if (eDP1 == null) {
+        return [];
+      }
+      const resolution = eDP1.width + "x" + eDP1.height;
+
+      const rates = eDP1.availableModes
+        .filter((mode) => mode.includes(resolution))
+        .map((mode) => Math.round(parseFloat(mode.split("@")[1])));
+
+      return [...new Set(rates)].sort((a, b) => a - b);
+    }
+
+    async updateCurrentRefreshRate(): Promise<void> {
       try {
-        const bus = Gio.bus_get_sync(Gio.BusType.SYSTEM, null);
-        const sessions = bus.call_sync(
-          "org.freedesktop.login1",
-          "/org/freedesktop/login1",
-          "org.freedesktop.login1.Manager",
-          "ListSessions",
-          null,
-          null,
-          Gio.DBusCallFlags.NONE,
-          -1,
-          null
-        );
-        const arr = sessions.get_child_value(0);
-        for (let i = 0; i < arr.n_children(); i++) {
-          const item = arr.get_child_value(i);
-          const spath = item.get_child_value(4).get_string()[0];
-          try {
-            bus.call_sync(
-              "org.freedesktop.login1",
-              spath,
-              "org.freedesktop.login1.Session",
-              "SetBrightness",
-              new GLib.Variant("(ssu)", [this.#deviceClass, this.#name, level]),
-              null,
-              Gio.DBusCallFlags.NONE,
-              -1,
-              null
-            );
-            return true;
-          } catch (_) {
-            // continue searching for active session
-          }
+        const monitors = await this.fetchMonitors();
+        const hyprlandRefreshRate = this.parseCurrentRefreshRate(monitors);
+
+        if (hyprlandRefreshRate === this.#refreshRate) {
+          return;
         }
-      } catch (e) {
-        console.error(`Backlight: Couldn't set brightness for "${this.#name}" via login1. Error: ${e}`);
+
+        this.#refreshRate = hyprlandRefreshRate;
+        this.notify("refresh-rate");
+      } catch {
+        this.#refreshRate = -1;
+        this.notify("refresh-rate");
+      }
+    }
+
+    parseCurrentRefreshRate(hyprctlOut: HyprlandMonitor[]): number {
+      const primaryDisplay = this.findPrimaryDisplay(hyprctlOut);
+      return primaryDisplay ? Math.round(primaryDisplay.refreshRate) : -1;
+    }
+
+    private findPrimaryDisplay(monitors: HyprlandMonitor[]) {
+      const eDP1 = monitors.find((monitor) => { return monitor.name === "eDP-1" });
+
+      if (eDP1 === undefined || eDP1 == null) {
+        return null;
       }
 
-      return false;
+      return eDP1;
+    }
+
+    private async applyRefreshRate(hertz: number): Promise<void> {
+      const monitors = await this.fetchMonitors();
+      await this.syncRefreshRateState(monitors, hertz);
+
+      this.#refreshRate = hertz;
+      this.notify("refresh-rate");
+    }
+
+    private async syncRefreshRateState(hyprctlMonitors: HyprlandMonitor[], hertz: number): Promise<void> {
+      const hyprctlMonitor = this.findPrimaryDisplay(hyprctlMonitors);
+
+      if (!hyprctlMonitor) {
+        throw new Error("eDP-1 was not found");
+      }
+      if (!this.#availableRefreshRates.includes(hertz)) {
+        throw new Error("Unapplicable refreshRate");
+      }
+
+      const monitorArgs = [
+        "eDP-1",
+        `${hyprctlMonitor.width}x${hyprctlMonitor.height}@${hertz}`,
+        `${hyprctlMonitor.x}x${hyprctlMonitor.y}`,
+        `${hyprctlMonitor.scale}`,
+      ];
+
+      await execAsync(["hyprctl", "keyword", "monitor", monitorArgs.join(",")]);
     }
 
     public destroy(): void {
-      this.#monitor?.cancel();
-      if (this.#conn && instance) {
-        instance.disconnect(this.#conn);
-        this.#conn = 0;
+      if (this.#pollTimer) {
+        GLib.source_remove(this.#pollTimer);
+        this.#pollTimer = 0;
       }
-
-      // Ensure timer is cleaned up
-      if (this.#writeTimer > 0) {
-        GLib.source_remove(this.#writeTimer);
-        this.#writeTimer = 0;
+      if (this.#hyprlandSignalId) {
+        AstalHyprland.get_default().disconnect(this.#hyprlandSignalId);
       }
+      this.run_dispose();
     }
   }
 
-  export const Backlights = _Backlights;
-  export const Backlight = _Backlight;
-  export type Backlight = InstanceType<typeof Backlight>;
-  export type Backlights = InstanceType<typeof Backlights>;
+  export const RefreshRate = _RefreshRate;
+  export type RefreshRate = InstanceType<typeof RefreshRate>;
 }

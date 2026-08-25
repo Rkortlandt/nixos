@@ -376,10 +376,9 @@ scrollbar {
 }
 
 .setting-card {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 12px;
+  background-color: transparent;
+  border: none;
+  padding: 4px 2px;
 }
 
 .setting-card-title {
@@ -398,50 +397,6 @@ scrollbar {
   padding: 2px 6px;
 }
 
-/* Squircle Style Refresh Rate Toggle */
-.squircle-toggle {
-  border-radius: 14px;
-  padding: 10px 12px;
-  background-color: rgba(20, 20, 20, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.2s ease-in-out;
-}
-
-.squircle-toggle:hover {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background-color: rgba(40, 40, 40, 0.9);
-}
-
-.squircle-toggle.active-high {
-  background: linear-gradient(135deg, rgba(15, 88, 128, 0.85), rgba(14, 161, 111, 0.85));
-  border: 1px solid rgba(14, 161, 111, 0.6);
-}
-
-.squircle-toggle.active-auto {
-  background: linear-gradient(135deg, rgba(23, 42, 125, 0.85), rgba(15, 88, 128, 0.85));
-  border: 1px solid rgba(15, 88, 128, 0.6);
-}
-
-.squircle-toggle.active-low {
-  background-color: rgba(25, 25, 25, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.squircle-toggle.active-saver {
-  background: linear-gradient(135deg, rgba(14, 161, 111, 0.75), rgba(15, 88, 128, 0.65));
-  border: 1px solid rgba(14, 161, 111, 0.6);
-}
-
-.squircle-toggle.active-balanced {
-  background: linear-gradient(135deg, rgba(23, 42, 125, 0.85), rgba(15, 88, 128, 0.85));
-  border: 1px solid rgba(15, 88, 128, 0.6);
-}
-
-.squircle-toggle.active-performance {
-  background: linear-gradient(135deg, rgba(175, 45, 45, 0.85), rgba(220, 95, 40, 0.85));
-  border: 1px solid rgba(220, 95, 40, 0.6);
-}
-
 .setting-card-badge.saver {
   color: #0EA16F;
   background-color: rgba(14, 161, 111, 0.15);
@@ -457,94 +412,51 @@ scrollbar {
   background-color: rgba(229, 83, 75, 0.2);
 }
 
-.squircle-icon-container {
-  background-color: rgba(0, 0, 0, 0.35);
-  border-radius: 10px;
-  padding: 8px;
-}
-
-.squircle-badge {
-  border-radius: 10px;
-  padding: 4px 10px;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.squircle-badge.high {
-  background-color: #0EA16F;
-  color: white;
-}
-
-.squircle-badge.auto {
-  background-color: #0F5880;
-  color: white;
-}
-
-.squircle-badge.low {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #cccccc;
-}
-
-.squircle-badge.saver {
-  background-color: #0EA16F;
-  color: white;
-}
-
-.squircle-badge.balanced {
-  background-color: #0F5880;
-  color: white;
-}
-
-.squircle-badge.performance {
-  background: linear-gradient(135deg, #E5534B, #E67E22);
-  color: white;
-}
-
 /* Squircle Segmented Pills */
 .squircle-pill-container {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 3px;
 }
 
 .squircle-pill {
-  border-radius: 10px;
+  border-radius: 9px;
   padding: 6px 12px;
   background: transparent;
   border: none;
   font-size: 11px;
+  font-weight: 500;
   color: #aaaaaa;
 }
 
 .squircle-pill:hover {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.06);
   color: white;
   border: none;
 }
 
 .squircle-pill.active {
-  background-color: #0F5880;
-  color: white;
+  color: #ffffff;
   font-weight: bold;
   border: none;
-}
-
-.squircle-pill.active.saver {
-  background-color: #0EA16F;
-  color: white;
-  font-weight: bold;
-}
-
-.squircle-pill.active.balanced {
   background-color: #0F5880;
-  color: white;
-  font-weight: bold;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Gradients for selected states */
+.squircle-pill.active.low,
+.squircle-pill.active.saver {
+  background: linear-gradient(135deg, #0EA16F, #14b8a6);
+}
+
+.squircle-pill.active.high,
+.squircle-pill.active.balanced {
+  background: linear-gradient(135deg, #0F5880, #38A3D8);
 }
 
 .squircle-pill.active.performance {
-  background: linear-gradient(135deg, #E5534B, #E67E22);
-  color: white;
-  font-weight: bold;
+  background: linear-gradient(135deg, #E5534B, #F97316);
 }
 
 /* Stepped Slider for Keyboard Backlight */
