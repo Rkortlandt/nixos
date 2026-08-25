@@ -304,7 +304,7 @@ function BatteryStatusCard() {
   const timeToFull = createBinding(battery, "timeToFull");
   const timeToEmpty = createBinding(battery, "timeToEmpty");
 
-  const sysfsData = createPoll(readBatterySysfs(), 2000, readBatterySysfs);
+  const sysfsData = createPoll(readBatterySysfs(), 5000, readBatterySysfs);
 
   const batteryHeaderIcon = createComputed([percentage, charging], (pct, chg) => {
     if (chg) return "Battery-Charging";
@@ -401,11 +401,11 @@ function BatteryStatusCard() {
 }
 
 export function SettingsMenu() {
-  const time = createPoll("", 1000, () => {
+  const time = createPoll("", 30000, () => {
     return GLib.DateTime.new_now_local().format("%l:%M")?.trimStart()!;
   });
 
-  const fullDate = createPoll("", 10000, () => {
+  const fullDate = createPoll("", 60000, () => {
     return GLib.DateTime.new_now_local().format("%A, %B %e")?.trim()!;
   });
 

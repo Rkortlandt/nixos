@@ -156,6 +156,7 @@ services.xserver.videoDrivers = [ "nvidia" ];
     jetbrains.gateway
     trash-cli
     OVMFFull
+    asusctl
   ];
 
 

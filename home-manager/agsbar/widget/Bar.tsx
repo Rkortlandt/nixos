@@ -6,7 +6,6 @@ import Gdk from "gi://Gdk?version=4.0"
 import AstalWp from "gi://AstalWp"
 import AstalTray from "gi://AstalTray"
 import { For, With, createBinding, createComputed, createState, onCleanup } from "ags"
-import { createPoll } from "ags/time"
 import { SpecialWorkspaces, Workspaces } from "./applets/Workspaces"
 import { Backlights } from "../modules/backlight";
 import { BarMprisPlayer } from "./applets/Media"
