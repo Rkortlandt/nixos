@@ -25,10 +25,23 @@
 
     hardware.nvidia = {
       modesetting.enable = true;
-      powerManagement.enable = true;
-      # Needs investigation
-      # powerManagement.finegrained = true;
       open = true;
+      powerManagement.enable = true;
+      powerManagement.finegrained = true;
+      nvidiaPersistenced = false;
+
+      prime = {
+        offload = {
+          enable = true;
+          enableOffloadCmd = true; # gives you the `nvidia-offload` wrapper script
+        };
+# sync.enable must NOT be true — mutually exclusive with finegrained
+# reverseSync.enable must NOT be true either
+
+        amdgpuBusId  = "PCI:101:0:0";  # your iGPU's bus ID
+        nvidiaBusId = "PCI:100:0:0";  # your dGPU's bus ID
+      };
+
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
