@@ -36,6 +36,8 @@
       ];
     };
   };
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
 
   nix = {
     registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
