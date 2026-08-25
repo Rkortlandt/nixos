@@ -52,6 +52,7 @@
     };
   };
 services.tailscale.enable = true;
+services.asusd.enable = true;
 
   systemd.services.samba-smbd.after = [ "tailscaled.service" ];
 
