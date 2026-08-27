@@ -1,5 +1,4 @@
 import app from "ags/gtk4/app"
-import GLib from "gi://GLib"
 import Astal from "gi://Astal?version=4.0"
 import Gtk from "gi://Gtk?version=4.0"
 import Gdk from "gi://Gdk?version=4.0"
@@ -13,34 +12,7 @@ import { SystemInfo } from "./applets/SystemInfo"
 import ConnectivityModule from "./applets/Wireless"
 import { AudioOutput } from "./applets/Audio"
 import { SettingsMenu } from "./applets/SettingsMenu"
-
-// Import the calculator and its global state
 import { showCalculator, InlineCalculator } from "./applets/Calculator"
-
-function Tray() {
-  const tray = AstalTray.get_default()
-  const items = createBinding(tray, "items")
-
-  const init = (btn: Gtk.MenuButton, item: AstalTray.TrayItem) => {
-    btn.menuModel = item.menuModel
-    btn.insert_action_group("dbusmenu", item.actionGroup)
-    item.connect("notify::action-group", () => {
-      btn.insert_action_group("dbusmenu", item.actionGroup)
-    })
-  }
-
-  return (
-    <box>
-      <For each={items}>
-        {(item) => (
-          <menubutton $={(self) => init(self, item)}>
-            <image gicon={createBinding(item, "gicon")} />
-          </menubutton>
-        )}
-      </For>
-    </box>
-  )
-}
 
 export function Mic() {
   const mic = AstalWp.get_default()?.audio.default_microphone!

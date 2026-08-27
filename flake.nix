@@ -123,6 +123,12 @@ pkgs-legacy = import nixpkgs-legacy {
       };
     };
 
+    services.libinput = {
+  enable = true;
+  touchpad.disableWhileTyping = false;
+};
+
+
     homeConfigurations = {
       "ss-rowan@rowan-nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
