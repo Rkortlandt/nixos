@@ -8,7 +8,7 @@
     firewall = {
       enable = true; 
       allowedTCPPorts = [ 8080 12345 22 8090 5173 53317 ];
-      allowedUDPPorts = [ 53317 ];
+      allowedUDPPorts = [ 53317 55555 ];
       trustedInterfaces = [ "tailscale0" "thunderbolt0"];
     };
     interfaces.thunderbolt0 = {
