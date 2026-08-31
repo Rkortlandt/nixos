@@ -1,2 +1,0 @@
-Wolfram_*.sh filter=lfs diff=lfs merge=lfs -text
-pkgs/wolfram/Wolfram_15.0.1.sh filter=lfs diff=lfs merge=lfs -text

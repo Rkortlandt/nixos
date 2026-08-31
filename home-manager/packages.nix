@@ -65,6 +65,7 @@
     taskwarrior3
     libreoffice-qt
     octaveFull
+    mathematica
     thunderbird
 
     # Gaming & Emulation
