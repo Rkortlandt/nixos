@@ -160,6 +160,7 @@ services.xserver.videoDrivers = [ "nvidia" ];
     trash-cli
     OVMFFull
     asusctl
+    git-lfs
   ];
 
 
