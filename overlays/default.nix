@@ -7,6 +7,10 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
+      mathematica = prev.mathematica.overrideAttrs (oldAttrs: {
+        version = "15.0.1";
+        src = ../pkgs/Wolfram_15.0.1_LIN_Bndl.sh; # Adjust path relative to this file
+      });
 /*     freecad = final.unstable.freecad.overrideAttrs (oldAttrs: rec {
       version = "1.1rc3"; # Update this to the exact release tag if different
 

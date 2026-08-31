@@ -375,6 +375,12 @@ scrollbar {
   margin: 2px 0;
 }
 
+.setting-title-divider {
+  min-height: 1px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 1px;
+}
+
 .setting-card {
   background-color: transparent;
   border: none;

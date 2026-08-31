@@ -272,18 +272,25 @@ function WifiList({ network, visible }: { network: AstalNetwork.Network, visible
                           iconName="Locked"
                           visible={createBinding(ap, "requires_password")}
                           pixelSize={18}
-                          css="opacity: 0.8;"
                         />
                         <box hexpand={true} />
                         <label label="Connecting..." visible={connectingTo.as(s => s === ap.ssid)} css="opacity: 0.6; font-size: 0.9em;" />
-                        <image iconName="object-select-symbolic" visible={createBinding(wifi, "active_access_point").as(active => active != null && active.ssid === ap.ssid)} pixelSize={18} />
+                        <image iconName="object-select-symbolic" visible={createBinding(wifi, "active_access_point").as(active => active != null && active.ssid === ap.ssid)} pixelSize={22} />
                       </box>
                     </button>
                     <revealer revealChild={passwordPrompt.as(s => s === ap.ssid)} transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}>
-                      <entry
-                        placeholderText="Password..." visibility={false}
-                        onActivate={(self) => { connect(ap, self.text); self.text = ""; setPasswordPrompt(null); }}
-                      />
+                      <box>
+                        <entry
+                          placeholderText="Password..." visibility={false}
+                          onActivate={(self) => { connect(ap, self.text); self.text = ""; setPasswordPrompt(null); }}
+                        />
+                        <button onClicked={() => setPasswordPrompt(null)}>
+                          <image
+                            iconName="Close"
+                            pixelSize={18}
+                          />
+                        </button>
+                      </box>
                     </revealer>
                   </box>
                 );

@@ -21,9 +21,10 @@ function RefreshRateToggle() {
 
   return (
     <box orientation={Gtk.Orientation.VERTICAL} class="setting-card" spacing={8}>
-      <box spacing={6}>
-        <image iconName="video-display-symbolic" pixelSize={18} />
-        <label label="DISPLAY REFRESH RATE" class="setting-card-title" hexpand={true} halign={Gtk.Align.START} />
+      <box spacing={6} valign={Gtk.Align.CENTER}>
+        <image iconName="Screen" pixelSize={22} />
+        <label label="DISPLAY REFRESH RATE" class="setting-card-title" halign={Gtk.Align.START} />
+        <box class="setting-title-divider" hexpand={true} valign={Gtk.Align.CENTER} />
       </box>
 
       <box class="squircle-pill-container" homogeneous={true} spacing={4}>
@@ -53,9 +54,10 @@ function KeyboardBrightnessSlider() {
   if (!kbdBk) {
     return (
       <box orientation={Gtk.Orientation.VERTICAL} class="setting-card" spacing={8}>
-        <box spacing={6}>
-          <image iconName="Keyboard-Brightness" pixelSize={18} />
-          <label label="KEYBOARD BACKLIGHT" class="setting-card-title" />
+        <box spacing={6} valign={Gtk.Align.CENTER}>
+          <image iconName="Keyboard" pixelSize={22} />
+          <label label="KEYBOARD BACKLIGHT" class="setting-card-title" halign={Gtk.Align.START} />
+          <box class="setting-title-divider" hexpand={true} valign={Gtk.Align.CENTER} />
         </box>
         <label label="No keyboard backlight detected" class="subtitle" css="font-size: 11px; padding: 8px 0;" />
       </box>
@@ -94,9 +96,10 @@ function KeyboardBrightnessSlider() {
       />
 
       {/* Header */}
-      <box spacing={6}>
-        <image iconName="Keyboard-Brightness" pixelSize={18} />
-        <label label="KEYBOARD BACKLIGHT" class="setting-card-title" hexpand={true} halign={Gtk.Align.START} />
+      <box spacing={6} valign={Gtk.Align.CENTER}>
+        <image iconName="Keyboard" pixelSize={22} />
+        <label label="KEYBOARD BACKLIGHT" class="setting-card-title" halign={Gtk.Align.START} />
+        <box class="setting-title-divider" hexpand={true} valign={Gtk.Align.CENTER} />
       </box>
 
       {/* Slider with Discrete Stops */}
@@ -105,17 +108,25 @@ function KeyboardBrightnessSlider() {
           class="stepped-slider"
           hexpand={true}
           min={0}
-          max={max}
+          max={3}
           step={1}
           page={1}
-          value={kbdBrightness}
-          onChangeValue={({ value }) => {
-            const rounded = Math.max(0, Math.min(max, Math.round(value)));
-            if (kbdBk.brightness !== rounded) {
-              kbdBk.brightness = rounded;
+          value={kbdBrightness.as((brightness) => Math.round(brightness * 4))}
+          onChangeValue={(self, _, value) => {
+            console.log(max)
+            if (value == 0) {
+              kbdBk.brightness = 0
+            } else if (value == 1) {
+              kbdBk.brightness = 1
+            } else if (value == 2) {
+              kbdBk.brightness = 2
+            } else if (value == 3) {
+              kbdBk.brightness = 3
             }
           }}
           $={(self) => {
+            self.set_range(0, max);
+            self.set_increments(1, 1);
             self.set_round_digits(0);
             self.set_draw_value(false);
             self.set_has_origin(true);
@@ -179,9 +190,10 @@ function PowerProfilesControl() {
 
   return (
     <box orientation={Gtk.Orientation.VERTICAL} class="setting-card" spacing={8}>
-      <box spacing={6}>
-        <image iconName="Cpu" pixelSize={18} />
-        <label label="POWER PROFILE" class="setting-card-title" hexpand={true} halign={Gtk.Align.START} />
+      <box spacing={6} valign={Gtk.Align.CENTER}>
+        <image iconName="Cpu" pixelSize={22} />
+        <label label="POWER PROFILE" class="setting-card-title" halign={Gtk.Align.START} />
+        <box class="setting-title-divider" hexpand={true} valign={Gtk.Align.CENTER} />
       </box>
 
       {/* Segmented Selector Pills */}
@@ -292,8 +304,6 @@ function readBatterySysfs() {
 
 function BatteryStatusCard() {
   const battery = AstalBattery.get_default();
-  if (!battery) return null;
-
   const isPresent = createBinding(battery, "isPresent");
   const percentage = createBinding(battery, "percentage");
   const charging = createBinding(battery, "charging");
@@ -364,9 +374,10 @@ function BatteryStatusCard() {
   return (
     <box orientation={Gtk.Orientation.VERTICAL} class="setting-card battery-status-card" spacing={8} visible={isPresent}>
       {/* Header */}
-      <box spacing={6}>
-        <image iconName={batteryHeaderIcon} pixelSize={18} />
-        <label label="BATTERY" class="setting-card-title" hexpand={true} halign={Gtk.Align.START} />
+      <box spacing={6} valign={Gtk.Align.CENTER}>
+        <image iconName={batteryHeaderIcon} pixelSize={22} />
+        <label label="BATTERY" class="setting-card-title" halign={Gtk.Align.START} />
+        <box class="setting-title-divider" hexpand={true} valign={Gtk.Align.CENTER} />
       </box>
 
       {/* Metrics container */}
@@ -376,7 +387,7 @@ function BatteryStatusCard() {
           <box spacing={4} hexpand={true} halign={Gtk.Align.START} valign={Gtk.Align.CENTER}>
             <image
               iconName={arrowIcon}
-              pixelSize={18}
+              pixelSize={22}
               visible={arrowIcon.as((ic) => !!ic)}
             />
             <label label={wattageText} class="battery-text-white" />
@@ -420,21 +431,9 @@ export function SettingsMenu() {
           </box>
           <label label={fullDate} class="settings-subdate" halign={Gtk.Align.START} />
         </box>
-
-        <box class="settings-separator" />
-
-        {/* Squircle Style Refresh Rate Toggle */}
         <RefreshRateToggle />
-
-        {/* Squircle Style Power Profiles Control */}
         <PowerProfilesControl />
-
-        {/* Stepped Slider Keyboard Brightness with Stops */}
         <KeyboardBrightnessSlider />
-
-        <box class="settings-separator" />
-
-        {/* Battery Status Section */}
         <BatteryStatusCard />
       </box>
     </popover>
