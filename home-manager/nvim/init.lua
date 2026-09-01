@@ -84,9 +84,6 @@ local autocmp = {
   },
 }
 
-require("luasnip.loaders.from_vscode").lazy_load({
-  paths = { vim.fn.stdpath("config") .. "/snippets" }
-})
 
 --[[ local llama = {
   "ggml-org/llama.vim",
@@ -573,6 +570,9 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
+require('luasnip.loaders.from_vscode').lazy_load({ paths = { vim.fn.stdpath 'config' .. '/snippits' } })
+require('luasnip.loaders.from_snipmate').lazy_load({ paths = { vim.fn.stdpath 'config' .. '/snippits' } })
+require('luasnip.loaders.from_lua').lazy_load({ paths = { vim.fn.stdpath 'config' .. '/snippits' } })
 luasnip.config.setup {}
 
 cmp.setup {
