@@ -259,11 +259,6 @@
       };
     };
 
-    tmux = {
-      enable = true;
-      mouse = true;
-      baseIndex = 1;
-    };
   };
  
 /*     firefox.enable = true;

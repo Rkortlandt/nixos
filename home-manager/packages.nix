@@ -29,6 +29,7 @@
 
     # Development
     # llama-cpp
+    tmux
     eza
     gcc
     jdk21
