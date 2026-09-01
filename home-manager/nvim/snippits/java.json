@@ -2,11 +2,25 @@
   "Main": {
     "prefix": "mainClass",
     "body": [
-      "package main",
-      "public class Triangle {",
+      "/**",
+      "* This program computes the solutions to a quadratic equation.",
+      "*",
+      "* Date Last Modified: 09/12/2016",
+      "* @author Rowan Kortlandt",
+      "*",
+      "* CS1122, Fall 2026",
+      "* Lab Section ",
+      "*/",
+      "",
+      "public class _ {",
+      "",
       "  public static void main(String[] args) {",
+      "",
       "    System.out.println(\"Hello World\");",
-      "]}"
+      "",
+      "  }",
+      "",
+      "}"
     ],
     "description": "Simple Class Setup with main func"
   }
