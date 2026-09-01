@@ -182,14 +182,263 @@ local theme = {
 
 local lualine = {
   'nvim-lualine/lualine.nvim',
-  opts = {
-    options = {
-      icons_enabled = true,
-      theme = 'onedark',
-      component_separators = '|',
-      section_separators = '',
-    },
-  },
+  config = function()
+    -- Colors matching Tmux and Starship config
+    local colors = {
+      bg         = '#0d0f18', -- Dark bar background (tmux bar)
+      fg         = '#fffaf3', -- Cream white text (tmux & starship)
+      slate      = '#3B4252', -- Nord slate (starship directory & tmux session)
+      navy       = '#0F5880', -- Deep navy blue (starship nix & tmux uptime)
+      ocean      = '#0c6da3', -- Ocean blue (starship git branch)
+      vivid_blue = '#0D77B1', -- Vivid blue (starship languages & tmux window)
+      teal       = '#0A7883', -- Teal (tmux window status)
+      mint       = '#0EA16F', -- Mint/Sea green (starship docker)
+      emerald    = '#03883B', -- Emerald green (starship time & tmux active window)
+      yellow     = '#ffd141', -- Yellow (tmux prefix & bell)
+      red        = '#DF2500', -- Red (starship root)
+      line       = '#3B4252', -- Solid horizontal line color
+      inactive   = '#1e222a',
+    }
+
+    -- Mode-adaptive colors
+    local mode_colors = {
+      n = colors.emerald,
+      i = colors.vivid_blue,
+      v = colors.yellow,
+      ['\22'] = colors.yellow,
+      V = colors.yellow,
+      c = colors.mint,
+      no = colors.emerald,
+      s = colors.yellow,
+      S = colors.yellow,
+      ['\19'] = colors.yellow,
+      ic = colors.yellow,
+      R = colors.red,
+      Rv = colors.red,
+      cv = colors.red,
+      ce = colors.red,
+      r = colors.red,
+      rm = colors.red,
+      ['r?'] = colors.red,
+      ['!'] = colors.mint,
+      t = colors.vivid_blue,
+    }
+
+    local custom_theme = {
+      normal = {
+        a = { fg = colors.fg, bg = colors.emerald, gui = 'bold' },
+        b = { fg = colors.fg, bg = colors.navy },
+        c = { fg = colors.line, bg = colors.bg },
+        x = { fg = colors.fg, bg = colors.navy },
+        y = { fg = colors.fg, bg = colors.vivid_blue },
+        z = { fg = colors.fg, bg = colors.emerald, gui = 'bold' },
+      },
+      insert = {
+        a = { fg = colors.fg, bg = colors.vivid_blue, gui = 'bold' },
+        b = { fg = colors.fg, bg = colors.navy },
+        c = { fg = colors.line, bg = colors.bg },
+        x = { fg = colors.fg, bg = colors.navy },
+        y = { fg = colors.fg, bg = colors.vivid_blue },
+        z = { fg = colors.fg, bg = colors.emerald, gui = 'bold' },
+      },
+      visual = {
+        a = { fg = colors.bg, bg = colors.yellow, gui = 'bold' },
+        b = { fg = colors.fg, bg = colors.navy },
+        c = { fg = colors.line, bg = colors.bg },
+        x = { fg = colors.fg, bg = colors.navy },
+        y = { fg = colors.fg, bg = colors.vivid_blue },
+        z = { fg = colors.fg, bg = colors.emerald, gui = 'bold' },
+      },
+      command = {
+        a = { fg = colors.fg, bg = colors.mint, gui = 'bold' },
+        b = { fg = colors.fg, bg = colors.navy },
+        c = { fg = colors.line, bg = colors.bg },
+        x = { fg = colors.fg, bg = colors.navy },
+        y = { fg = colors.fg, bg = colors.vivid_blue },
+        z = { fg = colors.fg, bg = colors.emerald, gui = 'bold' },
+      },
+      replace = {
+        a = { fg = colors.fg, bg = colors.red, gui = 'bold' },
+        b = { fg = colors.fg, bg = colors.navy },
+        c = { fg = colors.line, bg = colors.bg },
+        x = { fg = colors.fg, bg = colors.navy },
+        y = { fg = colors.fg, bg = colors.vivid_blue },
+        z = { fg = colors.fg, bg = colors.emerald, gui = 'bold' },
+      },
+      inactive = {
+        a = { fg = colors.slate, bg = colors.bg, gui = 'bold' },
+        b = { fg = colors.slate, bg = colors.bg },
+        c = { fg = colors.slate, bg = colors.bg },
+        x = { fg = colors.slate, bg = colors.bg },
+        y = { fg = colors.slate, bg = colors.bg },
+        z = { fg = colors.slate, bg = colors.bg },
+      },
+    }
+
+    -- Set statusline and fillchars
+    vim.opt.fillchars:append({ stl = '─', stlnc = '─' })
+    local function set_statusline_hl()
+      vim.api.nvim_set_hl(0, 'StatusLine', { bg = colors.bg, fg = colors.line })
+      vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = colors.bg, fg = colors.line })
+    end
+    set_statusline_hl()
+    vim.api.nvim_create_autocmd({ 'ColorScheme', 'VimEnter' }, {
+      callback = set_statusline_hl,
+    })
+
+    -- Git pill component (branch + diff indicators)
+    local function git_component()
+      local head = vim.fn.FugitiveHead and vim.fn.FugitiveHead()
+      if not head or head == '' then
+        local dict = vim.b.gitsigns_status_dict
+        head = dict and dict.head or ''
+      end
+      if head == '' then return '' end
+      local dict = vim.b.gitsigns_status_dict
+      local diff = ''
+      if dict then
+        if dict.added and dict.added > 0 then diff = diff .. ' +' .. dict.added end
+        if dict.changed and dict.changed > 0 then diff = diff .. ' ~' .. dict.changed end
+        if dict.removed and dict.removed > 0 then diff = diff .. ' -' .. dict.removed end
+      end
+      return ' ' .. head .. diff
+    end
+
+    -- LSP & Diagnostics status
+    local function lsp_info()
+      local parts = {}
+      local num_errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+      local num_warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+      local num_info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+      local num_hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+
+      if num_errors > 0 then table.insert(parts, '󰅚 ' .. num_errors) end
+      if num_warnings > 0 then table.insert(parts, '󰀪 ' .. num_warnings) end
+      if num_info > 0 then table.insert(parts, '󰋽 ' .. num_info) end
+      if num_hints > 0 then table.insert(parts, '󰌶 ' .. num_hints) end
+
+      local clients = vim.lsp.get_clients({ bufnr = 0 })
+      local names = {}
+      for _, c in ipairs(clients) do
+        if c.name ~= 'null-ls' and c.name ~= 'copilot' and c.name ~= 'llm' then
+          table.insert(names, c.name)
+        end
+      end
+      if #names > 0 then
+        table.insert(parts, '󰗀 ' .. table.concat(names, ','))
+      end
+
+      if #parts == 0 then return '' end
+      return table.concat(parts, ' ')
+    end
+
+    require('lualine').setup({
+      options = {
+        theme = custom_theme,
+        section_separators = '',
+        component_separators = '',
+        disabled_filetypes = { 'neo-tree', 'NvimTree' },
+        icons_enabled = true,
+      },
+      sections = {
+        -- LEFT SIDE: Pill capsules
+        lualine_a = {
+          -- Mode pill
+          {
+            'mode',
+            fmt = function(str) return ' ' .. str end,
+            color = function()
+              local m = vim.fn.mode()
+              local bg = mode_colors[m] or colors.emerald
+              local fg = (m:find('^[vV\22sS\19]') or m == 'ic') and colors.bg or colors.fg
+              return { bg = bg, fg = fg, gui = 'bold' }
+            end,
+            separator = { left = '', right = '' },
+          },
+          -- Spacer between mode and git
+          {
+            function() return ' ' end,
+            padding = 0,
+            color = { bg = colors.bg },
+            cond = function() return git_component() ~= '' end,
+          },
+          -- Git branch & diff pill
+          {
+            git_component,
+            color = { bg = colors.navy, fg = colors.fg },
+            separator = { left = '', right = '' },
+            cond = function() return git_component() ~= '' end,
+          },
+          -- Spacer between git and file
+          {
+            function() return ' ' end,
+            padding = 0,
+            color = { bg = colors.bg },
+          },
+          -- Filename pill
+          {
+            'filename',
+            file_status = true,
+            path = 1,
+            symbols = {
+              modified = ' ●',
+              readonly = ' 󰌾',
+              unnamed = '[No Name]',
+              newfile = ' [New]',
+            },
+            color = { bg = colors.slate, fg = colors.fg },
+            separator = { left = '', right = '' },
+          },
+        },
+        lualine_b = {},
+        lualine_c = {},
+        -- RIGHT SIDE: Starship style continuous chevrons + rounded corner
+        lualine_x = {
+          {
+            lsp_info,
+            color = { bg = colors.navy, fg = colors.fg },
+            separator = { left = '' },
+            cond = function() return lsp_info() ~= '' end,
+          },
+        },
+        lualine_y = {
+          {
+            'filetype',
+            separator = { left = '' },
+            color = { bg = colors.vivid_blue, fg = colors.fg },
+          },
+        },
+        lualine_z = {
+          {
+            'progress',
+            separator = { left = '' },
+            color = { bg = colors.mint, fg = colors.fg },
+          },
+          {
+            'location',
+            separator = { left = '', right = '' },
+            color = { bg = colors.emerald, fg = colors.fg, gui = 'bold' },
+          },
+        },
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {
+          {
+            'filename',
+            file_status = true,
+            path = 1,
+            color = { bg = colors.slate, fg = colors.fg },
+            separator = { left = '', right = '' },
+          },
+        },
+        lualine_x = { { 'location', separator = { left = '', right = '' } } },
+        lualine_y = {},
+        lualine_z = {},
+      },
+    })
+  end,
 }
 
 local indent = {
