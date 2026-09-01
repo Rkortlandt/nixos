@@ -31,6 +31,8 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- note: you should make sure your terminal supports this
 vim.o.termguicolors = true
+-- disable default redundant mode indicator (shown in statusline)
+vim.o.showmode = false
 -- disable space bar
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>', { silent = true })
 
