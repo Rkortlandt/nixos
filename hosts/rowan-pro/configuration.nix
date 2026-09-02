@@ -142,7 +142,7 @@ services.xserver.videoDrivers = [ "nvidia" ];
       nerd-fonts._0xproto
       nerd-fonts.droid-sans-mono
       roboto
-      inter-nerdfont
+      inter
       carlito
       open-sans
       lato
@@ -151,7 +151,7 @@ services.xserver.videoDrivers = [ "nvidia" ];
 # Microsoft Compatibility (Arial, Times New Roman, Calibri, etc.)
       corefonts
       vistafonts
-
+      google-fonts
 # Standard Apple/Linux Alternatives & Linux Defaults
       liberation_ttf
       dejavu_fonts
