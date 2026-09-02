@@ -143,6 +143,7 @@ services.xserver.videoDrivers = [ "nvidia" ];
       nerd-fonts.droid-sans-mono
       roboto
       inter
+      calibre
       open-sans
       lato
       montserrat
