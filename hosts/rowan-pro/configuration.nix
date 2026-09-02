@@ -150,14 +150,12 @@ services.xserver.videoDrivers = [ "nvidia" ];
 
 # Microsoft Compatibility (Arial, Times New Roman, Calibri, etc.)
       corefonts
-      vistafonts
-      google-fonts
 # Standard Apple/Linux Alternatives & Linux Defaults
       liberation_ttf
       dejavu_fonts
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
   ];
 
   environment.systemPackages = with pkgs; [
