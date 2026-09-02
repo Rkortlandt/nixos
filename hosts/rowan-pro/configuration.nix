@@ -142,8 +142,8 @@ services.xserver.videoDrivers = [ "nvidia" ];
       nerd-fonts._0xproto
       nerd-fonts.droid-sans-mono
       roboto
-      inter
-      calibre
+      inter-nerdfont
+      carlito
       open-sans
       lato
       montserrat
