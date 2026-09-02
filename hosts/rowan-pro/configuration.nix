@@ -138,9 +138,25 @@ services.xserver.videoDrivers = [ "nvidia" ];
 
   fonts.packages = with pkgs; [
     font-awesome
-    helvetica-neue-lt-std
-    nerd-fonts._0xproto
-    nerd-fonts.droid-sans-mono
+      helvetica-neue-lt-std
+      nerd-fonts._0xproto
+      nerd-fonts.droid-sans-mono
+      roboto
+      inter
+      open-sans
+      lato
+      montserrat
+
+# Microsoft Compatibility (Arial, Times New Roman, Calibri, etc.)
+      corefonts
+      vistafonts
+
+# Standard Apple/Linux Alternatives & Linux Defaults
+      liberation_ttf
+      dejavu_fonts
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
   ];
 
   environment.systemPackages = with pkgs; [
