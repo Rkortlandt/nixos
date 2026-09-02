@@ -131,7 +131,7 @@ local aicmp = {
       repository = "deepseek-ai/deepseek-coder-1.3b-base",
     },
     context_window = 4096,
-    enable_suggestions_on_startup = true,
+    enable_suggestions_on_startup = false,
     enable_suggestions_on_files = "*",
   },
   config = function(_, opts)
@@ -458,6 +458,11 @@ local comment = {
   }
 }
 
+local scroll = {
+  "karb94/neoscroll.nvim",
+  opts = {},
+}
+
 local telescope = {
   'nvim-telescope/telescope.nvim',
   branch = '0.1.x',
@@ -598,6 +603,7 @@ require('lazy').setup({
   garmin_monkeyc,
   -- llama,
   aicmp,
+  scroll,
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
