@@ -135,7 +135,7 @@ services.xserver.videoDrivers = [ "nvidia" ];
       default = ["hyprland" "gtk"];
     };
   };
-
+ fonts.fontconfig.enable = true;
   fonts.packages = with pkgs; [
     font-awesome
       helvetica-neue-lt-std
