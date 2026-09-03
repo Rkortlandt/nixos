@@ -25,7 +25,13 @@ function MediaPlayer({ player }: { player: AstalMpris.Player }) {
   });
 
   const coverArtStyle = createBinding(player, "coverArt").as((c) => {
-    return `background-image: url('file://${c}');`;
+    if (!c || typeof c !== "string" || c.trim() === "") return "";
+    let url = c.trim();
+    if (!url.startsWith("file://") && !url.startsWith("http://") && !url.startsWith("https://")) {
+      url = `file://${url}`;
+    }
+    const safeUrl = url.replace(/'/g, "%27");
+    return `background-image: url('${safeUrl}');`;
   });
 
   const position = createBinding(player, "position").as((p) =>

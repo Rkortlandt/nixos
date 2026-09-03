@@ -305,6 +305,24 @@ systemd.user.services.auto-float = {
   };
 };
 
+systemd.user.services.agsbar = {
+  Unit = {
+    Description = "AGS Bar Desktop Shell";
+    After = [ "graphical-session.target" ];
+    PartOf = [ "graphical-session.target" ];
+  };
+
+  Service = {
+    ExecStart = "${config.home.homeDirectory}/nixos/home-manager/agsbar/result/bin/agsbar";
+    Restart = "always";
+    RestartSec = "2";
+  };
+
+  Install = {
+    WantedBy = [ "graphical-session.target" ];
+  };
+};
+
 
 
   # Enable home-manager and git
