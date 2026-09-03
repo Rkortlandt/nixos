@@ -176,6 +176,7 @@ services.xserver.videoDrivers = [ "nvidia" ];
     OVMFFull
     asusctl
     git-lfs
+    nemo-with-extensions
     nemo-fileroller
   ];
 

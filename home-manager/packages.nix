@@ -15,7 +15,6 @@
     cliphist
 
     # Core Utilities
-    nemo
     btop
     unzip
     rclone
