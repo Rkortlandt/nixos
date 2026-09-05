@@ -180,14 +180,40 @@ services.xserver.videoDrivers = [ "nvidia" ];
     nemo-fileroller
   ];
 
-  hardware.asus-dialpad-driver = {
-    enable = true;
-    daemon.enable = true;
-    sessionTypes = [ "wayland" ];
-    layout = "proartp16";
+hardware.asus-dialpad-driver = {
+  enable = true;
+  daemon.enable = true;
+  sessionTypes = [ "wayland" ];
+  layout = "proartp16";
+
+  defaultConfig = {
+    app_shortcuts = {
+      none = {
+        clockwise = [
+          {
+            command = "hyprctl dispatch splitratio +0.02";
+            trigger = "immediate";
+            title = "Split Grow";
+          }
+        ];
+        counterclockwise = [
+          {
+            command = "hyprctl dispatch splitratio -0.02";
+            trigger = "immediate";
+            title = "Split Shrink";
+          }
+        ];
+        center = [
+          {
+            command = "hyprctl dispatch splitratio exact 0.5";
+            trigger = "release";
+            title = "Split Reset";
+          }
+        ];
+      };
+    };
   };
-
-
+};
 
   time.timeZone = "America/Detroit";
   i18n.defaultLocale = "en_US.UTF-8";
