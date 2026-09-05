@@ -106,6 +106,26 @@
         "type": "github"
       }
     },
+    "asus-dialpad-driver": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788072468,
+        "narHash": "sha256-dvQ2+g/4Bs1/TYR+o3d9udvNILwUK+174EUTa7/DpOI=",
+        "owner": "asus-linux-drivers",
+        "repo": "asus-dialpad-driver",
+        "rev": "60b56c28c715558fede6e19b08f85dde8dc23a49",
+        "type": "github"
+      },
+      "original": {
+        "owner": "asus-linux-drivers",
+        "repo": "asus-dialpad-driver",
+        "type": "github"
+      }
+    },
     "dgop": {
       "inputs": {
         "nixpkgs": [
@@ -482,6 +502,7 @@
         "ags": "ags",
         "anyrun": "anyrun",
         "astal": "astal_2",
+        "asus-dialpad-driver": "asus-dialpad-driver",
         "dgop": "dgop",
         "dms": "dms",
         "firefox-addons": "firefox-addons",

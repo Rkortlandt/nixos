@@ -9,6 +9,10 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    asus-dialpad-driver = {
+      url = "github:asus-linux-drivers/asus-dialpad-driver";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
 #    grab.url = "path:/home/ss-rowan/Documents/grab";
 #    grab.inputs.nixpkgs.follows = "nixpkgs";
@@ -65,6 +69,7 @@
     grub2-themes,
     ags,
     zen-browser,
+    asus-dialpad-driver,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -117,6 +122,12 @@ pkgs-legacy = import nixpkgs-legacy {
       rowan-proart = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs pkgs-legacy; };
         modules = [
+        {
+          nixpkgs.overlays = [
+            asus-dialpad-driver.overlays.default
+          ];
+        }
+        asus-dialpad-driver.nixosModules.default
           grub2-themes.nixosModules.default
           ./hosts/rowan-pro/configuration.nix
         ];

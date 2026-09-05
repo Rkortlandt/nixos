@@ -180,6 +180,13 @@ services.xserver.videoDrivers = [ "nvidia" ];
     nemo-fileroller
   ];
 
+  hardware.asus-dialpad-driver = {
+    enable = true;
+    daemon.enable = true;
+    sessionTypes = [ "wayland" ];
+    layout = "proartp16";
+  };
+
 
 
   time.timeZone = "America/Detroit";

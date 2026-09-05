@@ -24,6 +24,9 @@
         "developers"
         "render"
         "video"
+        "i2c" 
+        "input" 
+        "uinput"
       ];
     };
 
