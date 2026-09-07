@@ -227,5 +227,24 @@ hardware.asus-dialpad-driver = {
     LC_TIME = "en_US.UTF-8";
   };
 
+  systemd.user.services.rclone-sync = {
+    description = "One-way mirror ~/Documents to Google Drive";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.rclone}/bin/rclone sync %h/Documents main-drive:Documents --fast-list";
+    };
+  };
+
+  systemd.user.timers.rclone-sync = {
+    description = "Schedule Google Drive sync every 15 minutes";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5m";
+      OnUnitActiveSec = "15m";
+    };
+  };
+
   system.stateVersion = "26.05";
 }
