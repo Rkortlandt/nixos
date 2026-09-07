@@ -10,6 +10,12 @@
     };
   };
 
+  # Allow traffic on the libvirt NAT bridge so the default network
+  # (and DHCP/DNS for guests) actually works. This is the most common
+  # cause of "VM has no internet" on NixOS, since the firewall blocks
+  # virbr0 by default.
+  networking.firewall.trustedInterfaces = [ "virbr0" ];
+
   # Virtual Machine Manager GUI
   programs.virt-manager.enable = true;
 
@@ -24,5 +30,6 @@
     qemu
     bridge-utils
     OVMFFull
+    swtpm      # software TPM emulator - see note on the domain XML below
   ];
 }

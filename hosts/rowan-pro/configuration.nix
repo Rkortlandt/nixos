@@ -175,6 +175,7 @@ services.xserver.videoDrivers = [ "nvidia" ];
     git-lfs
     nemo-with-extensions
     nemo-fileroller
+    rclone
   ];
 
 hardware.asus-dialpad-driver = {
