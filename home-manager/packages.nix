@@ -21,8 +21,6 @@
     snapshot
     qalculate-gtk
     libqalculate
-    qemu
-    bridge-utils
     kitty
     localsend
 

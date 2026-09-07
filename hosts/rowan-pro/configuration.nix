@@ -106,7 +106,6 @@ services.xserver.videoDrivers = [ "nvidia" ];
   hardware.bluetooth.powerOnBoot = true;
 
   programs.dconf.enable = true;
-  programs.virt-manager.enable = true;
 
   modules.hyprland.enable = lib.mkDefault true;
 
@@ -118,7 +117,6 @@ services.xserver.videoDrivers = [ "nvidia" ];
   };
 
   virtualisation.docker.enable = true;
-  virtualisation.libvirtd.enable = true;
 
   services.fwupd.enable = true;
   services.gvfs.enable = true;
@@ -173,7 +171,6 @@ services.xserver.videoDrivers = [ "nvidia" ];
     libnotify
     jetbrains.gateway
     trash-cli
-    OVMFFull
     asusctl
     git-lfs
     nemo-with-extensions
