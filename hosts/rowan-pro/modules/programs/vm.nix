@@ -32,4 +32,10 @@
     OVMFFull
     swtpm      # software TPM emulator - see note on the domain XML below
   ];
+
+   # Enable the VMware Workstation host daemon and kernel modules
+  virtualisation.vmware.host.enable = true;
+
+  # Required fix: Prevent VMware from triggering kcompactd0 high CPU usage
+  boot.kernelParams = [ "transparent_hugepage=never" ];
 }
