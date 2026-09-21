@@ -511,7 +511,7 @@ local treesitter = {
     local configs = require("nvim-treesitter.configs")
     configs.setup({
       -- add languages to be installed here that you want installed for treesitter
-      ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+      ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'qmljs' },
       ignore_install = {},
 
       modules = {},
@@ -813,6 +813,12 @@ require('lspconfig').htmx.setup({
 require('lspconfig').ts_ls.setup({
   capabilities = lsp_capabilities,
   on_attach = setup_lsp_keymaps,
+})
+
+require('lspconfig').qmlls.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+  cmd = { vim.fn.executable('qmlls') == 1 and 'qmlls' or (vim.fn.executable('qmlls6') == 1 and 'qmlls6' or 'qmlls') },
 })
 
 -- (Keep your existing nvim-cmp, Telescope bindings, and autocmds down here)

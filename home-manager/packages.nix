@@ -43,6 +43,7 @@
     vscode-json-languageserver
     nil
     nixd
+    kdePackages.qtdeclarative # provides qmlls, qmlformat, qmllint
     delve
     jetbrains.idea
     jetbrains.rider
