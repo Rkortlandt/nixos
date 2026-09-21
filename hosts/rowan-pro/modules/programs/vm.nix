@@ -19,8 +19,9 @@
   # Virtual Machine Manager GUI
   programs.virt-manager.enable = true;
 
-  # Add user to libvirt and QEMU access groups
+  # Add user to libvirt, QEMU, and KVM access groups
   users.users.ss-pro.extraGroups = [
+    "kvm"
     "libvirtd"
     "qemu-libvirtd"
   ];
@@ -31,6 +32,14 @@
     bridge-utils
     OVMFFull
     swtpm      # software TPM emulator - see note on the domain XML below
+    looking-glass-client
+    virtio-win
+  ];
+
+  # Looking Glass shared memory device
+  # 2880x1800 resolution needs ~64MB (128MB gives room for 4K / HDR)
+  systemd.tmpfiles.rules = [
+    "f /dev/shm/looking-glass 0660 ss-pro kvm -"
   ];
 
    # Enable the VMware Workstation host daemon and kernel modules

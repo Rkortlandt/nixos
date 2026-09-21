@@ -47,6 +47,8 @@
     jetbrains.idea
     jetbrains.rider
     llm-ls
+    webkitgtk_6_0
+    rPackages.rvg
 
     # Creative & Design
     gimp

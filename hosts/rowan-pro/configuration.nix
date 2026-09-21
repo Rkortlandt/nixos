@@ -114,6 +114,27 @@ services.xserver.videoDrivers = [ "nvidia" ];
       modules.hyprland.enable = false;
       modules.kde.enable = true;
     };
+
+    vfio.configuration = {
+      system.nixos.tags = [ "vfio" ];
+
+      boot.kernelParams = [
+        "amd_iommu=on"
+        "iommu=pt"
+        "vfio-pci.ids=10de:2d18,10de:22eb"
+      ];
+
+      boot.initrd.kernelModules = [
+        "vfio_pci"
+        "vfio"
+        "vfio_iommu_type1"
+      ];
+
+      # In VFIO mode, isolate the NVIDIA dGPU from host graphics
+      services.xserver.videoDrivers = lib.mkForce [ "modesetting" ];
+      hardware.nvidia.prime.offload.enable = lib.mkForce false;
+      hardware.nvidia.powerManagement.finegrained = lib.mkForce false;
+    };
   };
 
   virtualisation.docker.enable = true;
