@@ -172,6 +172,7 @@ local aerial = {
   },
 }
 
+
 local whichkey = { 'folke/which-key.nvim', opts = {} }
 
 local theme = {
@@ -622,6 +623,16 @@ require("aerial").setup({
   on_attach = function(bufnr)
     vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
   end,
+
+  backends = { "treesitter", "lsp" },
+
+  -- Force aerial to use treesitter specifically for QML files
+  filetype_backends = {
+    qml = { "treesitter" },
+  },
+
+  -- Prevent aerial from filtering out your custom UI elements
+  filter_kind = false,
 })
 
 -- [[ highlight on yank ]]
