@@ -1,8 +1,3 @@
-;; Capture QML Object instances (e.g., ApplicationWindow {}, Rectangle {})
+;; Capture QML Object definitions (e.g. Item, Rectangle, Button)
 (ui_object_definition
-  (ui_object_initializer) @name) @symbol
-
-;; Optional: Capture custom properties defined inside the elements
-(property_declaration
-  (identifier) @name) @symbol
-
+  type_name: (identifier) @name) @symbol

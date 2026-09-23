@@ -26,7 +26,7 @@ Scope {
                             break;
                         }
                     }
-                } catch(e) {}
+                } catch (e) {}
             }
         }
     }
@@ -34,10 +34,12 @@ Scope {
     Connections {
         target: Hyprland
         function onRawEvent(event) {
-            if (!event) return;
+            if (!event)
+                return;
             if (event.name === "focusedmon") {
                 let mon = event.data.split(",")[0];
-                if (mon) root.focusedMonitorName = mon;
+                if (mon)
+                    root.focusedMonitorName = mon;
             } else if (event.name === "workspace" || event.name === "workspacev2") {
                 if (Hyprland.focusedWorkspace?.monitor?.name) {
                     root.focusedMonitorName = Hyprland.focusedWorkspace.monitor.name;
