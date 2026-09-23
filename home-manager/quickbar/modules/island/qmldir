@@ -1,0 +1,8 @@
+DateView 1.0 DateView.qml
+VolumeOsd 1.0 VolumeOsd.qml
+BrightnessOsd 1.0 BrightnessOsd.qml
+KbdBacklightOsd 1.0 KbdBacklightOsd.qml
+WifiOsd 1.0 WifiOsd.qml
+BluetoothOsd 1.0 BluetoothOsd.qml
+MediaView 1.0 MediaView.qml
+ConnectivityView 1.0 ConnectivityView.qml

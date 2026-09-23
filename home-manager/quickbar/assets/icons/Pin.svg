@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="4.2333336mm"
+   height="4.2333331mm"
+   viewBox="0 0 4.2333336 4.2333331"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1"><marker
+       markerWidth="0.52499998"
+       markerHeight="0.99999994"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       id="CapTriangle"
+       viewBox="0 0 0.525 1"
+       style="overflow:visible"
+       preserveAspectRatio="xMidYMid"><path
+         style="fill:context-stroke;stroke-linecap:butt"
+         d="M 0,-1 1,0 0,1 -0.05,0 Z"
+         transform="scale(0.5)"
+         id="path61" /></marker></defs><g
+     id="layer1"
+     transform="translate(-224.93396,-27.392776)"
+     style="display:inline"><path
+       style="fill:#000000;stroke:#ffffff;stroke-width:0.184999;stroke-linecap:round;stroke-linejoin:round"
+       d="m 226.78159,30.282962 1.01152,-0.665197 -0.29893,-0.377169 -0.26222,0.173583 -0.3978,-0.414054 0.18093,-0.151687 -0.21859,-0.281216 -0.78303,0.547015 0.21695,0.285484 0.20427,-0.135235 0.3034,0.476568 -0.247,0.163489 z"
+       id="path26" /><path
+       style="fill:#000000;stroke:#ffffff;stroke-width:0.184999;stroke-linecap:round;stroke-linejoin:round;marker-start:url(#CapTriangle)"
+       d="m 227.44092,30.142726 0.4984,0.628876"
+       id="path29" /></g></svg>

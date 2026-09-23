@@ -1,0 +1,12 @@
+Workspaces 1.0 Workspaces.qml
+Workspace 1.0 Workspaces.qml
+Volume 1.0 Volume.qml
+Microphone 1.0 Microphone.qml
+Audio 1.0 Audio.qml
+SystemInfo 1.0 SystemInfo.qml
+Clock 1.0 Clock.qml
+Wireless 1.0 Wireless.qml
+Backlight 1.0 Backlight.qml
+Brightness 1.0 Backlight.qml
+VolumeOsd 1.0 VolumeOsd.qml
+DynamicIsland 1.0 DynamicIsland.qml

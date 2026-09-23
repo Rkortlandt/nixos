@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="15.999999"
+   height="16"
+   viewBox="0 0 4.2333331 4.2333334"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1"><marker
+       style="overflow:visible"
+       id="ArrowWideRounded_reversed"
+       refX="0"
+       refY="0"
+       orient="auto"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       preserveAspectRatio="xMidYMid"><g
+         transform="scale(-1)"
+         id="g4"><path
+           style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+           d="M 3,-3 0,0 3,3"
+           transform="rotate(180,0.125,0)"
+           id="path4" /></g></marker></defs><g
+     id="layer1"
+     transform="translate(-224.93396,-21.966051)"
+     style="display:inline"><path
+       style="fill:none;stroke:#066406;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#ArrowWideRounded_reversed)"
+       d="m 227.05062,23.235359 v 1.694713"
+       id="path1" /></g></svg>
