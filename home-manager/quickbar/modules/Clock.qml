@@ -8,4 +8,5 @@ TextButton {
 
     text: Time.time
     buttonStyle: Button.Style.Normal
+    onClicked: MenuService.toggle()
 }

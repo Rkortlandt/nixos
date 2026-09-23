@@ -15,7 +15,7 @@ PanelWindow {
 
     // Force Overlay layer so it renders above fullscreen windows
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: ConnectivityService.isOpen ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    WlrLayershell.keyboardFocus: (ConnectivityService.isOpen || MenuService.isOpen) ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     anchors {
         top: true
@@ -53,20 +53,24 @@ PanelWindow {
     // When closed, ONLY the visible pill gets mouse clicks (rest of screen passes through).
     // When open, the full backdrop receives clicks to dismiss on click-outside.
     mask: Region {
-        Region { item: ConnectivityService.isOpen ? backdropArea : islandPill }
+        Region { item: (ConnectivityService.isOpen || MenuService.isOpen) ? backdropArea : islandPill }
     }
 
     // Fullscreen backdrop to dismiss on click outside the island and listen to global Esc
     MouseArea {
         id: backdropArea
         anchors.fill: parent
-        enabled: ConnectivityService.isOpen
-        focus: ConnectivityService.isOpen
+        enabled: ConnectivityService.isOpen || MenuService.isOpen
+        focus: ConnectivityService.isOpen || MenuService.isOpen
         Keys.onEscapePressed: event => {
             ConnectivityService.close();
+            MenuService.close();
             event.accepted = true;
         }
-        onClicked: ConnectivityService.close()
+        onClicked: {
+            ConnectivityService.close();
+            MenuService.close();
+        }
     }
 
     // =========================================================================
@@ -196,10 +200,13 @@ PanelWindow {
         id: islandPill
         anchors.horizontalCenter: parent.horizontalCenter
 
-        readonly property bool effectiveMediaExpanded: root.hasActiveTrack && !root.isOsdActive && !ConnectivityService.isOpen && (root.isIslandHovered || root.isMediaExpanded)
-        readonly property bool shouldShowIsland: root.isScreenFocused && (ConnectivityService.isOpen || root.isOsdActive || effectiveMediaExpanded || !root.isWorkspaceFullscreen)
+        readonly property bool effectiveMediaExpanded: root.hasActiveTrack && !root.isOsdActive && !ConnectivityService.isOpen && !MenuService.isOpen && (root.isIslandHovered || root.isMediaExpanded)
+        readonly property bool shouldShowIsland: root.isScreenFocused && (MenuService.isOpen || ConnectivityService.isOpen || root.isOsdActive || effectiveMediaExpanded || !root.isWorkspaceFullscreen)
 
         readonly property real currentContentWidth: {
+            if (MenuService.isOpen) {
+                return 500;
+            }
             if (ConnectivityService.isOpen) {
                 return 420;
             }
@@ -218,15 +225,15 @@ PanelWindow {
             return dateItem.implicitWidth;
         }
 
-        readonly property real targetWidth: ConnectivityService.isOpen ? 420 : (!shouldShowIsland ? 0 : (
+        readonly property real targetWidth: MenuService.isOpen ? 500 : (ConnectivityService.isOpen ? 420 : (!shouldShowIsland ? 0 : (
             effectiveMediaExpanded ? 420 : (currentContentWidth + 24)
-        ))
-        readonly property real targetHeight: ConnectivityService.isOpen ? 320 : (!shouldShowIsland ? 0 : (
+        )))
+        readonly property real targetHeight: MenuService.isOpen ? 520 : (ConnectivityService.isOpen ? 320 : (!shouldShowIsland ? 0 : (
             root.isOsdActive ? 36 : (
                 effectiveMediaExpanded ? 124 : Theme.defaultHeight
             )
-        ))
-        readonly property real targetRadius: (ConnectivityService.isOpen || effectiveMediaExpanded) ? 16 : (targetHeight / 2)
+        )))
+        readonly property real targetRadius: MenuService.isOpen ? 24 : ((ConnectivityService.isOpen || effectiveMediaExpanded) ? 16 : (targetHeight / 2))
 
         width: targetWidth
         height: targetHeight
@@ -249,7 +256,7 @@ PanelWindow {
             id: pillHoverHandler
             onHoveredChanged: {
                 root.isIslandHovered = hovered;
-                if (!hovered && !ConnectivityService.isOpen) {
+                if (!hovered && !ConnectivityService.isOpen && !MenuService.isOpen) {
                     root.isMediaExpanded = false;
                 }
             }
@@ -263,7 +270,7 @@ PanelWindow {
         DateView {
             id: dateItem
             anchors.centerIn: parent
-            opacity: (!ConnectivityService.isOpen && !root.isOsdActive && !root.hasActiveTrack && !root.isWorkspaceFullscreen) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && !root.isOsdActive && !root.hasActiveTrack && !root.isWorkspaceFullscreen) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -283,7 +290,7 @@ PanelWindow {
             anchors.fill: parent
             player: root.activePlayer
             isExpanded: islandPill.effectiveMediaExpanded
-            opacity: (!ConnectivityService.isOpen && !root.isOsdActive && root.hasActiveTrack && (!root.isWorkspaceFullscreen || islandPill.effectiveMediaExpanded)) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && !root.isOsdActive && root.hasActiveTrack && (!root.isWorkspaceFullscreen || islandPill.effectiveMediaExpanded)) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
             onToggleExpand: root.isMediaExpanded = !root.isMediaExpanded
@@ -302,7 +309,7 @@ PanelWindow {
         VolumeOsd {
             id: volumeItem
             anchors.centerIn: parent
-            opacity: (!ConnectivityService.isOpen && root.activeOsdMode === 1) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 1) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
             onInteraction: root.triggerOsd(1)
@@ -322,7 +329,7 @@ PanelWindow {
             id: brightnessItem
             anchors.centerIn: parent
             brightnessPercent: BacklightService.screenPercent
-            opacity: (!ConnectivityService.isOpen && root.activeOsdMode === 2) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 2) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
             onInteraction: root.triggerOsd(2)
@@ -344,7 +351,7 @@ PanelWindow {
             kbdBrightness: BacklightService.kbdBrightness
             kbdMaxBrightness: BacklightService.kbdMaxBrightness
             kbdIsOn: BacklightService.kbdBrightness > 0
-            opacity: (!ConnectivityService.isOpen && root.activeOsdMode === 3) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 3) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -364,7 +371,7 @@ PanelWindow {
             anchors.centerIn: parent
             ssid: root.wifiSsid
             signalStrength: root.wifiSignal
-            opacity: (!ConnectivityService.isOpen && root.activeOsdMode === 4) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 4) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -384,7 +391,7 @@ PanelWindow {
             anchors.centerIn: parent
             deviceName: root.btDeviceName
             connected: root.btDeviceConnected
-            opacity: (!ConnectivityService.isOpen && root.activeOsdMode === 5) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 5) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -408,7 +415,31 @@ PanelWindow {
                     id: connectivityItem
                 }
             }
-            opacity: ConnectivityService.isOpen ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && ConnectivityService.isOpen) ? 1.0 : 0.0
+            scale: opacity > 0 ? 1.0 : 0.90
+            visible: opacity > 0.01
+
+            Behavior on opacity {
+                NumberAnimation { duration: 250; easing.type: Easing.OutCubic }
+            }
+            Behavior on scale {
+                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+            }
+        }
+
+        // -------------------------------------------------------------
+        // ITEM 7: Main Menu / Dashboard Page
+        // -------------------------------------------------------------
+        Loader {
+            id: mainMenuLoader
+            anchors.fill: parent
+            active: MenuService.isOpen || opacity > 0.01
+            sourceComponent: Component {
+                MainMenuView {
+                    id: mainMenuItem
+                }
+            }
+            opacity: MenuService.isOpen ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 

@@ -15,6 +15,7 @@ Singleton {
     property string activeTab: "wifi" // "wifi" | "bluetooth"
 
     function open(tab = "wifi") {
+        MenuService.close();
         activeTab = tab;
         isOpen = true;
         if (tab === "wifi") {

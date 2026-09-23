@@ -3,6 +3,7 @@ singleton RevealerManager 1.0 RevealerManager.qml
 singleton ScrollHelper 1.0 ScrollHelper.qml
 singleton BacklightService 1.0 BacklightService.qml
 singleton ConnectivityService 1.0 ConnectivityService.qml
+singleton MenuService 1.0 MenuService.qml
 Button 1.0 Button.qml
 TextButton 1.0 TextButton.qml
 IconButton 1.0 IconButton.qml
