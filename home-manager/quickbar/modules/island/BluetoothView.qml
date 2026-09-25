@@ -1,6 +1,7 @@
 // modules/island/BluetoothView.qml
 import QtQuick
 import QtQuick.Layouts
+import Quickshell
 import "../../core"
 
 Item {
@@ -15,7 +16,7 @@ Item {
 
         IconImage {
             implicitSize: 48
-            source: Qt.resolvedUrl("../../assets/icons/Bluetooth-Disabled.svg")
+            source: Quickshell.shellDir + "/assets/icons/Bluetooth-Disabled.svg"
             opacity: 0.5
             Layout.alignment: Qt.AlignHCenter
         }
@@ -65,8 +66,8 @@ Item {
                 Layout.preferredWidth: 124
                 Layout.preferredHeight: 28
                 radius: 14
-                color: ConnectivityService.btPowered ? Theme.primaryBg : (btPwrMouse.containsMouse ? "#222222" : "#141414")
-                border.color: ConnectivityService.btPowered ? Theme.primaryBorder : "#2a2a2a"
+                color: ConnectivityService.btPowered ? Theme.primaryBg : (btPwrMouse.containsMouse ? Theme.cardHoverBg : Theme.itemBg)
+                border.color: ConnectivityService.btPowered ? Theme.primaryBorder : Theme.cardBorder
                 border.width: 1
 
                 Behavior on color {
@@ -89,7 +90,7 @@ Item {
 
                     IconImage {
                         implicitSize: 18
-                        source: ConnectivityService.btPowered ? Qt.resolvedUrl("../../assets/icons/Bluetooth.svg") : Qt.resolvedUrl("../../assets/icons/Bluetooth-Disabled.svg")
+                        source: ConnectivityService.btPowered ? (ConnectivityService.btHasConnectedDevice ? (Quickshell.shellDir + "/assets/icons/Bluetooth-Connected.svg") : (Quickshell.shellDir + "/assets/icons/Bluetooth.svg")) : (Quickshell.shellDir + "/assets/icons/Bluetooth-Disabled.svg")
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
@@ -111,10 +112,10 @@ Item {
                 Layout.preferredHeight: 28
                 customRadius: 6
                 buttonStyle: ConnectivityService.btScanning ? Button.Style.Accent : Button.Style.Normal
-                backgroundColor: ConnectivityService.btScanning ? Theme.accentBg : "#1c1c1c"
-                hoverColor: ConnectivityService.btScanning ? Theme.accentHoverBg : "#282828"
-                iconSize: 14
-                source: Qt.resolvedUrl("../../assets/icons/Loading.svg")
+                backgroundColor: ConnectivityService.btScanning ? Theme.accentBg : Theme.cardBg
+                hoverColor: ConnectivityService.btScanning ? Theme.accentHoverBg : Theme.cardHoverBg
+                iconSize: 24
+                source: Quickshell.shellDir + "/assets/icons/Loading.svg"
                 onClicked: ConnectivityService.toggleBtDiscovery()
 
                 RotationAnimation {
@@ -263,7 +264,7 @@ Item {
                                     Layout.fillWidth: true
                                     Layout.fillHeight: true
                                     radius: 8
-                                    color: dev.connected ? Theme.primaryBg : (devMouse.containsMouse ? "#222222" : "#141414")
+                                    color: dev.connected ? Theme.primaryBg : (devMouse.containsMouse ? Theme.itemHoverBg : Theme.itemBg)
                                     border.color: dev.connected ? Theme.primaryBorder : "transparent"
                                     border.width: dev.connected ? 1 : 0
 
@@ -295,7 +296,7 @@ Item {
 
                                         IconImage {
                                             implicitSize: 18
-                                            source: Qt.resolvedUrl("../../assets/icons/Bluetooth.svg")
+                                            source: dev.connected ? (Quickshell.shellDir + "/assets/icons/Bluetooth-Connected.svg") : (Quickshell.shellDir + "/assets/icons/Bluetooth.svg")
                                             Layout.alignment: Qt.AlignVCenter
                                         }
 
@@ -338,9 +339,9 @@ Item {
                                     customRadius: 6
                                     buttonStyle: Button.Style.Normal
                                     backgroundColor: "transparent"
-                                    hoverColor: "#2a2a2a"
+                                    hoverColor: Theme.cardHoverBg
                                     iconSize: 18
-                                    source: Qt.resolvedUrl("../../assets/icons/Close.svg")
+                                    source: Quickshell.shellDir + "/assets/icons/Close.svg"
                                     onClicked: ConnectivityService.unpairBt(dev.address)
                                 }
                             }
@@ -379,7 +380,7 @@ Item {
                             Rectangle {
                                 anchors.fill: parent
                                 radius: 8
-                                color: availMouse.containsMouse ? "#222222" : "#141414"
+                                color: availMouse.containsMouse ? Theme.itemHoverBg : Theme.itemBg
 
                                 Behavior on color {
                                     ColorAnimation {
@@ -403,7 +404,7 @@ Item {
 
                                     IconImage {
                                         implicitSize: 12
-                                        source: Qt.resolvedUrl("../../assets/icons/Bluetooth.svg")
+                                        source: Quickshell.shellDir + "/assets/icons/Bluetooth.svg"
                                         Layout.alignment: Qt.AlignVCenter
                                     }
 

@@ -1,5 +1,6 @@
 // core/SquircleArt.qml
 import QtQuick
+import Quickshell
 import Quickshell.Widgets
 import "../core"
 
@@ -42,7 +43,7 @@ ClippingRectangle {
     IconImage {
         anchors.centerIn: parent
         implicitSize: root.iconSize
-        source: Qt.resolvedUrl("../assets/icons/Music.svg")
+        source: Quickshell.shellDir + "/assets/icons/Music.svg"
         visible: !artImage.visible
     }
 }

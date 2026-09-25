@@ -1,5 +1,6 @@
 import QtQuick
-import "../../core"
+import Quickshell
+import "../../../core"
 
 Row {
     id: root
@@ -10,16 +11,12 @@ Row {
 
     IconImage {
         implicitSize: 18
-        source: root.connected
-            ? Qt.resolvedUrl("../../assets/icons/Bluetooth.svg")
-            : Qt.resolvedUrl("../../assets/icons/Bluetooth-Disabled.svg")
+        source: root.connected ? (Quickshell.shellDir + "/assets/icons/Bluetooth-Connected.svg") : (Quickshell.shellDir + "/assets/icons/Bluetooth-Disabled.svg")
         anchors.verticalCenter: parent.verticalCenter
     }
 
     Text {
-        text: root.connected
-            ? (root.deviceName.length > 0 ? ("Connected: " + root.deviceName) : "Bluetooth Connected")
-            : (root.deviceName.length > 0 ? ("Disconnected: " + root.deviceName) : "Bluetooth Disconnected")
+        text: root.connected ? (root.deviceName.length > 0 ? ("Connected: " + root.deviceName) : "Bluetooth Connected") : (root.deviceName.length > 0 ? ("Disconnected: " + root.deviceName) : "Bluetooth Disconnected")
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSize
         font.bold: Theme.fontBold

@@ -1,5 +1,6 @@
 // modules/Wireless.qml
 import QtQuick
+import Quickshell
 import "../core"
 
 Rectangle {
@@ -18,23 +19,27 @@ Rectangle {
     // Network & Bluetooth tracking via ConnectivityService
     readonly property string wifiIcon: {
         if (!ConnectivityService.wifiEnabled)
-            return Qt.resolvedUrl("../assets/icons/Wifi-Disabled.svg");
+            return Quickshell.shellDir + "/assets/icons/Wifi-Disabled.svg";
         if (ConnectivityService.wifiScanning)
-            return Qt.resolvedUrl("../assets/icons/Wifi-Acquiring.svg");
+            return Quickshell.shellDir + "/assets/icons/Wifi-Acquiring.svg";
         if (!ConnectivityService.wifiActiveSsid || ConnectivityService.wifiActiveSsid.length === 0)
-            return Qt.resolvedUrl("../assets/icons/Wifi-Disabled.svg");
+            return Quickshell.shellDir + "/assets/icons/Wifi-Disabled.svg";
         if (ConnectivityService.wifiActiveSignal >= 75)
-            return Qt.resolvedUrl("../assets/icons/Wifi-High.svg");
+            return Quickshell.shellDir + "/assets/icons/Wifi-High.svg";
         if (ConnectivityService.wifiActiveSignal >= 50)
-            return Qt.resolvedUrl("../assets/icons/Wifi-Mid.svg");
+            return Quickshell.shellDir + "/assets/icons/Wifi-Mid.svg";
         if (ConnectivityService.wifiActiveSignal >= 25)
-            return Qt.resolvedUrl("../assets/icons/Wifi-Low.svg");
-        return Qt.resolvedUrl("../assets/icons/Wifi-Zero.svg");
+            return Quickshell.shellDir + "/assets/icons/Wifi-Low.svg";
+        return Quickshell.shellDir + "/assets/icons/Wifi-Zero.svg";
     }
 
-    readonly property string bluetoothIcon: ConnectivityService.btPowered
-        ? Qt.resolvedUrl("../assets/icons/Bluetooth.svg")
-        : Qt.resolvedUrl("../assets/icons/Bluetooth-Disabled.svg")
+    readonly property string bluetoothIcon: {
+        if (!ConnectivityService.btPowered)
+            return Quickshell.shellDir + "/assets/icons/Bluetooth-Disabled.svg";
+        if (ConnectivityService.btHasConnectedDevice)
+            return Quickshell.shellDir + "/assets/icons/Bluetooth-Connected.svg";
+        return Quickshell.shellDir + "/assets/icons/Bluetooth.svg";
+    }
 
     // Sliding Selection Pill on the Bar
     Rectangle {

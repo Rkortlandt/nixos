@@ -1,29 +1,30 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.Pipewire
-import "../../core"
+import "../../../core"
 
 Row {
     id: root
     spacing: 10
 
     readonly property var audioSink: Pipewire.defaultAudioSink
-    signal interaction()
+    signal interaction
 
     function getVolumeIcon(vol, muted) {
-        if (muted) return Qt.resolvedUrl("../../assets/icons/Speaker-Muted.svg");
-        if (vol > 0.8) return Qt.resolvedUrl("../../assets/icons/Speaker-High.svg");
-        if (vol > 0.5) return Qt.resolvedUrl("../../assets/icons/Speaker-Mid.svg");
-        if (vol > 0.0) return Qt.resolvedUrl("../../assets/icons/Speaker-Low.svg");
-        return Qt.resolvedUrl("../../assets/icons/Speaker-Zero.svg");
+        if (muted)
+            return Quickshell.shellDir + "/assets/icons/Speaker-Muted.svg";
+        if (vol > 0.8)
+            return Quickshell.shellDir + "/assets/icons/Speaker-High.svg";
+        if (vol > 0.5)
+            return Quickshell.shellDir + "/assets/icons/Speaker-Mid.svg";
+        if (vol > 0.0)
+            return Quickshell.shellDir + "/assets/icons/Speaker-Low.svg";
+        return Quickshell.shellDir + "/assets/icons/Speaker-Zero.svg";
     }
 
     IconImage {
         implicitSize: 18
-        source: root.getVolumeIcon(
-            root.audioSink?.audio?.volume ?? 0,
-            root.audioSink?.audio?.muted ?? false
-        )
+        source: root.getVolumeIcon(root.audioSink?.audio?.volume ?? 0, root.audioSink?.audio?.muted ?? false)
         anchors.verticalCenter: parent.verticalCenter
     }
 

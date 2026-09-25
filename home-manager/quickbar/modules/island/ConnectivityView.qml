@@ -15,17 +15,38 @@ FocusScope {
         event.accepted = true;
     }
 
+    // Catch clicks inside connectivity view so they do not fall through to the dismissal backdrop
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {}
+    }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 12
         spacing: 10
 
         // =====================================================================
-        // HEADER ROW: TABS & CLOSE BUTTON
+        // HEADER ROW: BACK, TABS & CLOSE BUTTON
         // =====================================================================
         RowLayout {
             Layout.fillWidth: true
             spacing: 8
+
+            // Square Back Button to Main Menu
+            IconButton {
+                Layout.preferredWidth: 32
+                Layout.preferredHeight: 32
+                customRadius: 6
+                buttonStyle: Button.Style.Normal
+                backgroundColor: Theme.cardBg
+                hoverColor: Theme.cardHoverBg
+                iconSize: 18
+                source: Quickshell.shellDir + "/assets/icons/Back.svg"
+                onClicked: {
+                    MenuService.open();
+                }
+            }
 
             // Tab Switcher Container with sliding pill indicator
             Rectangle {
@@ -33,8 +54,8 @@ FocusScope {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 32
                 radius: 16
-                color: "#161616"
-                border.color: "#282828"
+                color: Theme.cardBg
+                border.color: Theme.cardBorder
                 border.width: 1
 
                 readonly property real tabWidth: (width - 4) / 2
@@ -88,7 +109,7 @@ FocusScope {
 
                             IconImage {
                                 implicitSize: 20
-                                source: Qt.resolvedUrl("../../assets/icons/Wifi-High.svg")
+                                source: Quickshell.shellDir + "/assets/icons/Wifi-High.svg"
                                 anchors.verticalCenter: parent.verticalCenter
                             }
 
@@ -128,7 +149,9 @@ FocusScope {
 
                             IconImage {
                                 implicitSize: 20
-                                source: Qt.resolvedUrl("../../assets/icons/Bluetooth.svg")
+                                source: ConnectivityService.btPowered
+                                    ? (ConnectivityService.btHasConnectedDevice ? (Quickshell.shellDir + "/assets/icons/Bluetooth-Connected.svg") : (Quickshell.shellDir + "/assets/icons/Bluetooth.svg"))
+                                    : (Quickshell.shellDir + "/assets/icons/Bluetooth-Disabled.svg")
                                 anchors.verticalCenter: parent.verticalCenter
                             }
 
@@ -151,10 +174,10 @@ FocusScope {
                 Layout.preferredHeight: 32
                 customRadius: 6
                 buttonStyle: Button.Style.Normal
-                backgroundColor: "#161616"
-                hoverColor: "#282828"
+                backgroundColor: Theme.cardBg
+                hoverColor: Theme.cardHoverBg
                 iconSize: 22
-                source: Qt.resolvedUrl("../../assets/icons/Close.svg")
+                source: Quickshell.shellDir + "/assets/icons/Close.svg"
                 onClicked: ConnectivityService.close()
             }
         }

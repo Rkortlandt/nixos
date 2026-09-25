@@ -1,16 +1,17 @@
 import QtQuick
-import "../../core"
+import Quickshell
+import "../../../core"
 
 Row {
     id: root
     spacing: 10
 
     property real brightnessPercent: 100
-    signal interaction()
+    signal interaction
 
     IconImage {
         implicitSize: 18
-        source: Qt.resolvedUrl("../../assets/icons/Brightness.svg")
+        source: Quickshell.shellDir + "/assets/icons/Brightness.svg"
         anchors.verticalCenter: parent.verticalCenter
     }
 

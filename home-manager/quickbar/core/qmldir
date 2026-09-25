@@ -4,6 +4,7 @@ singleton ScrollHelper 1.0 ScrollHelper.qml
 singleton BacklightService 1.0 BacklightService.qml
 singleton ConnectivityService 1.0 ConnectivityService.qml
 singleton MenuService 1.0 MenuService.qml
+singleton MediaService 1.0 MediaService.qml
 Button 1.0 Button.qml
 TextButton 1.0 TextButton.qml
 IconButton 1.0 IconButton.qml
@@ -16,3 +17,5 @@ Stack 1.0 Stack.qml
 Slider 1.0 Slider.qml
 IconImage 1.0 IconImage.qml
 SquircleArt 1.0 SquircleArt.qml
+MediaPlayer 1.0 MediaPlayer.qml
+LottieIcon 1.0 LottieIcon.qml

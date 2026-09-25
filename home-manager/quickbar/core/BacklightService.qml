@@ -33,7 +33,7 @@ Singleton {
     Process {
         id: monitorProc
         running: true
-        command: ["bash", Qt.resolvedUrl("backlight_monitor.sh").toString().replace(/^file:\/\//, "")]
+        command: ["bash", Quickshell.shellDir + "/core/backlight_monitor.sh"]
         stdout: SplitParser {
             splitMarker: "\n"
             onRead: data => {

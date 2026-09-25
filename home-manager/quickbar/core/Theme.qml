@@ -12,6 +12,20 @@ Singleton {
     property color normalText: "#ffffff"
     property color normalBorder: "#333333"
 
+    // Card / Surface style (common dark grey container & border)
+    property color cardBg: "#161616"
+    property color cardHoverBg: "#222222"
+    property color cardPressedBg: "#2a2a2a"
+    property color cardBorder: "#262626"
+    property color surfaceBg: root.cardBg
+    property color surfaceBorder: root.cardBorder
+    property color surfaceHoverBg: root.cardHoverBg
+
+    // Item style (list delegates / inner tiles)
+    property color itemBg: "#141414"
+    property color itemHoverBg: "#222222"
+    property color itemBorder: "#262626"
+
     // Primary style
     property color primaryBg: "#0f5880"
     property color primaryHoverBg: "#146896"

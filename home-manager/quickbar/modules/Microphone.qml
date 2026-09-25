@@ -1,5 +1,6 @@
 // modules/Microphone.qml
 import QtQuick
+import Quickshell
 import Quickshell.Services.Pipewire
 import "../core"
 
@@ -10,8 +11,8 @@ RevealerButton {
 
     button: IconButton {
         iconSource: (root.audioSource?.audio?.muted ?? false)
-            ? Qt.resolvedUrl("../assets/icons/Mic-Muted.svg")
-            : Qt.resolvedUrl("../assets/icons/Mic.svg")
+            ? Quickshell.shellDir + "/assets/icons/Mic-Muted.svg"
+            : Quickshell.shellDir + "/assets/icons/Mic.svg"
         buttonStyle: Button.Style.Normal
     }
     revealOnHover: true

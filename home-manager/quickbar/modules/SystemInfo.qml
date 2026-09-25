@@ -1,5 +1,6 @@
 // modules/SystemInfo.qml
 import QtQuick
+import Quickshell
 import Quickshell.Io
 import Quickshell.Services.UPower
 import "../core"
@@ -14,7 +15,7 @@ RevealerButton {
 
     Process {
         id: statsProc
-        command: ["bash", Qt.resolvedUrl("../core/system_stats.sh").toString().replace(/^file:\/\//, "")]
+        command: ["bash", Quickshell.shellDir + "/core/system_stats.sh"]
         stdout: StdioCollector {
             onStreamFinished: {
                 let parts = this.text.trim().split(" ");
@@ -48,14 +49,14 @@ RevealerButton {
     // Battery icon helper
     function getBatteryIcon(pct, state) {
         if (state === UPowerDeviceState.Charging)
-            return Qt.resolvedUrl("../assets/icons/Battery-Charging.svg");
+            return Quickshell.shellDir + "/assets/icons/Battery-Charging.svg";
         if (pct >= 0.70)
-            return Qt.resolvedUrl("../assets/icons/Battery-Full.svg");
+            return Quickshell.shellDir + "/assets/icons/Battery-Full.svg";
         if (pct >= 0.20)
-            return Qt.resolvedUrl("../assets/icons/Battery-Mid.svg");
+            return Quickshell.shellDir + "/assets/icons/Battery-Mid.svg";
         if (pct >= 0.10)
-            return Qt.resolvedUrl("../assets/icons/Battery-Low.svg");
-        return Qt.resolvedUrl("../assets/icons/Battery-Critical.svg");
+            return Quickshell.shellDir + "/assets/icons/Battery-Low.svg";
+        return Quickshell.shellDir + "/assets/icons/Battery-Critical.svg";
     }
 
     button: IconTextButton {
@@ -84,21 +85,21 @@ RevealerButton {
         anchors.verticalCenter: parent.verticalCenter
 
         IconTextButton {
-            iconSource: Qt.resolvedUrl("../assets/icons/Cpu.svg")
+            iconSource: Quickshell.shellDir + "/assets/icons/Cpu.svg"
             text: "CPU: " + root.cpuUsage + "%"
             buttonStyle: Button.Style.Normal
             onClicked: sysStack.next()
         }
 
         IconTextButton {
-            iconSource: Qt.resolvedUrl("../assets/icons/Ram.svg")
+            iconSource: Quickshell.shellDir + "/assets/icons/Ram.svg"
             text: "RAM: " + root.ramUsage + "%"
             buttonStyle: Button.Style.Normal
             onClicked: sysStack.next()
         }
 
         IconTextButton {
-            iconSource: Qt.resolvedUrl("../assets/icons/Temp.svg")
+            iconSource: Quickshell.shellDir + "/assets/icons/Temp.svg"
             text: "Temp: " + root.cpuTemp + "°C"
             buttonStyle: Button.Style.Normal
             onClicked: sysStack.next()

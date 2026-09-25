@@ -44,6 +44,7 @@
     nil
     nixd
     kdePackages.qtdeclarative # provides qmlls, qmlformat, qmllint
+    qt6.qtlottie
     delve
     jetbrains.idea
     jetbrains.rider

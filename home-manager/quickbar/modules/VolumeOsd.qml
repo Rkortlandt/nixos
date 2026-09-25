@@ -13,11 +13,15 @@ Scope {
 
     // Volume icon helper
     function getVolumeIcon(vol, muted) {
-        if (muted) return Qt.resolvedUrl("../assets/icons/Speaker-Muted.svg");
-        if (vol > 0.8) return Qt.resolvedUrl("../assets/icons/Speaker-High.svg");
-        if (vol > 0.5) return Qt.resolvedUrl("../assets/icons/Speaker-Mid.svg");
-        if (vol > 0.0) return Qt.resolvedUrl("../assets/icons/Speaker-Low.svg");
-        return Qt.resolvedUrl("../assets/icons/Speaker-Zero.svg");
+        if (muted)
+            return Quickshell.shellDir + "/assets/icons/Speaker-Muted.svg";
+        if (vol > 0.8)
+            return Quickshell.shellDir + "/assets/icons/Speaker-High.svg";
+        if (vol > 0.5)
+            return Quickshell.shellDir + "/assets/icons/Speaker-Mid.svg";
+        if (vol > 0.0)
+            return Quickshell.shellDir + "/assets/icons/Speaker-Low.svg";
+        return Quickshell.shellDir + "/assets/icons/Speaker-Zero.svg";
     }
 
     PwObjectTracker {
@@ -65,7 +69,6 @@ Scope {
                         leftMargin: 10
                         rightMargin: 15
                     }
-
                     IconImage {
                         implicitSize: 30
                         source: root.getVolumeIcon(root.audioSink?.audio?.volume ?? 0, root.audioSink?.audio?.muted ?? false)

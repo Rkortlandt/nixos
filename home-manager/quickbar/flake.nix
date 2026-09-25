@@ -30,6 +30,7 @@
         systemPackages.qt6.qtimageformats
         systemPackages.qt6.qtmultimedia
         systemPackages.qt6.qt5compat
+        systemPackages.qt6.qtlottie
       ];
     };
 
@@ -47,6 +48,7 @@
         systemPackages.qt6.qtimageformats
         systemPackages.qt6.qtmultimedia
         systemPackages.qt6.qt5compat
+        systemPackages.qt6.qtlottie
       ];
 
       installPhase = ''

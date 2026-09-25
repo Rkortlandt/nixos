@@ -9,6 +9,8 @@ import Quickshell.Services.Mpris
 import Quickshell.Bluetooth
 import "../core"
 import "island"
+import "island/osd"
+import "island/menu"
 
 PanelWindow {
     id: root
@@ -32,14 +34,14 @@ PanelWindow {
     visible: root.isScreenFocused
 
     // Hyprland fullscreen tracking: check workspace and active toplevel window
-    readonly property bool isWorkspaceFullscreen: (Hyprland.focusedWorkspace?.hasFullscreen ?? false)
-                                               || (Hyprland.activeToplevel?.wayland?.fullscreen ?? false)
+    readonly property bool isWorkspaceFullscreen: (Hyprland.focusedWorkspace?.hasFullscreen ?? false) || (Hyprland.activeToplevel?.wayland?.fullscreen ?? false)
 
     // Listen to Hyprland raw IPC events to guarantee instantaneous refresh on fullscreen transitions
     Connections {
         target: Hyprland
         function onRawEvent(event) {
-            if (!event) return;
+            if (!event)
+                return;
             if (event.name === "fullscreen" || event.name === "changefloatingmode" || event.name === "workspace") {
                 Hyprland.refreshWorkspaces();
                 Hyprland.refreshToplevels();
@@ -50,16 +52,26 @@ PanelWindow {
     color: "transparent"
 
     // Wayland input mask:
-    // When closed, ONLY the visible pill gets mouse clicks (rest of screen passes through).
-    // When open, the full backdrop receives clicks to dismiss on click-outside.
+    // When closed, ONLY the visible island pill captures mouse clicks.
+    // When open, the island pill AND the backdrop below the top bar capture clicks (leaving the bar row clickable).
     mask: Region {
-        Region { item: (ConnectivityService.isOpen || MenuService.isOpen) ? backdropArea : islandPill }
+        Region {
+            item: (ConnectivityService.isOpen || MenuService.isOpen) ? backdropArea : islandPill
+        }
+        Region {
+            item: islandPill
+        }
     }
 
-    // Fullscreen backdrop to dismiss on click outside the island and listen to global Esc
+    // Dismissal backdrop covering everything below the top bar height
     MouseArea {
         id: backdropArea
-        anchors.fill: parent
+        z: 1
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.top: parent.top
+        anchors.topMargin: Theme.defaultHeight + 4
         enabled: ConnectivityService.isOpen || MenuService.isOpen
         focus: ConnectivityService.isOpen || MenuService.isOpen
         Keys.onEscapePressed: event => {
@@ -86,20 +98,10 @@ PanelWindow {
     readonly property bool isOsdActive: activeOsdMode !== 0
 
     // -------------------------------------------------------------------------
-    // MPRIS Active Media Player Tracking
+    // MPRIS Active Media Player Tracking (via MediaService)
     // -------------------------------------------------------------------------
-    readonly property var activePlayer: {
-        let list = Mpris.players.values;
-        if (!list || list.length === 0) return null;
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].isPlaying) return list[i];
-        }
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].trackTitle && list[i].trackTitle.length > 0) return list[i];
-        }
-        return null;
-    }
-    readonly property bool hasActiveTrack: activePlayer !== null && (activePlayer.isPlaying || (activePlayer.trackTitle && activePlayer.trackTitle.length > 0))
+    readonly property var activePlayer: MediaService.activePlayer
+    readonly property bool hasActiveTrack: MediaService.hasActiveTrack
 
     property bool isMediaExpanded: false
     property bool isIslandHovered: false
@@ -127,8 +129,12 @@ PanelWindow {
     Connections {
         target: Pipewire.defaultAudioSink?.audio ?? null
         ignoreUnknownSignals: true
-        function onVolumeChanged() { root.triggerOsd(1); }
-        function onMutedChanged() { root.triggerOsd(1); }
+        function onVolumeChanged() {
+            root.triggerOsd(1);
+        }
+        function onMutedChanged() {
+            root.triggerOsd(1);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -184,7 +190,8 @@ PanelWindow {
                 target: dev ?? null
                 ignoreUnknownSignals: true
                 function onConnectedChanged() {
-                    if (!dev) return;
+                    if (!dev)
+                        return;
                     root.btDeviceName = dev.alias || dev.deviceName || dev.name || dev.address || "Device";
                     root.btDeviceConnected = dev.connected;
                     root.triggerOsd(5, 2500);
@@ -198,6 +205,7 @@ PanelWindow {
     // =========================================================================
     Rectangle {
         id: islandPill
+        z: 2
         anchors.horizontalCenter: parent.horizontalCenter
 
         readonly property bool effectiveMediaExpanded: root.hasActiveTrack && !root.isOsdActive && !ConnectivityService.isOpen && !MenuService.isOpen && (root.isIslandHovered || root.isMediaExpanded)
@@ -212,11 +220,16 @@ PanelWindow {
             }
             if (root.isOsdActive) {
                 switch (root.activeOsdMode) {
-                case 1: return volumeItem.implicitWidth;
-                case 2: return brightnessItem.implicitWidth;
-                case 3: return kbdItem.implicitWidth;
-                case 4: return wifiItem.implicitWidth;
-                case 5: return btItem.implicitWidth;
+                case 1:
+                    return volumeItem.implicitWidth;
+                case 2:
+                    return brightnessItem.implicitWidth;
+                case 3:
+                    return kbdItem.implicitWidth;
+                case 4:
+                    return wifiItem.implicitWidth;
+                case 5:
+                    return btItem.implicitWidth;
                 }
             }
             if (root.hasActiveTrack) {
@@ -225,14 +238,8 @@ PanelWindow {
             return dateItem.implicitWidth;
         }
 
-        readonly property real targetWidth: MenuService.isOpen ? 500 : (ConnectivityService.isOpen ? 420 : (!shouldShowIsland ? 0 : (
-            effectiveMediaExpanded ? 420 : (currentContentWidth + 24)
-        )))
-        readonly property real targetHeight: MenuService.isOpen ? 520 : (ConnectivityService.isOpen ? 320 : (!shouldShowIsland ? 0 : (
-            root.isOsdActive ? 36 : (
-                effectiveMediaExpanded ? 124 : Theme.defaultHeight
-            )
-        )))
+        readonly property real targetWidth: MenuService.isOpen ? 500 : (ConnectivityService.isOpen ? 420 : (!shouldShowIsland ? 0 : (effectiveMediaExpanded ? 420 : (currentContentWidth + 24))))
+        readonly property real targetHeight: MenuService.isOpen ? 520 : (ConnectivityService.isOpen ? 320 : (!shouldShowIsland ? 0 : (root.isOsdActive ? 36 : (effectiveMediaExpanded ? 124 : Theme.defaultHeight))))
         readonly property real targetRadius: MenuService.isOpen ? 24 : ((ConnectivityService.isOpen || effectiveMediaExpanded) ? 16 : (targetHeight / 2))
 
         width: targetWidth
@@ -243,13 +250,24 @@ PanelWindow {
         color: Theme.normalBg
 
         Behavior on width {
-            NumberAnimation { duration: 320; easing.type: Easing.OutBack; easing.overshoot: 1.08 }
+            NumberAnimation {
+                duration: 320
+                easing.type: Easing.OutBack
+                easing.overshoot: 1.08
+            }
         }
         Behavior on height {
-            NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+            NumberAnimation {
+                duration: 280
+                easing.type: Easing.OutBack
+                easing.overshoot: 1.05
+            }
         }
         Behavior on radius {
-            NumberAnimation { duration: 280; easing.type: Easing.OutCubic }
+            NumberAnimation {
+                duration: 280
+                easing.type: Easing.OutCubic
+            }
         }
 
         HoverHandler {
@@ -275,10 +293,17 @@ PanelWindow {
             visible: opacity > 0.01
 
             Behavior on opacity {
-                NumberAnimation { duration: (!root.isOsdActive && !root.hasActiveTrack) ? 250 : 100; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: (!root.isOsdActive && !root.hasActiveTrack) ? 250 : 100
+                    easing.type: Easing.OutCubic
+                }
             }
             Behavior on scale {
-                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
             }
         }
 
@@ -296,10 +321,17 @@ PanelWindow {
             onToggleExpand: root.isMediaExpanded = !root.isMediaExpanded
 
             Behavior on opacity {
-                NumberAnimation { duration: 250; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
             }
             Behavior on scale {
-                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
             }
         }
 
@@ -315,10 +347,17 @@ PanelWindow {
             onInteraction: root.triggerOsd(1)
 
             Behavior on opacity {
-                NumberAnimation { duration: root.activeOsdMode === 1 ? 250 : 100; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: root.activeOsdMode === 1 ? 250 : 100
+                    easing.type: Easing.OutCubic
+                }
             }
             Behavior on scale {
-                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
             }
         }
 
@@ -335,10 +374,17 @@ PanelWindow {
             onInteraction: root.triggerOsd(2)
 
             Behavior on opacity {
-                NumberAnimation { duration: root.activeOsdMode === 2 ? 250 : 100; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: root.activeOsdMode === 2 ? 250 : 100
+                    easing.type: Easing.OutCubic
+                }
             }
             Behavior on scale {
-                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
             }
         }
 
@@ -356,10 +402,17 @@ PanelWindow {
             visible: opacity > 0.01
 
             Behavior on opacity {
-                NumberAnimation { duration: root.activeOsdMode === 3 ? 250 : 100; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: root.activeOsdMode === 3 ? 250 : 100
+                    easing.type: Easing.OutCubic
+                }
             }
             Behavior on scale {
-                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
             }
         }
 
@@ -376,10 +429,17 @@ PanelWindow {
             visible: opacity > 0.01
 
             Behavior on opacity {
-                NumberAnimation { duration: root.activeOsdMode === 4 ? 250 : 100; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: root.activeOsdMode === 4 ? 250 : 100
+                    easing.type: Easing.OutCubic
+                }
             }
             Behavior on scale {
-                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
             }
         }
 
@@ -396,10 +456,17 @@ PanelWindow {
             visible: opacity > 0.01
 
             Behavior on opacity {
-                NumberAnimation { duration: root.activeOsdMode === 5 ? 250 : 100; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: root.activeOsdMode === 5 ? 250 : 100
+                    easing.type: Easing.OutCubic
+                }
             }
             Behavior on scale {
-                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
             }
         }
 
@@ -409,6 +476,7 @@ PanelWindow {
         Loader {
             id: connectivityLoader
             anchors.fill: parent
+            focus: ConnectivityService.isOpen
             active: ConnectivityService.isOpen || opacity > 0.01
             sourceComponent: Component {
                 ConnectivityView {
@@ -420,10 +488,17 @@ PanelWindow {
             visible: opacity > 0.01
 
             Behavior on opacity {
-                NumberAnimation { duration: 250; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
             }
             Behavior on scale {
-                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
             }
         }
 
@@ -433,6 +508,7 @@ PanelWindow {
         Loader {
             id: mainMenuLoader
             anchors.fill: parent
+            focus: MenuService.isOpen
             active: MenuService.isOpen || opacity > 0.01
             sourceComponent: Component {
                 MainMenuView {
@@ -444,10 +520,17 @@ PanelWindow {
             visible: opacity > 0.01
 
             Behavior on opacity {
-                NumberAnimation { duration: 250; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
             }
             Behavior on scale {
-                NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.05 }
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
             }
         }
     }

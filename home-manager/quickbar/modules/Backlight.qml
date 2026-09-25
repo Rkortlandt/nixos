@@ -1,5 +1,6 @@
 // modules/Backlight.qml
 import QtQuick
+import Quickshell
 import "../core"
 
 IconTextButton {
@@ -27,7 +28,7 @@ IconTextButton {
     }
 
     // Button visual properties
-    iconSource: Qt.resolvedUrl("../assets/icons/Brightness.svg")
+    iconSource: Quickshell.shellDir + "/assets/icons/Brightness.svg"
     text: Math.round(BacklightService.screenPercent) + "%"
     buttonStyle: Button.Style.Normal
     backgroundColor: Theme.normalBg

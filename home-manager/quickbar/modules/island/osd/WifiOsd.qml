@@ -1,5 +1,6 @@
 import QtQuick
-import "../../core"
+import Quickshell
+import "../../../core"
 
 Row {
     id: root
@@ -10,11 +11,15 @@ Row {
     property bool isConnected: ssid.length > 0
 
     readonly property string wifiIcon: {
-        if (!root.isConnected) return Qt.resolvedUrl("../../assets/icons/Wifi-Disabled.svg");
-        if (root.signalStrength >= 75) return Qt.resolvedUrl("../../assets/icons/Wifi-High.svg");
-        if (root.signalStrength >= 50) return Qt.resolvedUrl("../../assets/icons/Wifi-Mid.svg");
-        if (root.signalStrength >= 25) return Qt.resolvedUrl("../../assets/icons/Wifi-Low.svg");
-        return Qt.resolvedUrl("../../assets/icons/Wifi-Zero.svg");
+        if (!root.isConnected)
+            return Quickshell.shellDir + "/assets/icons/Wifi-Disabled.svg";
+        if (root.signalStrength >= 75)
+            return Quickshell.shellDir + "/assets/icons/Wifi-High.svg";
+        if (root.signalStrength >= 50)
+            return Quickshell.shellDir + "/assets/icons/Wifi-Mid.svg";
+        if (root.signalStrength >= 25)
+            return Quickshell.shellDir + "/assets/icons/Wifi-Low.svg";
+        return Quickshell.shellDir + "/assets/icons/Wifi-Zero.svg";
     }
 
     IconImage {

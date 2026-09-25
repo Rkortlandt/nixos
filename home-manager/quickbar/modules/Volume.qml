@@ -1,5 +1,6 @@
 // modules/Volume.qml
 import QtQuick
+import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Pipewire
 import "../core"
@@ -13,14 +14,14 @@ RevealerButton {
     // Volume icon resolver
     function getVolumeIcon(vol, muted) {
         if (muted)
-            return Qt.resolvedUrl("../assets/icons/Speaker-Muted.svg");
+            return Quickshell.shellDir + "/assets/icons/Speaker-Muted.svg";
         if (vol > 0.8)
-            return Qt.resolvedUrl("../assets/icons/Speaker-High.svg");
+            return Quickshell.shellDir + "/assets/icons/Speaker-High.svg";
         if (vol > 0.5)
-            return Qt.resolvedUrl("../assets/icons/Speaker-Mid.svg");
+            return Quickshell.shellDir + "/assets/icons/Speaker-Mid.svg";
         if (vol > 0.0)
-            return Qt.resolvedUrl("../assets/icons/Speaker-Low.svg");
-        return Qt.resolvedUrl("../assets/icons/Speaker-Zero.svg");
+            return Quickshell.shellDir + "/assets/icons/Speaker-Low.svg";
+        return Quickshell.shellDir + "/assets/icons/Speaker-Zero.svg";
     }
 
     // Friendly device label resolver
@@ -105,7 +106,7 @@ RevealerButton {
         duration: 150
 
         IconButton {
-            iconSource: (root.audioSink?.audio?.muted ?? false) ? Qt.resolvedUrl("../assets/icons/Speaker-High.svg") : Qt.resolvedUrl("../assets/icons/Speaker-Muted.svg")
+            iconSource: (root.audioSink?.audio?.muted ?? false) ? Quickshell.shellDir + "/assets/icons/Speaker-High.svg" : Quickshell.shellDir + "/assets/icons/Speaker-Muted.svg"
             buttonStyle: Button.Style.Normal
             onClicked: {
                 if (root.audioSink?.audio) {

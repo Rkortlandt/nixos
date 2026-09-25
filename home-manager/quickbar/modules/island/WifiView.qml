@@ -1,6 +1,7 @@
 // modules/island/WifiView.qml
 import QtQuick
 import QtQuick.Layouts
+import Quickshell
 import "../../core"
 
 Item {
@@ -15,7 +16,7 @@ Item {
 
         IconImage {
             implicitSize: 48
-            source: Qt.resolvedUrl("../../assets/icons/Wifi-Disabled.svg")
+            source: Quickshell.shellDir + "/assets/icons/Wifi-Disabled.svg"
             opacity: 0.5
             Layout.alignment: Qt.AlignHCenter
         }
@@ -65,8 +66,8 @@ Item {
                 Layout.preferredWidth: 104
                 Layout.preferredHeight: 28
                 radius: 14
-                color: ConnectivityService.wifiEnabled ? Theme.primaryBg : (pwrMouse.containsMouse ? "#222222" : "#141414")
-                border.color: ConnectivityService.wifiEnabled ? Theme.primaryBorder : "#2a2a2a"
+                color: ConnectivityService.wifiEnabled ? Theme.primaryBg : (pwrMouse.containsMouse ? Theme.cardHoverBg : Theme.itemBg)
+                border.color: ConnectivityService.wifiEnabled ? Theme.primaryBorder : Theme.cardBorder
                 border.width: 1
 
                 Behavior on color {
@@ -89,7 +90,7 @@ Item {
 
                     IconImage {
                         implicitSize: 18
-                        source: ConnectivityService.wifiEnabled ? Qt.resolvedUrl("../../assets/icons/Wifi-High.svg") : Qt.resolvedUrl("../../assets/icons/Wifi-Disabled.svg")
+                        source: ConnectivityService.wifiEnabled ? (Quickshell.shellDir + "/assets/icons/Wifi-High.svg") : (Quickshell.shellDir + "/assets/icons/Wifi-Disabled.svg")
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
@@ -111,10 +112,10 @@ Item {
                 Layout.preferredHeight: 28
                 customRadius: 6
                 buttonStyle: ConnectivityService.wifiScanning ? Button.Style.Accent : Button.Style.Normal
-                backgroundColor: ConnectivityService.wifiScanning ? Theme.accentBg : "#1c1c1c"
-                hoverColor: ConnectivityService.wifiScanning ? Theme.accentHoverBg : "#282828"
-                iconSize: 14
-                source: Qt.resolvedUrl("../../assets/icons/Loading.svg")
+                backgroundColor: ConnectivityService.wifiScanning ? Theme.accentBg : Theme.cardBg
+                hoverColor: ConnectivityService.wifiScanning ? Theme.accentHoverBg : Theme.cardHoverBg
+                iconSize: 24
+                source: Quickshell.shellDir + "/assets/icons/Loading.svg"
                 onClicked: ConnectivityService.scanWifi()
 
                 RotationAnimation {
@@ -164,12 +165,12 @@ Item {
 
                 function getSignalIcon(sig) {
                     if (sig >= 75)
-                        return Qt.resolvedUrl("../../assets/icons/Wifi-High.svg");
+                        return Quickshell.shellDir + "/assets/icons/Wifi-High.svg";
                     if (sig >= 50)
-                        return Qt.resolvedUrl("../../assets/icons/Wifi-Mid.svg");
+                        return Quickshell.shellDir + "/assets/icons/Wifi-Mid.svg";
                     if (sig >= 25)
-                        return Qt.resolvedUrl("../../assets/icons/Wifi-Low.svg");
-                    return Qt.resolvedUrl("../../assets/icons/Wifi-Zero.svg");
+                        return Quickshell.shellDir + "/assets/icons/Wifi-Low.svg";
+                    return Quickshell.shellDir + "/assets/icons/Wifi-Zero.svg";
                 }
 
                 Column {
@@ -182,7 +183,7 @@ Item {
                         width: parent.width
                         height: 36
                         radius: 8
-                        color: apData.inUse ? Theme.primaryBg : (apMouse.containsMouse ? "#222222" : "#141414")
+                        color: apData.inUse ? Theme.primaryBg : (apMouse.containsMouse ? Theme.itemHoverBg : Theme.itemBg)
                         border.color: apData.inUse ? Theme.primaryBorder : "transparent"
                         border.width: apData.inUse ? 1 : 0
 
@@ -232,7 +233,7 @@ Item {
 
                             IconImage {
                                 implicitSize: 11
-                                source: Qt.resolvedUrl("../../assets/icons/Locked.svg")
+                                source: Quickshell.shellDir + "/assets/icons/Locked.svg"
                                 iconSize: 16
                                 visible: apData.requiresPassword
                                 opacity: 0.6
@@ -257,8 +258,8 @@ Item {
                         visible: apDelegate.isPrompting
                         clip: true
                         radius: 8
-                        color: "#1e1e1e"
-                        border.color: "#333333"
+                        color: Theme.cardBg
+                        border.color: Theme.cardBorder
                         border.width: 1
 
                         Behavior on height {
@@ -336,7 +337,7 @@ Item {
                                 backgroundColor: "transparent"
                                 hoverColor: "#333333"
                                 iconSize: 18
-                                source: Qt.resolvedUrl("../../assets/icons/Close.svg")
+                                source: Quickshell.shellDir + "/assets/icons/Close.svg"
                                 onClicked: ConnectivityService.passwordPromptSsid = ""
                             }
                         }

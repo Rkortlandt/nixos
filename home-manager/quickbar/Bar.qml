@@ -1,8 +1,8 @@
-// Bar.qml
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import Quickshell.Wayland
 import Quickshell.Hyprland
 import "core"
 import "modules"
@@ -58,6 +58,8 @@ Scope {
                 id: barWindow
                 required property var modelData
                 screen: modelData
+
+                WlrLayershell.layer: WlrLayer.Overlay
 
                 anchors {
                     top: true

@@ -206,8 +206,41 @@ Singleton {
     readonly property var btAdapter: Bluetooth.defaultAdapter ?? null
     readonly property bool btPowered: (btAdapter !== null && btAdapter.enabled) || false
     readonly property bool btScanning: (btAdapter !== null && btAdapter.discovering) || false
+    property bool btHasConnectedDevice: false
     property string btConnectingAddr: ""
     property string btPairingAddr: ""
+
+    function updateBtConnectedState() {
+        if (!root.btAdapter || !root.btAdapter.devices) {
+            root.btHasConnectedDevice = false;
+            return;
+        }
+        let devs = root.btAdapter.devices.values || [];
+        for (let i = 0; i < devs.length; i++) {
+            if (devs[i] && devs[i].connected) {
+                root.btHasConnectedDevice = true;
+                return;
+            }
+        }
+        root.btHasConnectedDevice = false;
+    }
+
+    onBtAdapterChanged: updateBtConnectedState()
+    onBtPoweredChanged: updateBtConnectedState()
+
+    Repeater {
+        model: (root.btAdapter && root.btAdapter.devices) ? root.btAdapter.devices.values : []
+        Item {
+            readonly property var dev: modelData
+            Connections {
+                target: dev ?? null
+                ignoreUnknownSignals: true
+                function onConnectedChanged() {
+                    root.updateBtConnectedState();
+                }
+            }
+        }
+    }
 
     Process {
         id: btExecProc
