@@ -19,10 +19,13 @@ Singleton {
     property int tempMax: 0
     property int tempMin: 0
     property int humidity: 0
+    property int uvIndex: 0
     property int windSpeed: 0
     property string windDir: ""
     property string sunrise: ""
     property string sunset: ""
+    property string moonPhase: ""
+    property int moonIllumination: 0
     property string lastUpdated: ""
     property bool isLoaded: false
     property bool isLoading: false
@@ -112,6 +115,7 @@ Singleton {
             root.temp = parseInt(cur.temp_F) || 0;
             root.feelsLike = parseInt(cur.FeelsLikeF) || 0;
             root.humidity = parseInt(cur.humidity) || 0;
+            root.uvIndex = parseInt(cur.uvIndex) || 0;
             root.windSpeed = parseInt(cur.windspeedMiles) || 0;
             root.windDir = cur.winddir16Point || "";
             root.weatherCode = cur.weatherCode || "";
@@ -159,7 +163,9 @@ Singleton {
                     condition: midCond,
                     weatherCode: midCode,
                     sunrise: ast ? (ast.sunrise || "") : "",
-                    sunset: ast ? (ast.sunset || "") : ""
+                    sunset: ast ? (ast.sunset || "") : "",
+                    moonPhase: ast ? (ast.moon_phase || "") : "",
+                    moonIllumination: ast ? (parseInt(ast.moon_illumination) || 0) : 0
                 });
 
                 // Extract 3-hour slots for today (day 0)
@@ -193,6 +199,8 @@ Singleton {
                 root.tempMin = daysList[0].tempMin;
                 root.sunrise = daysList[0].sunrise;
                 root.sunset = daysList[0].sunset;
+                root.moonPhase = daysList[0].moonPhase;
+                root.moonIllumination = daysList[0].moonIllumination;
             }
         }
 

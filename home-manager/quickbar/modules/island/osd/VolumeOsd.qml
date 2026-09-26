@@ -42,9 +42,8 @@ Row {
         }
     }
 
-    Text {
-        text: Math.round((root.audioSink?.audio?.volume ?? 0) * 100) + "%"
-        font.family: Theme.fontFamily
+    StablePercentText {
+        value: Math.round((root.audioSink?.audio?.volume ?? 0) * 100)
         font.pixelSize: Theme.fontSize
         font.bold: Theme.fontBold
         color: Theme.normalText

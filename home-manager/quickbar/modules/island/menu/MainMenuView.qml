@@ -27,6 +27,7 @@ FocusScope {
     }
 
     ColumnLayout {
+        id: mainCol
         anchors.fill: parent
         anchors.margins: 18
         spacing: 12
@@ -119,7 +120,7 @@ FocusScope {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 52
                 radius: 14
-                color: wifiCardMouse.containsMouse ? Theme.cardHoverBg : Theme.cardBg
+                color: wifiCardMouse.containsMouse ? "#1a1a1a" : "transparent"
                 border.color: Theme.cardBorder
                 border.width: 1
 
@@ -141,7 +142,7 @@ FocusScope {
                         Layout.preferredWidth: 40
                         Layout.preferredHeight: 40
                         radius: 20
-                        color: ConnectivityService.wifiEnabled ? Theme.primaryBg : (wifiCircleMouse.containsMouse ? "#222222" : Theme.normalBg)
+                        color: ConnectivityService.wifiEnabled ? Theme.primaryBg : (wifiCircleMouse.containsMouse ? "#222222" : "transparent")
                         border.color: ConnectivityService.wifiEnabled ? Theme.primaryBorder : Theme.cardBorder
 
                         MouseArea {
@@ -195,7 +196,7 @@ FocusScope {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 52
                 radius: 14
-                color: btCardMouse.containsMouse ? Theme.cardHoverBg : Theme.cardBg
+                color: btCardMouse.containsMouse ? "#1a1a1a" : "transparent"
                 border.color: Theme.cardBorder
                 border.width: 1
 
@@ -217,7 +218,7 @@ FocusScope {
                         Layout.preferredWidth: 40
                         Layout.preferredHeight: 40
                         radius: 20
-                        color: ConnectivityService.btPowered ? Theme.primaryBg : (btCircleMouse.containsMouse ? "#222222" : Theme.normalBg)
+                        color: ConnectivityService.btPowered ? Theme.primaryBg : (btCircleMouse.containsMouse ? "#222222" : "transparent")
                         border.color: ConnectivityService.btPowered ? Theme.primaryBorder : Theme.cardBorder
 
                         MouseArea {
@@ -271,7 +272,7 @@ FocusScope {
                 Layout.preferredWidth: 64
                 Layout.preferredHeight: 52
                 radius: 14
-                color: MenuService.cafeMode ? Theme.accentBg : (cafeMouse.containsMouse ? Theme.cardHoverBg : Theme.cardBg)
+                color: MenuService.cafeMode ? Theme.accentBg : (cafeMouse.containsMouse ? "#1a1a1a" : "transparent")
                 border.color: MenuService.cafeMode ? Theme.accentBorder : Theme.cardBorder
                 border.width: 1
 
@@ -295,7 +296,7 @@ FocusScope {
                 Layout.preferredWidth: 64
                 Layout.preferredHeight: 52
                 radius: 14
-                color: BacklightService.kbdBrightness > 0 ? Theme.primaryBg : (kbdMouse.containsMouse ? Theme.cardHoverBg : Theme.cardBg)
+                color: BacklightService.kbdBrightness > 0 ? Theme.primaryBg : (kbdMouse.containsMouse ? "#1a1a1a" : "transparent")
                 border.color: BacklightService.kbdBrightness > 0 ? Theme.primaryBorder : Theme.cardBorder
                 border.width: 1
 
@@ -330,32 +331,32 @@ FocusScope {
         // 4. TWO BLANK PLACEHOLDER SECTIONS (Timer & System Stats)
         // =============================================================
         RowLayout {
+            id: cardsRow
             Layout.fillWidth: true
-            Layout.preferredHeight: 110
             spacing: 10
 
-            // Left Placeholder Card
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                radius: 18
-                color: Theme.cardBg
-                border.color: Theme.cardBorder
-                border.width: 1
+            readonly property real totalRowWidth: mainCol.width > 0 ? mainCol.width : (root.width > 0 ? root.width - 36 : 464)
+            readonly property real availableWidth: Math.max(0, totalRowWidth - cardsRow.spacing)
+            readonly property real leftWidth: availableWidth * (2.0 / 3.0)
+            readonly property real rightWidth: availableWidth * (1.0 / 3.0)
+            readonly property real calculatedHeight: leftWidth > 0 ? Math.round(leftWidth / 1.625) : 110
 
-                LottieIcon {
-                    anchors.centerIn: parent
-                    source: Quickshell.shellDir + "/assets/icons/sun.json"
-                    size: 64
-                }
+            Layout.preferredHeight: calculatedHeight
+
+            // Left Weather Card (2/3 of area - spacing)
+            Weather {
+                Layout.preferredWidth: cardsRow.leftWidth
+                Layout.preferredHeight: cardsRow.calculatedHeight
+                Layout.fillHeight: true
             }
 
-            // Right Placeholder Card (System Stats)
+            // Right Placeholder Card (1/3 of area - spacing)
             Rectangle {
-                Layout.fillWidth: true
+                Layout.preferredWidth: cardsRow.rightWidth
+                Layout.preferredHeight: cardsRow.calculatedHeight
                 Layout.fillHeight: true
                 radius: 18
-                color: Theme.cardBg
+                color: "transparent"
                 border.color: Theme.cardBorder
                 border.width: 1
             }
@@ -406,8 +407,10 @@ FocusScope {
                 implicitHeight: 44
                 customRadius: 14
                 buttonStyle: Button.Style.Normal
-                backgroundColor: Theme.cardBg
-                hoverColor: Theme.cardHoverBg
+                backgroundColor: "transparent"
+                hoverColor: "#1a1a1a"
+                bordered: true
+                borderColor: Theme.cardBorder
                 iconSize: 18
                 source: Quickshell.shellDir + "/assets/icons/App-Menu.svg"
                 onClicked: {
@@ -422,8 +425,10 @@ FocusScope {
                 implicitHeight: 44
                 customRadius: 14
                 buttonStyle: Button.Style.Normal
-                backgroundColor: Theme.cardBg
-                hoverColor: Theme.cardHoverBg
+                backgroundColor: "transparent"
+                hoverColor: "#1a1a1a"
+                bordered: true
+                borderColor: Theme.cardBorder
                 iconSize: 18
                 source: Quickshell.shellDir + "/assets/icons/Locked.svg"
                 onClicked: {
@@ -438,8 +443,10 @@ FocusScope {
                 implicitHeight: 44
                 customRadius: 14
                 buttonStyle: Button.Style.Normal
-                backgroundColor: Theme.cardBg
-                hoverColor: Theme.cardHoverBg
+                backgroundColor: "transparent"
+                hoverColor: "#1a1a1a"
+                bordered: true
+                borderColor: Theme.cardBorder
                 iconSize: 18
                 source: Quickshell.shellDir + "/assets/icons/Notification.svg"
                 onClicked: {
@@ -453,8 +460,10 @@ FocusScope {
                 implicitHeight: 44
                 customRadius: 14
                 buttonStyle: Button.Style.Normal
-                backgroundColor: Theme.cardBg
+                backgroundColor: "transparent"
                 hoverColor: "#3a1818"
+                bordered: true
+                borderColor: Theme.cardBorder
                 iconSize: 18
                 source: Quickshell.shellDir + "/assets/icons/Shutdown.svg"
                 onClicked: {

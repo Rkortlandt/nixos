@@ -151,7 +151,8 @@ Rectangle {
     property font font: Qt.font({
         family: Theme.fontFamily,
         pixelSize: Theme.fontSize,
-        bold: Theme.fontBold
+        bold: Theme.fontBold,
+        features: { "tnum": 1 }
     })
 
     // Signals

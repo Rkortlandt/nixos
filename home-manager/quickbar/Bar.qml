@@ -45,6 +45,11 @@ Scope {
                     root.focusedMonitorName = Hyprland.focusedWorkspace.monitor.name;
                 }
             }
+            if (event.name === "fullscreen" || event.name === "changefloatingmode" || event.name === "workspace" || event.name === "workspacev2") {
+                Hyprland.refreshWorkspaces();
+                Hyprland.refreshToplevels();
+                Hyprland.refreshMonitors();
+            }
         }
     }
 
@@ -59,7 +64,10 @@ Scope {
                 required property var modelData
                 screen: modelData
 
-                WlrLayershell.layer: WlrLayer.Overlay
+                WlrLayershell.layer: WlrLayer.Top
+
+                readonly property var currentWorkspace: Hyprland.monitorFor(modelData)?.activeWorkspace
+                readonly property bool isWorkspaceFullscreen: currentWorkspace?.hasFullscreen ?? false
 
                 anchors {
                     top: true
@@ -72,7 +80,7 @@ Scope {
                     right: 4
                 }
                 implicitHeight: Theme.defaultHeight
-                exclusiveZone: implicitHeight
+                exclusiveZone: isWorkspaceFullscreen ? 0 : implicitHeight
                 color: "transparent"
 
                 // Mask out the center so mouse clicks pass through to dynamic island and desktop
@@ -90,6 +98,15 @@ Scope {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 4
+                    opacity: barWindow.isWorkspaceFullscreen ? 0.0 : 1.0
+                    visible: opacity > 0.01
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 150
+                            easing.type: Easing.OutCubic
+                        }
+                    }
 
                     Workspaces {}
                     Volume {}
@@ -102,6 +119,15 @@ Scope {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 4
+                    opacity: barWindow.isWorkspaceFullscreen ? 0.0 : 1.0
+                    visible: opacity > 0.01
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 150
+                            easing.type: Easing.OutCubic
+                        }
+                    }
 
                     Wireless {}
                     Backlight {}

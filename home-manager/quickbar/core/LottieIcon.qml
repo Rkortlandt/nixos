@@ -1,6 +1,6 @@
 // core/LottieIcon.qml
 import QtQuick
-import Qt.labs.lottieanimation 1.0
+import Qt.labs.lottieqt
 import "."
 
 Item {
@@ -9,21 +9,20 @@ Item {
     // File path or URL to the .json Lottie animation file
     property var source: ""
 
-    // Sizing controls (defaults to standard Theme icon size if not specified)
+    // Sizing controls
     property real size: Theme.defaultIconSize
     property alias implicitSize: root.size
     property alias iconSize: root.size
 
-    // Playback controls
-    property bool playing: true
-    property bool autoPlay: true
-    property int loops: LottieAnimation.Infinite
-    property alias speed: anim.speed
+    // Playback controls & properties
+    property alias autoPlay: anim.autoPlay
+    property alias loops: anim.loops
     property alias status: anim.status
     property alias frameRate: anim.frameRate
     property alias startFrame: anim.startFrame
     property alias endFrame: anim.endFrame
-    property alias currentFrame: anim.currentFrame
+    property alias direction: anim.direction
+    property alias quality: anim.quality
 
     implicitWidth: size
     implicitHeight: size
@@ -45,30 +44,38 @@ Item {
 
     LottieAnimation {
         id: anim
-        anchors.fill: parent
+        anchors.centerIn: parent
+        width: implicitWidth > 0 ? implicitWidth : root.width
+        height: implicitHeight > 0 ? implicitHeight : root.height
         source: root.resolvedSource
-        loops: root.loops
-        autoPlay: root.autoPlay && root.playing
-        running: root.playing
-        fillMode: Image.PreserveAspectFit
+        autoPlay: true
+        loops: LottieAnimation.Infinite
+        quality: LottieAnimation.HighQuality
+
+        scale: (anim.width > 0 && anim.height > 0)
+            ? Math.min(root.width / anim.width, root.height / anim.height)
+            : 1.0
     }
 
     // Methods for programmatic control
     function play() {
-        root.playing = true;
         anim.play();
     }
 
     function pause() {
-        root.playing = false;
         anim.pause();
     }
 
     function toggle() {
-        if (anim.status === LottieAnimation.Ready || anim.status === LottieAnimation.Loading) {
-            if (anim.playing) anim.pause();
-            else anim.play();
-        }
+        anim.togglePause();
+    }
+
+    function start() {
+        anim.start();
+    }
+
+    function stop() {
+        anim.stop();
     }
 
     function gotoAndPlay(frame) {

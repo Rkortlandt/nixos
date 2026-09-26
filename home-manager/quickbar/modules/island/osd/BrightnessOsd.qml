@@ -26,9 +26,8 @@ Row {
         }
     }
 
-    Text {
-        text: Math.round(root.brightnessPercent) + "%"
-        font.family: Theme.fontFamily
+    StablePercentText {
+        value: Math.round(root.brightnessPercent)
         font.pixelSize: Theme.fontSize
         font.bold: Theme.fontBold
         color: Theme.normalText

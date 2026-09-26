@@ -46,6 +46,8 @@
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
       trusted-users = [ "root" "@wheel" ];
+      extra-substituters = [ "https://hyprland.cachix.org" ];
+      extra-trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
     };
     gc = {
       automatic = true;
@@ -148,7 +150,6 @@ services.xserver.videoDrivers = [ "nvidia" ];
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
     ];
     config.common = {
       default = ["hyprland" "gtk"];

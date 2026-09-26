@@ -46,7 +46,10 @@ in {
 
   config = mkIf cfg.enable {
     programs = {
-      hyprland.enable = true;
+      hyprland = {
+        enable = true;
+        package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      };
     };
 
     services.udev.extraRules = ''
@@ -70,7 +73,6 @@ in {
     environment.systemPackages = with pkgs; [
       kitty
       dunst
-      xdg-desktop-portal-hyprland
       brightnessctl
     ] ++ (with pkgs.unstable; [
       hypridle

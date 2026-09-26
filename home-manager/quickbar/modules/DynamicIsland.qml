@@ -209,7 +209,7 @@ PanelWindow {
         anchors.horizontalCenter: parent.horizontalCenter
 
         readonly property bool effectiveMediaExpanded: root.hasActiveTrack && !root.isOsdActive && !ConnectivityService.isOpen && !MenuService.isOpen && (root.isIslandHovered || root.isMediaExpanded)
-        readonly property bool shouldShowIsland: root.isScreenFocused && (MenuService.isOpen || ConnectivityService.isOpen || root.isOsdActive || effectiveMediaExpanded || !root.isWorkspaceFullscreen)
+        readonly property bool shouldShowIsland: root.isScreenFocused
 
         readonly property real currentContentWidth: {
             if (MenuService.isOpen) {
@@ -238,8 +238,8 @@ PanelWindow {
             return dateItem.implicitWidth;
         }
 
-        readonly property real targetWidth: MenuService.isOpen ? 500 : (ConnectivityService.isOpen ? 420 : (!shouldShowIsland ? 0 : (effectiveMediaExpanded ? 420 : (currentContentWidth + 24))))
-        readonly property real targetHeight: MenuService.isOpen ? 520 : (ConnectivityService.isOpen ? 320 : (!shouldShowIsland ? 0 : (root.isOsdActive ? 36 : (effectiveMediaExpanded ? 124 : Theme.defaultHeight))))
+        readonly property real targetWidth: MenuService.isOpen ? 500 : (ConnectivityService.isOpen ? 420 : (effectiveMediaExpanded ? 420 : (currentContentWidth + 24)))
+        readonly property real targetHeight: MenuService.isOpen ? 520 : (ConnectivityService.isOpen ? 320 : (root.isOsdActive ? 36 : (effectiveMediaExpanded ? 124 : Theme.defaultHeight)))
         readonly property real targetRadius: MenuService.isOpen ? 24 : ((ConnectivityService.isOpen || effectiveMediaExpanded) ? 16 : (targetHeight / 2))
 
         width: targetWidth
@@ -288,7 +288,7 @@ PanelWindow {
         DateView {
             id: dateItem
             anchors.centerIn: parent
-            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && !root.isOsdActive && !root.hasActiveTrack && !root.isWorkspaceFullscreen) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && !root.isOsdActive && !root.hasActiveTrack) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -315,7 +315,7 @@ PanelWindow {
             anchors.fill: parent
             player: root.activePlayer
             isExpanded: islandPill.effectiveMediaExpanded
-            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && !root.isOsdActive && root.hasActiveTrack && (!root.isWorkspaceFullscreen || islandPill.effectiveMediaExpanded)) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && !root.isOsdActive && root.hasActiveTrack) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
             onToggleExpand: root.isMediaExpanded = !root.isMediaExpanded

@@ -54,6 +54,9 @@
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
     firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Hyprland
+    hyprland.url = "github:hyprwm/Hyprland";
+
     # hardware.url = "github:nixos/nixos-hardware";
     # nix-colors.url = "github:misterio77/nix-colors";
   };

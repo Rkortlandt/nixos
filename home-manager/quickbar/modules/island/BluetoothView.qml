@@ -315,6 +315,7 @@ Item {
                                         Text {
                                             text: dev.batteryPercentage !== undefined && dev.batteryPercentage > -1 ? Math.floor(dev.batteryPercentage * 100) + "%" : (dev.battery !== undefined && dev.battery > -1 ? Math.floor(dev.battery) + "%" : "")
                                             font.family: Theme.fontFamily
+                                            font.features: { "tnum": 1 }
                                             font.pixelSize: 11
                                             color: "#aaaaaa"
                                             visible: text.length > 0
