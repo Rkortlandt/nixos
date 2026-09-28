@@ -1,6 +1,6 @@
 # Rowan's Nixos Desktop
-<img width="2256" height="1504" alt="image" src="https://github.com/user-attachments/assets/068991ae-abc9-483a-8366-1416c7d881e5" />
-b2209c)
+<img width="2880" height="1800" alt="image" src="https://github.com/user-attachments/assets/b20646e5-d1f1-468e-bbf0-d6aa13c63703" />
+
 
 ## Features
 1. Wayland Desktop Compositor with Hyprland Install and Additional specilization for simple gnome setup
