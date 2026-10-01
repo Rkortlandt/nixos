@@ -21,6 +21,7 @@
         systemPackages.brightnessctl
         systemPackages.wireplumber
         systemPackages.networkmanager
+        systemPackages.cava
         systemPackages.bash
       ];
 

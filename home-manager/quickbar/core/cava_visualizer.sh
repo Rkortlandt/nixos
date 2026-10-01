@@ -2,7 +2,7 @@
 
 CAVA_BIN=$(which cava 2>/dev/null)
 if [ -z "$CAVA_BIN" ]; then
-    CAVA_BIN=$(find /nix/store -maxdepth 3 -name cava -type f -perm -111 2>/dev/null | grep -E '/bin/cava$' | head -n 1)
+    CAVA_BIN=$(find /nix/store -maxdepth 4 -name cava -type f -perm -111 2>/dev/null | grep -E '/bin/cava$' | head -n 1)
 fi
 
 if [ -z "$CAVA_BIN" ] || [ ! -x "$CAVA_BIN" ]; then

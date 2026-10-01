@@ -29,7 +29,9 @@
     tmux
     eza
     gcc
-    jdk21
+    (jdk21.override {
+    enableJavaFX = true; # for JavaFX
+    })
     python3
     go
     gopls
@@ -59,6 +61,7 @@
     freecad
     spotify
     mpg123
+    cava
 
     # Productivity & Communication
     discord
