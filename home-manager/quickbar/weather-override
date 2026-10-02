@@ -1,0 +1,224 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# weather-override
+# CLI utility to override Quickbar weather data dynamically via Quickshell IPC.
+# ==============================================================================
+
+set -euo pipefail
+
+# Find quickbar root directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -f "$SCRIPT_DIR/shell.qml" ]]; then
+    QUICKBAR_DIR="$SCRIPT_DIR"
+elif [[ -f "$SCRIPT_DIR/../shell.qml" ]]; then
+    QUICKBAR_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+else
+    QUICKBAR_DIR="${QUICKBAR_DIR:-$HOME/nixos/home-manager/quickbar}"
+fi
+
+usage() {
+    cat << 'EOF'
+Usage: weather-override [PRESET | OPTIONS | JSON]
+
+Presets:
+  weather-override rainy           Set rainy style (rain icon, blue gradient, rain chip)
+  weather-override overcast        Set overcast style (cloudy icon, white/silver gradient)
+  weather-override sunny           Set sunny style (sun icon, amber gradient)
+  weather-override clear           Set clear style (sun/moon icon, sky blue gradient)
+  weather-override reset           Restore live weather data from wttr.in
+
+Options:
+  --variant <name>       Style variant: sunny, clear, overcast, rainy
+  --title <text>         Title header override (e.g. "Cloudy", "Rainy", "Thunderstorm")
+  --condition <text>     Weather condition text
+  --temp <degrees>       Current temperature (°F)
+  --min <degrees>        Today's minimum temperature (°F)
+  --max <degrees>        Today's maximum temperature (°F)
+  --feels-like <degrees> Feels like temperature (°F)
+  --rain <inches>        Precipitation amount in inches (e.g. 5, 2.5)
+  --chance <percent>     Chance of rain percentage (e.g. 40, 80)
+  --humidity <percent>   Humidity percentage (e.g. 65)
+  --wind-dir <dir>       Wind direction (N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW)
+  --wind-speed <mph>     Wind speed in mph
+  --uv <index>           UV index (0-11+)
+  --location <city>      Location name (e.g. "Houghton", "New York")
+  --region <state/code>  Region/State (e.g. "MI", "NY")
+  --show-rain            Force rain measurement chip visible
+  --hide-rain            Force rain measurement chip hidden
+  -h, --help             Show this help message
+
+JSON Override:
+  weather-override '{"variant": "rainy", "temp": 58, "precipInches": "1.2", "chanceOfRain": 90}'
+
+Examples:
+  weather-override rainy
+  weather-override overcast --temp 52 --min 45 --max 58
+  weather-override --condition "Thunderstorm" --variant rainy --rain 3.5 --chance 95
+  weather-override reset
+EOF
+    exit 0
+}
+
+if [[ $# -eq 0 ]]; then
+    usage
+fi
+
+FIRST_ARG="$1"
+
+# Handle help
+if [[ "$FIRST_ARG" == "-h" || "$FIRST_ARG" == "--help" || "$FIRST_ARG" == "help" ]]; then
+    usage
+fi
+
+# Handle reset / clear
+if [[ "$FIRST_ARG" == "reset" || "$FIRST_ARG" == "clear" || "$FIRST_ARG" == "restore" || "$FIRST_ARG" == "live" ]]; then
+    quickshell -p "$QUICKBAR_DIR" ipc call weather reset
+    echo "✓ Weather data restored to live wttr.in feed."
+    exit 0
+fi
+
+# Handle raw JSON
+if [[ "$FIRST_ARG" =~ ^\{.*\}$ ]]; then
+    quickshell -p "$QUICKBAR_DIR" ipc call weather set "$FIRST_ARG"
+    echo "✓ Applied weather JSON override: $FIRST_ARG"
+    exit 0
+fi
+
+# Parse arguments
+declare -A DATA
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        rainy|rain)
+            DATA["variant"]="rainy"
+            DATA["condition"]="Rainy"
+            DATA["precipInches"]="5"
+            DATA["chanceOfRain"]=40
+            DATA["showRainChip"]=true
+            shift
+            ;;
+        overcast|cloudy)
+            DATA["variant"]="overcast"
+            DATA["condition"]="Cloudy"
+            DATA["showRainChip"]=false
+            shift
+            ;;
+        sunny)
+            DATA["variant"]="sunny"
+            DATA["condition"]="Sunny"
+            DATA["showRainChip"]=false
+            shift
+            ;;
+        clear)
+            DATA["variant"]="clear"
+            DATA["condition"]="Clear"
+            DATA["showRainChip"]=false
+            shift
+            ;;
+        --variant)
+            DATA["variant"]="$2"
+            shift 2
+            ;;
+        --title)
+            DATA["title"]="$2"
+            shift 2
+            ;;
+        --condition)
+            DATA["condition"]="$2"
+            shift 2
+            ;;
+        --temp)
+            DATA["temp"]="$2"
+            shift 2
+            ;;
+        --min)
+            DATA["tempMin"]="$2"
+            shift 2
+            ;;
+        --max)
+            DATA["tempMax"]="$2"
+            shift 2
+            ;;
+        --feels-like)
+            DATA["feelsLike"]="$2"
+            shift 2
+            ;;
+        --rain)
+            DATA["precipInches"]="$2"
+            DATA["showRainChip"]=true
+            shift 2
+            ;;
+        --chance)
+            DATA["chanceOfRain"]="$2"
+            shift 2
+            ;;
+        --humidity)
+            DATA["humidity"]="$2"
+            shift 2
+            ;;
+        --wind-dir)
+            DATA["windDir"]="$2"
+            shift 2
+            ;;
+        --wind-speed)
+            DATA["windSpeed"]="$2"
+            shift 2
+            ;;
+        --uv)
+            DATA["uvIndex"]="$2"
+            shift 2
+            ;;
+        --location)
+            DATA["location"]="$2"
+            shift 2
+            ;;
+        --region)
+            DATA["region"]="$2"
+            shift 2
+            ;;
+        --show-rain)
+            DATA["showRainChip"]=true
+            shift
+            ;;
+        --hide-rain)
+            DATA["showRainChip"]=false
+            shift
+            ;;
+        *)
+            echo "Error: Unknown argument '$1'" >&2
+            echo "Run 'weather-override --help' for usage." >&2
+            exit 1
+            ;;
+    esac
+done
+
+# Build JSON using python
+PAIR_ARGS=()
+for k in "${!DATA[@]}"; do
+    PAIR_ARGS+=("$k" "${DATA[$k]}")
+done
+
+JSON_PAYLOAD=$(python3 -c '
+import sys, json
+
+data = {}
+args = sys.argv[1:]
+for i in range(0, len(args), 2):
+    k = args[i]
+    v = args[i+1]
+    if k in ("temp", "tempMin", "tempMax", "feelsLike", "chanceOfRain", "humidity", "windSpeed", "uvIndex"):
+        try:
+            data[k] = int(v)
+        except ValueError:
+            data[k] = v
+    elif k in ("showRainChip",):
+        data[k] = (v.lower() == "true")
+    else:
+        data[k] = v
+
+print(json.dumps(data))
+' "${PAIR_ARGS[@]}")
+
+quickshell -p "$QUICKBAR_DIR" ipc call weather set "$JSON_PAYLOAD"
+echo "✓ Weather updated successfully:"
+echo "  Payload: $JSON_PAYLOAD"

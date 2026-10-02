@@ -22,6 +22,8 @@ Singleton {
     property int uvIndex: 0
     property int windSpeed: 0
     property string windDir: ""
+    property string precipInches: ""
+    property int chanceOfRain: 0
     property string sunrise: ""
     property string sunset: ""
     property string moonPhase: ""
@@ -29,6 +31,15 @@ Singleton {
     property string lastUpdated: ""
     property bool isLoaded: false
     property bool isLoading: false
+
+    // =========================================================================
+    // 1b. OVERRIDE SUPPORT & IPC
+    // =========================================================================
+    property bool isOverridden: false
+    property string forcedVariant: ""
+    property string forcedTitle: ""
+    property bool showRainChip: false
+    property var _liveBackup: null
 
     // =========================================================================
     // 2. FORECAST DATA (3-Hour Slots & 3-Day Daily Summaries)
@@ -109,6 +120,11 @@ Singleton {
         if (!data)
             return;
 
+        if (root.isOverridden) {
+            root.isLoaded = true;
+            return;
+        }
+
         // --- Current conditions ---
         if (data.current_condition && data.current_condition.length > 0) {
             let cur = data.current_condition[0];
@@ -119,6 +135,7 @@ Singleton {
             root.windSpeed = parseInt(cur.windspeedMiles) || 0;
             root.windDir = cur.winddir16Point || "";
             root.weatherCode = cur.weatherCode || "";
+            root.precipInches = cur.precipInches || "0";
             if (cur.weatherDesc && cur.weatherDesc.length > 0) {
                 root.condition = cur.weatherDesc[0].value.trim();
             }
@@ -202,10 +219,153 @@ Singleton {
                 root.moonPhase = daysList[0].moonPhase;
                 root.moonIllumination = daysList[0].moonIllumination;
             }
+            if (hoursList.length > 0) {
+                root.chanceOfRain = hoursList[0].chanceOfRain;
+            }
         }
 
         let now = new Date();
         root.lastUpdated = Qt.formatTime(now, "h:mm ap");
         root.isLoaded = true;
+    }
+
+    // =========================================================================
+    // 5. DATA BACKUP & OVERRIDE LOGIC
+    // =========================================================================
+    function backupLive() {
+        if (!root.isOverridden) {
+            root._liveBackup = {
+                location: root.location,
+                region: root.region,
+                condition: root.condition,
+                weatherCode: root.weatherCode,
+                temp: root.temp,
+                feelsLike: root.feelsLike,
+                tempMax: root.tempMax,
+                tempMin: root.tempMin,
+                humidity: root.humidity,
+                uvIndex: root.uvIndex,
+                windSpeed: root.windSpeed,
+                windDir: root.windDir,
+                precipInches: root.precipInches,
+                chanceOfRain: root.chanceOfRain,
+                sunrise: root.sunrise,
+                sunset: root.sunset,
+                moonPhase: root.moonPhase,
+                moonIllumination: root.moonIllumination,
+                lastUpdated: root.lastUpdated,
+                forcedVariant: root.forcedVariant,
+                forcedTitle: root.forcedTitle,
+                showRainChip: root.showRainChip
+            };
+        }
+    }
+
+    function reset() {
+        root.isOverridden = false;
+        root.forcedVariant = "";
+        root.forcedTitle = "";
+        root.showRainChip = false;
+        if (root._liveBackup) {
+            for (let k in root._liveBackup) {
+                root[k] = root._liveBackup[k];
+            }
+        }
+        root.refresh();
+    }
+
+    function applyOverrides(obj) {
+        if (!obj || typeof obj !== "object") return;
+        backupLive();
+        root.isOverridden = true;
+        root.isLoaded = true;
+
+        if (obj.variant !== undefined) root.forcedVariant = obj.variant.toString();
+        if (obj.forcedVariant !== undefined) root.forcedVariant = obj.forcedVariant.toString();
+        if (obj.title !== undefined) root.forcedTitle = obj.title.toString();
+        if (obj.forcedTitle !== undefined) root.forcedTitle = obj.forcedTitle.toString();
+        if (obj.condition !== undefined) root.condition = obj.condition.toString();
+        if (obj.temp !== undefined) root.temp = parseInt(obj.temp) || 0;
+        if (obj.tempMin !== undefined) root.tempMin = parseInt(obj.tempMin) || 0;
+        if (obj.tempMax !== undefined) root.tempMax = parseInt(obj.tempMax) || 0;
+        if (obj.feelsLike !== undefined) root.feelsLike = parseInt(obj.feelsLike) || 0;
+        if (obj.humidity !== undefined) root.humidity = parseInt(obj.humidity) || 0;
+        if (obj.uvIndex !== undefined) root.uvIndex = parseInt(obj.uvIndex) || 0;
+        if (obj.windSpeed !== undefined) root.windSpeed = parseInt(obj.windSpeed) || 0;
+        if (obj.windDir !== undefined) root.windDir = obj.windDir.toString();
+        if (obj.precipInches !== undefined) root.precipInches = obj.precipInches.toString();
+        if (obj.chanceOfRain !== undefined) root.chanceOfRain = parseInt(obj.chanceOfRain) || 0;
+        if (obj.showRainChip !== undefined) root.showRainChip = Boolean(obj.showRainChip);
+        if (obj.location !== undefined) root.location = obj.location.toString();
+        if (obj.region !== undefined) root.region = obj.region.toString();
+        if (obj.moonPhase !== undefined) root.moonPhase = obj.moonPhase.toString();
+        let now = new Date();
+        root.lastUpdated = Qt.formatTime(now, "h:mm ap");
+    }
+
+    // =========================================================================
+    // 6. IPC HANDLER FOR CLI COMMAND OVERRIDES
+    // =========================================================================
+    IpcHandler {
+        target: "weather"
+
+        function set(jsonStr: string): void {
+            try {
+                let data = JSON.parse(jsonStr);
+                root.applyOverrides(data);
+            } catch (e) {
+                console.log("[Weather IPC] Error parsing JSON override:", e);
+            }
+        }
+
+        function setVariant(variantName: string): void {
+            let v = variantName.toLowerCase().trim();
+            let o = { variant: v };
+            if (v === "rainy" || v === "rain") {
+                o.condition = "Rainy";
+                o.precipInches = "5";
+                o.chanceOfRain = 40;
+                o.showRainChip = true;
+            } else if (v === "overcast" || v === "cloudy") {
+                o.condition = "Cloudy";
+                o.showRainChip = false;
+            } else if (v === "sunny") {
+                o.condition = "Sunny";
+                o.showRainChip = false;
+            } else if (v === "clear") {
+                o.condition = "Clear";
+                o.showRainChip = false;
+            }
+            root.applyOverrides(o);
+        }
+
+        function setCondition(cond: string): void {
+            root.applyOverrides({ condition: cond });
+        }
+
+        function setTemp(temp: string, min: string, max: string): void {
+            let o = { temp: parseInt(temp) || 0 };
+            if (min !== undefined && min !== "") o.tempMin = parseInt(min) || 0;
+            if (max !== undefined && max !== "") o.tempMax = parseInt(max) || 0;
+            root.applyOverrides(o);
+        }
+
+        function setRain(inches: string, chance: string): void {
+            root.applyOverrides({
+                precipInches: inches,
+                chanceOfRain: parseInt(chance) || 0,
+                showRainChip: true
+            });
+        }
+
+        function setWind(dir: string, speed: string): void {
+            let o = { windDir: dir };
+            if (speed !== undefined && speed !== "") o.windSpeed = parseInt(speed) || 0;
+            root.applyOverrides(o);
+        }
+
+        function reset(): void {
+            root.reset();
+        }
     }
 }
