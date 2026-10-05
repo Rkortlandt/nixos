@@ -759,6 +759,24 @@ require('lspconfig').svelte.setup({
   end,
 })
 
+local bundles = {
+  vim.fn.glob("/home/ss-pro/nixos/home-manager/nvim/javadebug/com.microsoft.java.debug.plugin-*.jar", 1)
+}
+
+
+-- This is the new part
+local java_test_bundles = vim.split(vim.fn.glob("/path/to/vscode-java-test/server/*.jar", 1), "\n")
+local excluded = {
+  "com.microsoft.java.test.runner-jar-with-dependencies.jar",
+  "jacocoagent.jar",
+}
+for _, java_test_jar in ipairs(java_test_bundles) do
+  local fname = vim.fn.fnamemodify(java_test_jar, ":t")
+  if not vim.tbl_contains(excluded, fname) then
+    table.insert(bundles, java_test_jar)
+  end
+end
+
 require('lspconfig').jdtls.setup({
   capabilities = lsp_capabilities,
   settings = {
@@ -773,6 +791,9 @@ require('lspconfig').jdtls.setup({
         },
       },
     },
+  },
+  init_options = {
+    bundles = bundles,
   },
   on_attach = function(client, bufnr)
     setup_lsp_keymaps(client, bufnr)
