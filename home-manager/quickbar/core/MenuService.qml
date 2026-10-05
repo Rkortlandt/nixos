@@ -26,6 +26,8 @@ Singleton {
 
     function open() {
         ConnectivityService.close();
+        LauncherService.close();
+        NotificationService.close();
         isOpen = true;
     }
 

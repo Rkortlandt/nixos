@@ -27,19 +27,23 @@ Rectangle {
     property string rainChance: ""
 
     readonly property bool isRainChipVisible: {
-        if (showRainChip || Weather.showRainChip) return true;
+        if (showRainChip || Weather.showRainChip)
+            return true;
         if (chips && Array.isArray(chips)) {
             for (let i = 0; i < chips.length; i++) {
                 let c = chips[i].toString().toLowerCase().trim();
-                if (c === "rain" || c === "rainchip" || c === "precip" || c === "precipitation") return true;
+                if (c === "rain" || c === "rainchip" || c === "precip" || c === "precipitation")
+                    return true;
             }
         }
-        if (currentStyle && currentStyle.showRainChip === true) return true;
+        if (currentStyle && currentStyle.showRainChip === true)
+            return true;
         return false;
     }
 
     readonly property string displayRainInches: {
-        if (root.rainInches !== "") return root.rainInches;
+        if (root.rainInches !== "")
+            return root.rainInches;
         if (Weather.isOverridden) {
             return Weather.precipInches !== "" ? Weather.precipInches : "0";
         }
@@ -50,7 +54,8 @@ Rectangle {
     }
 
     readonly property string displayRainChance: {
-        if (root.rainChance !== "") return root.rainChance;
+        if (root.rainChance !== "")
+            return root.rainChance;
         if (Weather.isOverridden) {
             return Weather.chanceOfRain.toString();
         }
@@ -92,14 +97,17 @@ Rectangle {
             return hr < 6 || hr >= 20;
         }
         try {
-            let parseTime = function(tStr) {
+            let parseTime = function (tStr) {
                 let match = tStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
-                if (!match) return 0;
+                if (!match)
+                    return 0;
                 let h = parseInt(match[1]);
                 let m = parseInt(match[2]);
                 let ampm = match[3].toUpperCase();
-                if (ampm === "PM" && h < 12) h += 12;
-                if (ampm === "AM" && h === 12) h = 0;
+                if (ampm === "PM" && h < 12)
+                    h += 12;
+                if (ampm === "AM" && h === 12)
+                    h = 0;
                 return h * 60 + m;
             };
             let now = new Date();
@@ -116,84 +124,130 @@ Rectangle {
 
     // Declarative style definitions. Add new weather variants here.
     readonly property var weatherStyles: ({
-        "sunny": {
-            title: "Sunny",
-            dayIcon: Quickshell.shellDir + "/assets/icons/sun.json",
-            nightIcon: Quickshell.shellDir + "/assets/icons/weather/clear-night.json",
-            titleColor: "#fbb01b",
-            textGradient: null,
-            borderGradient: [
-                { pos: 0.0, color: "#fbb01b" },
-                { pos: 0.35, color: "#d97706" },
-                { pos: 0.70, color: "#92400e" },
-                { pos: 1.0, color: "#5a2505" }
-            ],
-            heroRightMargin: -60,
-            heroYOffset: -75,
-            heroScaleX: 1.0,
-            showUv: true
-        },
-        "clear": {
-            title: "Clear",
-            dayIcon: Quickshell.shellDir + "/assets/icons/sun.json",
-            nightIcon: Quickshell.shellDir + "/assets/icons/weather/clear-night.json",
-            titleColor: "#79BDD7",
-            textGradient: null,
-            borderGradient: [
-                { pos: 0.0, color: "#FFFFFF" },
-                { pos: 1.0, color: "#79BDD7" }
-            ],
-            heroRightMargin: -20,
-            heroYOffset: -30,
-            heroScaleX: -1.0,
-            showUv: false
-        },
-        "overcast": {
-            title: "Cloudy",
-            dayIcon: "https://cdn.meteocons.com/3.0.0-next.10/lottie/fill/partly-cloudy-day.json",
-            nightIcon: "https://cdn.meteocons.com/3.0.0-next.10/lottie/fill/partly-cloudy-night.json",
-            titleColor: "#FFFFFF",
-            textGradient: [
-                { pos: 0.0, color: "#FFFFFF" },
-                { pos: 1.0, color: "#A7B4C6" }
-            ],
-            borderGradient: [
-                { pos: 0.0, color: "#FFFFFF" },
-                { pos: 1.0, color: "#A7B4C6" }
-            ],
-            heroRightMargin: -15,
-            heroYOffset: -25,
-            heroScaleX: 1.0,
-            showUv: false
-        },
-        "rainy": {
-            title: "Rainy",
-            dayIcon: "https://cdn.meteocons.com/3.0.0-next.10/lottie/fill/rain.json",
-            nightIcon: "https://cdn.meteocons.com/3.0.0-next.10/lottie/fill/rain.json",
-            titleColor: "#0A5AD4",
-            textGradient: [
-                { pos: 0.0, color: "#0A5AD4" },
-                { pos: 1.0, color: "#10274B" }
-            ],
-            borderGradient: [
-                { pos: 0.0, color: "#0A5AD4" },
-                { pos: 1.0, color: "#10274B" }
-            ],
-            heroRightMargin: -15,
-            heroYOffset: -25,
-            heroScaleX: 1.0,
-            showUv: false,
-            showRainChip: true,
-            chips: ["wind", "humidity"]
-        }
-    })
+            "sunny": {
+                title: "Sunny",
+                dayIcon: Quickshell.shellDir + "/assets/icons/sun.json",
+                nightIcon: Quickshell.shellDir + "/assets/icons/weather/clear-night.json",
+                titleColor: "#fbb01b",
+                textGradient: null,
+                borderGradient: [
+                    {
+                        pos: 0.0,
+                        color: "#fbb01b"
+                    },
+                    {
+                        pos: 0.35,
+                        color: "#d97706"
+                    },
+                    {
+                        pos: 0.70,
+                        color: "#92400e"
+                    },
+                    {
+                        pos: 1.0,
+                        color: "#5a2505"
+                    }
+                ],
+                heroRightMargin: -60,
+                heroYOffset: -75,
+                heroScaleX: 1.0,
+                showUv: true
+            },
+            "clear": {
+                title: "Clear",
+                dayIcon: Quickshell.shellDir + "/assets/icons/sun.json",
+                nightIcon: Quickshell.shellDir + "/assets/icons/weather/clear-night.json",
+                titleColor: "#79BDD7",
+                textGradient: null,
+                borderGradient: [
+                    {
+                        pos: 0.0,
+                        color: "#FFFFFF"
+                    },
+                    {
+                        pos: 1.0,
+                        color: "#79BDD7"
+                    }
+                ],
+                heroRightMargin: -20,
+                heroYOffset: -30,
+                heroScaleX: -1.0,
+                showUv: false
+            },
+            "overcast": {
+                title: "Cloudy",
+                dayIcon: Quickshell.shellDir + "/assets/icons/weather/partly-cloudy-day.json",
+                nightIcon: Quickshell.shellDir + "/assets/icons/weather/partly-cloudy-night.json",
+                titleColor: "#FFFFFF",
+                textGradient: [
+                    {
+                        pos: 0.0,
+                        color: "#FFFFFF"
+                    },
+                    {
+                        pos: 1.0,
+                        color: "#A7B4C6"
+                    }
+                ],
+                borderGradient: [
+                    {
+                        pos: 0.0,
+                        color: "#FFFFFF"
+                    },
+                    {
+                        pos: 1.0,
+                        color: "#A7B4C6"
+                    }
+                ],
+                heroRightMargin: -15,
+                heroYOffset: -25,
+                heroScaleX: 1.0,
+                showUv: false
+            },
+            "rainy": {
+                title: "Rainy",
+                dayIcon: Quickshell.shellDir + "/assets/icons/weather/rain.json",
+                nightIcon: Quickshell.shellDir + "/assets/icons/weather/rain.json",
+                titleColor: "#0A5AD4",
+                textGradient: [
+                    {
+                        pos: 0.0,
+                        color: "#0A5AD4"
+                    },
+                    {
+                        pos: 1.0,
+                        color: "#10274B"
+                    }
+                ],
+                borderGradient: [
+                    {
+                        pos: 0.0,
+                        color: "#0A5AD4"
+                    },
+                    {
+                        pos: 1.0,
+                        color: "#10274B"
+                    }
+                ],
+                heroRightMargin: -15,
+                heroYOffset: -50,
+                heroScaleX: .9,
+                showUv: false,
+                showRainChip: true,
+                chips: ["wind", "humidity"]
+            }
+        })
 
     function normalizeVariantName(name) {
-        if (!name) return "";
+        if (!name)
+            return "";
         let n = name.toLowerCase().trim();
-        if (n === "cloudy") return "overcast";
-        if (n === "clear_night") return "clear";
-        if (n === "rain") return "rainy";
+        if (n === "cloudy")
+            return "overcast";
+        if (n === "clear_night")
+            return "clear";
+        if (n === "rain")
+            return "rainy";
         return n;
     }
 
@@ -240,7 +294,8 @@ Rectangle {
 
     readonly property var currentStyle: {
         let s = weatherStyles[activeVariant];
-        if (s) return s;
+        if (s)
+            return s;
         return weatherStyles[isNight ? "clear" : "sunny"];
     }
 
@@ -262,9 +317,7 @@ Rectangle {
     readonly property string textGradientStart: hasTextGradient ? (textGradient[0].color || textGradient[0]) : "#ffffff"
     readonly property string textGradientEnd: hasTextGradient ? (textGradient[textGradient.length - 1].color || textGradient[1]) : "#ffffff"
 
-    readonly property string heroSource: isNight
-        ? (currentStyle.nightIcon ? currentStyle.nightIcon : currentStyle.dayIcon)
-        : (currentStyle.dayIcon ? currentStyle.dayIcon : currentStyle.nightIcon)
+    readonly property string heroSource: isNight ? (currentStyle.nightIcon ? currentStyle.nightIcon : currentStyle.dayIcon) : (currentStyle.dayIcon ? currentStyle.dayIcon : currentStyle.nightIcon)
     readonly property real heroRightMargin: currentStyle.heroRightMargin !== undefined ? currentStyle.heroRightMargin : -20
     readonly property real heroY: weatherTextBlock.y + (currentStyle.heroYOffset !== undefined ? currentStyle.heroYOffset : -30)
     readonly property real heroScaleX: currentStyle.heroScaleX !== undefined ? currentStyle.heroScaleX : 1.0
@@ -308,14 +361,22 @@ Rectangle {
         let code = "n";
         if (dir) {
             let d = dir.toUpperCase().trim();
-            if (d === "N" || d === "NNW" || d === "NNE") code = "n";
-            else if (d === "NE" || d === "ENE") code = "ne";
-            else if (d === "E" || d === "ESE") code = "e";
-            else if (d === "SE" || d === "SSE") code = "se";
-            else if (d === "S" || d === "SSW") code = "s";
-            else if (d === "SW" || d === "WSW") code = "sw";
-            else if (d === "W" || d === "WNW") code = "w";
-            else if (d === "NW") code = "nw";
+            if (d === "N" || d === "NNW" || d === "NNE")
+                code = "n";
+            else if (d === "NE" || d === "ENE")
+                code = "ne";
+            else if (d === "E" || d === "ESE")
+                code = "e";
+            else if (d === "SE" || d === "SSE")
+                code = "se";
+            else if (d === "S" || d === "SSW")
+                code = "s";
+            else if (d === "SW" || d === "WSW")
+                code = "sw";
+            else if (d === "W" || d === "WNW")
+                code = "w";
+            else if (d === "NW")
+                code = "nw";
         }
         return "https://cdn.meteocons.com/3.0.0-next.10/lottie/fill/wind-direction-" + code + ".json";
     }
@@ -420,7 +481,8 @@ Rectangle {
                     ctx.reset();
                     let w = width;
                     let h = height;
-                    if (w <= 0 || h <= 0) return;
+                    if (w <= 0 || h <= 0)
+                        return;
 
                     ctx.font = "900 " + conditionTitleText.font.pixelSize + "px " + (Theme.fontFamily || "sans-serif");
                     ctx.textBaseline = "alphabetic";
@@ -442,9 +504,15 @@ Rectangle {
 
                 Connections {
                     target: root
-                    function onTitleTextChanged() { gradientTitleCanvas.requestPaint(); }
-                    function onActiveVariantChanged() { gradientTitleCanvas.requestPaint(); }
-                    function onHasTextGradientChanged() { gradientTitleCanvas.requestPaint(); }
+                    function onTitleTextChanged() {
+                        gradientTitleCanvas.requestPaint();
+                    }
+                    function onActiveVariantChanged() {
+                        gradientTitleCanvas.requestPaint();
+                    }
+                    function onHasTextGradientChanged() {
+                        gradientTitleCanvas.requestPaint();
+                    }
                 }
 
                 onWidthChanged: requestPaint()
@@ -671,7 +739,8 @@ Rectangle {
         }
 
         function getChipComponent(chipName) {
-            if (!chipName) return null;
+            if (!chipName)
+                return null;
             let n = chipName.toString().toLowerCase().trim();
             if (n === "wind" || n === "winddir" || n === "winddirection" || n === "compass") {
                 return windChipComponent;
@@ -773,8 +842,12 @@ Rectangle {
 
             Connections {
                 target: root
-                function onActiveVariantChanged() { rainGradientBorder.requestPaint(); }
-                function onIsNightChanged() { rainGradientBorder.requestPaint(); }
+                function onActiveVariantChanged() {
+                    rainGradientBorder.requestPaint();
+                }
+                function onIsNightChanged() {
+                    rainGradientBorder.requestPaint();
+                }
             }
         }
 

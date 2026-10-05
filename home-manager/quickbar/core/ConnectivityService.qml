@@ -16,6 +16,8 @@ Singleton {
 
     function open(tab = "wifi") {
         MenuService.close();
+        LauncherService.close();
+        NotificationService.close();
         activeTab = tab;
         isOpen = true;
         if (tab === "wifi") {
@@ -228,18 +230,28 @@ Singleton {
     onBtAdapterChanged: updateBtConnectedState()
     onBtPoweredChanged: updateBtConnectedState()
 
-    Repeater {
+    Connections {
+        target: root.btAdapter?.devices ?? null
+        ignoreUnknownSignals: true
+        function onValuesChanged() {
+            root.updateBtConnectedState();
+        }
+    }
+
+    Instantiator {
         model: (root.btAdapter && root.btAdapter.devices) ? root.btAdapter.devices.values : []
-        Item {
-            readonly property var dev: modelData
-            Connections {
-                target: dev ?? null
+        delegate: QtObject {
+            required property var modelData
+            readonly property Connections _conn: Connections {
+                target: modelData ?? null
                 ignoreUnknownSignals: true
                 function onConnectedChanged() {
                     root.updateBtConnectedState();
                 }
             }
         }
+        onObjectAdded: (index, object) => root.updateBtConnectedState()
+        onObjectRemoved: (index, object) => root.updateBtConnectedState()
     }
 
     Process {
@@ -306,6 +318,7 @@ Singleton {
 
     Component.onCompleted: {
         root.refreshWifi();
+        root.updateBtConnectedState();
     }
 
     // =========================================================================

@@ -328,7 +328,7 @@ FocusScope {
         }
 
         // =============================================================
-        // 4. TWO BLANK PLACEHOLDER SECTIONS (Timer & System Stats)
+        // 4. WEATHER & PLACEHOLDER CARDS
         // =============================================================
         RowLayout {
             id: cardsRow
@@ -361,45 +361,14 @@ FocusScope {
                 border.width: 1
             }
         }
-        // Bottom Pagination Dots Indicator
-        Row {
-            Layout.alignment: Qt.AlignHCenter
-            spacing: 6
-            Layout.topMargin: 2
-
-            Rectangle {
-                width: 14
-                height: 4
-                radius: 2
-                color: "#ffffff"
-            }
-
-            Rectangle {
-                width: 4
-                height: 4
-                radius: 2
-                color: "#444444"
-            }
-
-            Rectangle {
-                width: 4
-                height: 4
-                radius: 2
-                color: "#444444"
-            }
-        }
 
         // =============================================================
-        // 5. FOOTER: ACTIONS (Launcher, Lock, Notifications, Power)
+        // 5. ACTIONS (Launcher & Notifications on Left, Lock & Power on Right)
         // =============================================================
         RowLayout {
             Layout.fillWidth: true
             Layout.preferredHeight: 44
             spacing: 8
-
-            Item {
-                Layout.fillWidth: true
-            }
 
             // App Launcher
             IconButton {
@@ -414,9 +383,29 @@ FocusScope {
                 iconSize: 18
                 source: Quickshell.shellDir + "/assets/icons/App-Menu.svg"
                 onClicked: {
-                    MenuService.close();
-                    launcherProc.running = true;
+                    LauncherService.open();
                 }
+            }
+
+            // Notifications
+            IconButton {
+                implicitWidth: 44
+                implicitHeight: 44
+                customRadius: 14
+                buttonStyle: Button.Style.Normal
+                backgroundColor: "transparent"
+                hoverColor: "#1a1a1a"
+                bordered: true
+                borderColor: Theme.cardBorder
+                iconSize: 18
+                source: Quickshell.shellDir + "/assets/icons/Notification.svg"
+                onClicked: {
+                    NotificationService.open();
+                }
+            }
+
+            Item {
+                Layout.fillWidth: true
             }
 
             // Lock Screen
@@ -434,23 +423,6 @@ FocusScope {
                 onClicked: {
                     MenuService.close();
                     lockProc.running = true;
-                }
-            }
-
-            // Notifications
-            IconButton {
-                implicitWidth: 44
-                implicitHeight: 44
-                customRadius: 14
-                buttonStyle: Button.Style.Normal
-                backgroundColor: "transparent"
-                hoverColor: "#1a1a1a"
-                bordered: true
-                borderColor: Theme.cardBorder
-                iconSize: 18
-                source: Quickshell.shellDir + "/assets/icons/Notification.svg"
-                onClicked: {
-                    MenuService.close();
                 }
             }
 

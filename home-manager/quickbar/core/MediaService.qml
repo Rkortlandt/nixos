@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Hyprland
 import Quickshell.Services.Mpris
 
 Singleton {
@@ -227,5 +228,94 @@ Singleton {
         let m = Math.floor(seconds / 60);
         let s = Math.floor(seconds % 60);
         return m + ":" + (s < 10 ? "0" + s : s);
+    }
+
+    // =========================================================================
+    // 5. OPEN / FOCUS ACTIVE MEDIA APPLICATION
+    // =========================================================================
+    signal playerAppOpened()
+
+    function openActivePlayer() {
+        if (!activePlayer)
+            return;
+
+        // 1. Try standard MPRIS raise if supported
+        if (activePlayer.canRaise && typeof activePlayer.raise === "function") {
+            try {
+                activePlayer.raise();
+            } catch (e) {}
+        }
+
+        // 2. Identify candidate keys to match in Hyprland
+        let de = (activePlayer.desktopEntry || "").toLowerCase();
+        let id = (activePlayer.identity || "").toLowerCase();
+        let dbus = (activePlayer.dbusName || "").toLowerCase();
+
+        let dbusBase = "";
+        if (dbus.startsWith("org.mpris.mediaplayer2.")) {
+            let parts = dbus.substring("org.mpris.mediaplayer2.".length).split(".");
+            if (parts.length > 0)
+                dbusBase = parts[0];
+        }
+
+        let searchKeys = [];
+        if (de.length > 0) searchKeys.push(de);
+        if (id.length > 0) searchKeys.push(id);
+        if (dbusBase.length > 0) searchKeys.push(dbusBase);
+
+        if (dbus.includes("spotify") || id.includes("spotify")) {
+            searchKeys.push("spotify");
+        }
+
+        let targetToplevel = null;
+        let toplevelList = (Hyprland.toplevels && Hyprland.toplevels.values) ? Hyprland.toplevels.values : [];
+
+        for (let i = 0; i < toplevelList.length; i++) {
+            let tl = toplevelList[i];
+            if (!tl) continue;
+
+            let tlClass = ((tl.lastIpcObject && tl.lastIpcObject.class) || (tl.wayland && tl.wayland.appId) || "").toLowerCase();
+            let tlInitialClass = ((tl.lastIpcObject && tl.lastIpcObject.initialClass) || "").toLowerCase();
+            let tlTitle = (tl.title || "").toLowerCase();
+
+            for (let k = 0; k < searchKeys.length; k++) {
+                let key = searchKeys[k];
+                if (!key) continue;
+                if (tlClass.includes(key) || tlInitialClass.includes(key) || key.includes(tlClass)) {
+                    targetToplevel = tl;
+                    break;
+                }
+            }
+            if (targetToplevel) break;
+
+            if (root.title && root.title !== "No Media" && tlTitle.includes(root.title.toLowerCase())) {
+                targetToplevel = tl;
+                break;
+            }
+        }
+
+        if (targetToplevel) {
+            let wsName = (targetToplevel.workspace && targetToplevel.workspace.name) ? targetToplevel.workspace.name : "";
+            if (wsName.startsWith("special:")) {
+                let specialName = wsName.substring("special:".length);
+                let currentSpecial = (Hyprland.focusedMonitor && Hyprland.focusedMonitor.lastIpcObject && Hyprland.focusedMonitor.lastIpcObject.specialWorkspace) ? Hyprland.focusedMonitor.lastIpcObject.specialWorkspace.name : "";
+                if (currentSpecial !== wsName) {
+                    Hyprland.dispatch("togglespecialworkspace " + specialName);
+                }
+            } else if (wsName.length > 0) {
+                Hyprland.dispatch("workspace " + wsName);
+            }
+            if (targetToplevel.address) {
+                Hyprland.dispatch("focuswindow address:" + targetToplevel.address);
+            }
+        } else {
+            let fallback = de || id || dbusBase;
+            if (fallback.length > 0) {
+                Hyprland.dispatch("focuswindow " + fallback);
+            }
+        }
+
+        MenuService.close();
+        root.playerAppOpened();
     }
 }

@@ -14,15 +14,33 @@ Row {
 
     spacing: 14
 
-    // --- Left: Album Art Cover ---
+    // --- Left: Album Art Cover (Click to open/focus media player app) ---
     SquircleArt {
         id: albumArt
         artUrl: MediaService.artUrl
         artSize: root.artSize
         cornerRadius: root.artCornerRadius
         borderWidth: root.artBorderWidth
-        borderColor: MediaService.accentColor
+        borderColor: artMouse.containsMouse ? MediaService.accentHoverColor : MediaService.accentColor
         anchors.verticalCenter: parent.verticalCenter
+        scale: artMouse.containsMouse ? 1.04 : 1.0
+
+        Behavior on scale {
+            NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
+        }
+        Behavior on borderColor {
+            ColorAnimation { duration: 150 }
+        }
+
+        MouseArea {
+            id: artMouse
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
+            onClicked: {
+                MediaService.openActivePlayer();
+            }
+        }
     }
 
     // --- Right: Details Column & Cava Progress Controls ---

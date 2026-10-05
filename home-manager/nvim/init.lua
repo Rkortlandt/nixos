@@ -183,6 +183,10 @@ local theme = {
   end,
 }
 
+local dap = {
+  'mfussenegger/nvim-dap',
+}
+
 local lualine = {
   'nvim-lualine/lualine.nvim',
   config = function()
@@ -605,6 +609,7 @@ require('lazy').setup({
   -- llama,
   aicmp,
   scroll,
+  dap,
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',

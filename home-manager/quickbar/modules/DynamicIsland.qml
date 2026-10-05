@@ -15,9 +15,11 @@ import "island/menu"
 PanelWindow {
     id: root
 
+    readonly property bool isAnyModalOpen: ConnectivityService.isOpen || MenuService.isOpen || LauncherService.isOpen || NotificationService.isOpen
+
     // Force Overlay layer so it renders above fullscreen windows
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: (ConnectivityService.isOpen || MenuService.isOpen) ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    WlrLayershell.keyboardFocus: LauncherService.isOpen ? WlrKeyboardFocus.Exclusive : (root.isAnyModalOpen ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None)
 
     anchors {
         top: true
@@ -56,7 +58,7 @@ PanelWindow {
     // When open, the island pill AND the backdrop below the top bar capture clicks (leaving the bar row clickable).
     mask: Region {
         Region {
-            item: (ConnectivityService.isOpen || MenuService.isOpen) ? backdropArea : islandPill
+            item: root.isAnyModalOpen ? backdropArea : islandPill
         }
         Region {
             item: islandPill
@@ -72,16 +74,20 @@ PanelWindow {
         anchors.bottom: parent.bottom
         anchors.top: parent.top
         anchors.topMargin: Theme.defaultHeight + 4
-        enabled: ConnectivityService.isOpen || MenuService.isOpen
-        focus: ConnectivityService.isOpen || MenuService.isOpen
+        enabled: root.isAnyModalOpen
+        focus: root.isAnyModalOpen
         Keys.onEscapePressed: event => {
             ConnectivityService.close();
             MenuService.close();
+            LauncherService.close();
+            NotificationService.close();
             event.accepted = true;
         }
         onClicked: {
             ConnectivityService.close();
             MenuService.close();
+            LauncherService.close();
+            NotificationService.close();
         }
     }
 
@@ -105,6 +111,13 @@ PanelWindow {
 
     property bool isMediaExpanded: false
     property bool isIslandHovered: false
+
+    Connections {
+        target: MediaService
+        function onPlayerAppOpened() {
+            root.isMediaExpanded = false;
+        }
+    }
 
     function triggerOsd(mode, duration = 1800) {
         isMediaExpanded = false;
@@ -200,6 +213,18 @@ PanelWindow {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // 6. Notification Events (via NotificationService)
+    // -------------------------------------------------------------------------
+    Connections {
+        target: NotificationService
+        function onNotificationReceived(notif) {
+            if (!NotificationService.isOpen) {
+                root.triggerOsd(6, (notif && notif.urgency === 2) ? 6500 : 5000);
+            }
+        }
+    }
+
     // =========================================================================
     // MORPHING CAPSULE (GPU rendered, sub-pixel smooth)
     // =========================================================================
@@ -208,10 +233,16 @@ PanelWindow {
         z: 2
         anchors.horizontalCenter: parent.horizontalCenter
 
-        readonly property bool effectiveMediaExpanded: root.hasActiveTrack && !root.isOsdActive && !ConnectivityService.isOpen && !MenuService.isOpen && (root.isIslandHovered || root.isMediaExpanded)
+        readonly property bool effectiveMediaExpanded: root.hasActiveTrack && !root.isOsdActive && !root.isAnyModalOpen && (root.isIslandHovered || root.isMediaExpanded)
         readonly property bool shouldShowIsland: root.isScreenFocused
 
         readonly property real currentContentWidth: {
+            if (NotificationService.isOpen) {
+                return 500;
+            }
+            if (LauncherService.isOpen) {
+                return 500;
+            }
             if (MenuService.isOpen) {
                 return 500;
             }
@@ -230,6 +261,8 @@ PanelWindow {
                     return wifiItem.implicitWidth;
                 case 5:
                     return btItem.implicitWidth;
+                case 6:
+                    return 420;
                 }
             }
             if (root.hasActiveTrack) {
@@ -238,9 +271,54 @@ PanelWindow {
             return dateItem.implicitWidth;
         }
 
-        readonly property real targetWidth: MenuService.isOpen ? 500 : (ConnectivityService.isOpen ? 420 : (effectiveMediaExpanded ? 420 : (currentContentWidth + 24)))
-        readonly property real targetHeight: MenuService.isOpen ? 520 : (ConnectivityService.isOpen ? 320 : (root.isOsdActive ? 36 : (effectiveMediaExpanded ? 124 : Theme.defaultHeight)))
-        readonly property real targetRadius: MenuService.isOpen ? 24 : ((ConnectivityService.isOpen || effectiveMediaExpanded) ? 16 : (targetHeight / 2))
+        readonly property real targetWidth: {
+            if (NotificationService.isOpen || LauncherService.isOpen || MenuService.isOpen) {
+                return 500;
+            }
+            if (ConnectivityService.isOpen || effectiveMediaExpanded || root.activeOsdMode === 6) {
+                return 420;
+            }
+            return currentContentWidth + 24;
+        }
+
+        readonly property real targetHeight: {
+            if (NotificationService.isOpen || LauncherService.isOpen) {
+                return 480;
+            }
+            if (MenuService.isOpen) {
+                return 520;
+            }
+            if (ConnectivityService.isOpen) {
+                return 320;
+            }
+            if (root.activeOsdMode === 6) {
+                let notif = NotificationService.latestNotification;
+                if (notif && notif.actions && notif.actions.length > 0) {
+                    return 114;
+                }
+                if (notif && notif.body && notif.body.length > 0) {
+                    return 88;
+                }
+                return 72;
+            }
+            if (root.isOsdActive) {
+                return 36;
+            }
+            if (effectiveMediaExpanded) {
+                return 124;
+            }
+            return Theme.defaultHeight;
+        }
+
+        readonly property real targetRadius: {
+            if (NotificationService.isOpen || LauncherService.isOpen || MenuService.isOpen) {
+                return 24;
+            }
+            if (ConnectivityService.isOpen || effectiveMediaExpanded || root.activeOsdMode === 6) {
+                return 20;
+            }
+            return targetHeight / 2;
+        }
 
         width: targetWidth
         height: targetHeight
@@ -274,7 +352,7 @@ PanelWindow {
             id: pillHoverHandler
             onHoveredChanged: {
                 root.isIslandHovered = hovered;
-                if (!hovered && !ConnectivityService.isOpen && !MenuService.isOpen) {
+                if (!hovered && !root.isAnyModalOpen) {
                     root.isMediaExpanded = false;
                 }
             }
@@ -288,7 +366,7 @@ PanelWindow {
         DateView {
             id: dateItem
             anchors.centerIn: parent
-            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && !root.isOsdActive && !root.hasActiveTrack) ? 1.0 : 0.0
+            opacity: (!root.isAnyModalOpen && !root.isOsdActive && !root.hasActiveTrack) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -315,7 +393,7 @@ PanelWindow {
             anchors.fill: parent
             player: root.activePlayer
             isExpanded: islandPill.effectiveMediaExpanded
-            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && !root.isOsdActive && root.hasActiveTrack) ? 1.0 : 0.0
+            opacity: (!root.isAnyModalOpen && !root.isOsdActive && root.hasActiveTrack) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
             onToggleExpand: root.isMediaExpanded = !root.isMediaExpanded
@@ -341,7 +419,7 @@ PanelWindow {
         VolumeOsd {
             id: volumeItem
             anchors.centerIn: parent
-            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 1) ? 1.0 : 0.0
+            opacity: (!root.isAnyModalOpen && root.activeOsdMode === 1) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
             onInteraction: root.triggerOsd(1)
@@ -368,7 +446,7 @@ PanelWindow {
             id: brightnessItem
             anchors.centerIn: parent
             brightnessPercent: BacklightService.screenPercent
-            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 2) ? 1.0 : 0.0
+            opacity: (!root.isAnyModalOpen && root.activeOsdMode === 2) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
             onInteraction: root.triggerOsd(2)
@@ -397,7 +475,7 @@ PanelWindow {
             kbdBrightness: BacklightService.kbdBrightness
             kbdMaxBrightness: BacklightService.kbdMaxBrightness
             kbdIsOn: BacklightService.kbdBrightness > 0
-            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 3) ? 1.0 : 0.0
+            opacity: (!root.isAnyModalOpen && root.activeOsdMode === 3) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -424,7 +502,7 @@ PanelWindow {
             anchors.centerIn: parent
             ssid: root.wifiSsid
             signalStrength: root.wifiSignal
-            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 4) ? 1.0 : 0.0
+            opacity: (!root.isAnyModalOpen && root.activeOsdMode === 4) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -451,7 +529,7 @@ PanelWindow {
             anchors.centerIn: parent
             deviceName: root.btDeviceName
             connected: root.btDeviceConnected
-            opacity: (!MenuService.isOpen && !ConnectivityService.isOpen && root.activeOsdMode === 5) ? 1.0 : 0.0
+            opacity: (!root.isAnyModalOpen && root.activeOsdMode === 5) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -471,7 +549,33 @@ PanelWindow {
         }
 
         // -------------------------------------------------------------
-        // ITEM 6: Connectivity (Wi-Fi & Bluetooth) Management Page
+        // ITEM 6: Notification OSD View
+        // -------------------------------------------------------------
+        NotificationOsd {
+            id: notifOsdItem
+            anchors.fill: parent
+            notification: NotificationService.latestNotification
+            opacity: (!root.isAnyModalOpen && root.activeOsdMode === 6) ? 1.0 : 0.0
+            scale: opacity > 0 ? 1.0 : 0.90
+            visible: opacity > 0.01
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: root.activeOsdMode === 6 ? 250 : 100
+                    easing.type: Easing.OutCubic
+                }
+            }
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
+            }
+        }
+
+        // -------------------------------------------------------------
+        // ITEM 7: Connectivity (Wi-Fi & Bluetooth) Management Page
         // -------------------------------------------------------------
         Loader {
             id: connectivityLoader
@@ -483,7 +587,7 @@ PanelWindow {
                     id: connectivityItem
                 }
             }
-            opacity: (!MenuService.isOpen && ConnectivityService.isOpen) ? 1.0 : 0.0
+            opacity: (!MenuService.isOpen && !LauncherService.isOpen && !NotificationService.isOpen && ConnectivityService.isOpen) ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
@@ -503,7 +607,7 @@ PanelWindow {
         }
 
         // -------------------------------------------------------------
-        // ITEM 7: Main Menu / Dashboard Page
+        // ITEM 8: Main Menu / Dashboard Page
         // -------------------------------------------------------------
         Loader {
             id: mainMenuLoader
@@ -515,7 +619,76 @@ PanelWindow {
                     id: mainMenuItem
                 }
             }
-            opacity: MenuService.isOpen ? 1.0 : 0.0
+            opacity: (!LauncherService.isOpen && !NotificationService.isOpen && MenuService.isOpen) ? 1.0 : 0.0
+            scale: opacity > 0 ? 1.0 : 0.90
+            visible: opacity > 0.01
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
+            }
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
+            }
+        }
+
+        // -------------------------------------------------------------
+        // ITEM 9: App Launcher Page
+        // -------------------------------------------------------------
+        Loader {
+            id: launcherLoader
+            anchors.fill: parent
+            focus: LauncherService.isOpen
+            active: LauncherService.isOpen || opacity > 0.01
+            sourceComponent: Component {
+                LauncherView {
+                    id: launcherViewItem
+                }
+            }
+            onLoaded: {
+                if (LauncherService.isOpen && item) {
+                    item.resetAndFocus();
+                }
+            }
+            opacity: (!NotificationService.isOpen && LauncherService.isOpen) ? 1.0 : 0.0
+            scale: opacity > 0 ? 1.0 : 0.90
+            visible: opacity > 0.01
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
+            }
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 280
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.05
+                }
+            }
+        }
+
+        // -------------------------------------------------------------
+        // ITEM 10: Notification Center Page
+        // -------------------------------------------------------------
+        Loader {
+            id: notificationLoader
+            anchors.fill: parent
+            focus: NotificationService.isOpen
+            active: NotificationService.isOpen || opacity > 0.01
+            sourceComponent: Component {
+                NotificationView {
+                    id: notificationViewItem
+                }
+            }
+            opacity: NotificationService.isOpen ? 1.0 : 0.0
             scale: opacity > 0 ? 1.0 : 0.90
             visible: opacity > 0.01
 
