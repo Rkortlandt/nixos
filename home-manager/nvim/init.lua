@@ -1,3 +1,9 @@
+local config_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
+if not vim.tbl_contains(vim.opt.rtp:get(), config_dir) then
+  vim.opt.rtp:prepend(config_dir)
+end
+package.path = config_dir .. '/lua/?.lua;' .. config_dir .. '/lua/?/init.lua;' .. package.path
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -185,6 +191,17 @@ local theme = {
 
 local dap = {
   'mfussenegger/nvim-dap',
+  config = function()
+    local dap = require 'dap'
+    vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
+    vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
+    vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
+    vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
+    vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+    vim.keymap.set('n', '<leader>B', function()
+      dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+    end, { desc = 'Debug: Set Breakpoint' })
+  end,
 }
 
 local lualine = {
@@ -617,7 +634,7 @@ require('lazy').setup({
   'xiyaowong/transparent.nvim',
   'nvim-lua/plenary.nvim',
   'theprimeagen/harpoon',
-  'mfussenegger/nvim-jdtls',
+  require 'custom.plugins.java',
 
   require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
@@ -759,62 +776,6 @@ require('lspconfig').svelte.setup({
   end,
 })
 
-local bundles = {
-  vim.fn.glob("/home/ss-pro/nixos/home-manager/nvim/javadebug/com.microsoft.java.debug.plugin-*.jar", 1)
-}
-
-
--- This is the new part
-local java_test_bundles = vim.split(vim.fn.glob("/path/to/vscode-java-test/server/*.jar", 1), "\n")
-local excluded = {
-  "com.microsoft.java.test.runner-jar-with-dependencies.jar",
-  "jacocoagent.jar",
-}
-for _, java_test_jar in ipairs(java_test_bundles) do
-  local fname = vim.fn.fnamemodify(java_test_jar, ":t")
-  if not vim.tbl_contains(excluded, fname) then
-    table.insert(bundles, java_test_jar)
-  end
-end
-
-require('lspconfig').jdtls.setup({
-  capabilities = lsp_capabilities,
-  settings = {
-    java = {
-      completion = {
-        favoriteStaticMembers = {
-          "edu.wpi.first.units.Units.*",
-          "edu.wpi.first.wpilibj.SmartDashboard.*",
-          "edu.wpi.first.wpilibj.util.Color.*",
-          "org.junit.jupiter.api.Assertions.*",
-          "org.mockito.Mockito.*",
-        },
-      },
-    },
-  },
-  init_options = {
-    bundles = bundles,
-  },
-  on_attach = function(client, bufnr)
-    setup_lsp_keymaps(client, bufnr)
-
-    local function map_key(keys, func, desc)
-      vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'LSP: ' .. desc })
-    end
-
-    local jdtls_status, jdtls = pcall(require, 'jdtls')
-    if jdtls_status then
-      map_key('<leader>oi', jdtls.organize_imports, 'Java: [O]rganize [I]mports')
-      map_key('<leader>ev', jdtls.extract_variable, 'Java: [E]xtract [V]ariable')
-      map_key('<leader>ec', jdtls.extract_constant, 'Java: [E]xtract [C]onstant')
-      map_key('<leader>bld', '<CMD>JdtCompile full<CR>', 'Java: [B]ui[ld] Project')
-      map_key('<leader>td', function() require('telescope.builtin').diagnostics({ bufnr = nil }) end,
-        '[T]elescope [D]iagnostics (Errors)')
-      vim.keymap.set('v', '<leader>em', [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
-        { buffer = bufnr, desc = 'LSP: Java: [E]xtract [M]ethod' })
-    end
-  end,
-})
 
 require('lspconfig').nixd.setup({
   capabilities = lsp_capabilities,
