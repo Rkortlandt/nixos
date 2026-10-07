@@ -78,7 +78,6 @@
     dolphin-emu
     # unityhub
     wine
-    bottles
   ] ++ (with pkgs.unstable; [
     # Desktop & Utilities
     # cosmic-term

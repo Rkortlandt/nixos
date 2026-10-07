@@ -25,6 +25,7 @@
       url = "github:AvengeMedia/dgop";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake"; 
 
@@ -73,6 +74,7 @@
     ags,
     zen-browser,
     asus-dialpad-driver,
+    nix-flatpak,
     ...
   } @ inputs: let
     inherit (self) outputs;

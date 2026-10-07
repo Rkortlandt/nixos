@@ -13,6 +13,7 @@
   imports = [
     inputs.ags.homeManagerModules.default
     inputs.dms.homeModules.dank-material-shell
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
     ./bash  
     ./packages.nix
   ];
@@ -48,6 +49,31 @@
       ];
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = _: true;
+    };
+  };
+
+  services.flatpak = {
+    enable = true;
+
+# Declare the official Flathub remote repository
+    remotes = [{
+      name = "flathub";
+      location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+    }];
+
+# Declare user-space flatpak applications to install
+    packages = [
+      "com.usebottles.bottles"
+    ];
+
+# Apply declarative sandbox overrides to fix the network status check
+    overrides = {
+      "com.usebottles.bottles" = {
+        Context = {
+# Explicitly grant network access to fetch DXVK, VKD3D, and runners
+          sockets = [ "network" ];
+        };
+      };
     };
   };
 
