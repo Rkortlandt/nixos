@@ -43,6 +43,7 @@
     svelte-language-server
     vscode-json-languageserver
     clang
+    clang-tools
     nil
     nixd
     kdePackages.qtdeclarative # provides qmlls, qmlformat, qmllint

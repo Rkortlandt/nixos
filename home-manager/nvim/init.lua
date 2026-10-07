@@ -819,6 +819,11 @@ require('lspconfig').qmlls.setup({
   cmd = { vim.fn.executable('qmlls') == 1 and 'qmlls' or (vim.fn.executable('qmlls6') == 1 and 'qmlls6' or 'qmlls') },
 })
 
+require('lspconfig').clangd.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+})
+
 -- (Keep your existing nvim-cmp, Telescope bindings, and autocmds down here)
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
