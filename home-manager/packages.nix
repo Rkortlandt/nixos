@@ -28,7 +28,6 @@
     # llama-cpp
     tmux
     eza
-    gcc
     (jdk21.override {
     enableJavaFX = true; # for JavaFX
     })
@@ -43,6 +42,7 @@
     lua-language-server
     svelte-language-server
     vscode-json-languageserver
+    clang
     nil
     nixd
     kdePackages.qtdeclarative # provides qmlls, qmlformat, qmllint

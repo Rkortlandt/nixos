@@ -7,19 +7,24 @@ return {
   config = function()
     local dap_status, dap = pcall(require, 'dap')
     if dap_status then
-      -- Fallback / default Java DAP configurations
+      -- Default Java DAP configurations: Launch current file or Attach to running JVM
       dap.configurations.java = {
         {
           type = 'java',
+          request = 'launch',
+          name = 'Launch Java Program (Current File)',
+        },
+        {
+          type = 'java',
           request = 'attach',
-          name = 'Attach to Remote Process (Port 5005)',
+          name = 'Attach to Remote JVM (Port 5005)',
           hostName = '127.0.0.1',
           port = 5005,
         },
         {
           type = 'java',
           request = 'attach',
-          name = 'Attach to Remote Process (Prompt Port)',
+          name = 'Attach to Remote JVM (Prompt Port)',
           hostName = function()
             return vim.fn.input('Host [127.0.0.1]: ', '127.0.0.1')
           end,
