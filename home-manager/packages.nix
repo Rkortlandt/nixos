@@ -97,7 +97,11 @@
 
     # Browsers 
     chromium
-    vivaldi
+    (vivaldi.override {
+      proprietaryCodecs = true;
+      enableWidevine = true;
+      commandLineArgs = "--ignore-gpu-blocklist --enable-gpu-rasterization --enable-zero-copy --enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,VaapiVideoDecoder --render-node-override=/dev/dri/renderD128";
+    })
 
     # etc
     musescore
