@@ -57,6 +57,7 @@
   };
 services.tailscale.enable = true;
 services.asusd.enable = true;
+ services.flatpak.enable = true;
 
   systemd.services.samba-smbd.after = [ "tailscaled.service" ];
 
