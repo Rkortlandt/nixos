@@ -105,20 +105,32 @@ return {
       map_key('<leader>tm', jdtls.test_nearest_method, 'Java: [T]est Nearest [M]ethod')
     end
 
-    -- Attach jdtls via FileType autocmd
     vim.api.nvim_create_autocmd('FileType', {
       pattern = 'java',
-      callback = function()
+      callback = function(args)
         local jdtls = require('jdtls')
-        local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+
+        local current_file = vim.api.nvim_buf_get_name(args.buf)
+        local current_dir = vim.fs.dirname(current_file)
+
+        local root_markers = { '.classpath', '.project', '.git', 'mvnw', 'gradlew', 'build.gradle', 'pom.xml', 'Makefile' }
+        local root_dir = jdtls.setup.find_root(root_markers, current_dir) or vim.fs.root(args.buf, root_markers) or
+            vim.fn.getcwd()
+
+        local project_name = vim.fs.basename(root_dir)
         local workspace_dir = vim.fn.stdpath('cache') .. '/jdtls/workspace/' .. project_name
+
+        local jdtls_bin = vim.fn.exepath('jdtls')
+        if jdtls_bin == '' then
+          jdtls_bin = '/run/current-system/sw/bin/jdtls'
+        end
 
         local config = {
           cmd = {
-            'jdtls',
+            jdtls_bin,
             '-data', workspace_dir,
           },
-          root_dir = jdtls.setup.find_root({ '.git', 'mvnw', 'gradlew', 'build.gradle', 'pom.xml' }) or vim.fn.getcwd(),
+          root_dir = root_dir,
           capabilities = capabilities,
           on_attach = on_attach,
           init_options = {
