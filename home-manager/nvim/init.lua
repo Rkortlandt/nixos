@@ -533,7 +533,7 @@ local treesitter = {
     local configs = require("nvim-treesitter.configs")
     configs.setup({
       -- add languages to be installed here that you want installed for treesitter
-      ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'qmljs' },
+      ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'qmljs', 'zig' },
       ignore_install = {},
 
       modules = {},
@@ -820,6 +820,11 @@ require('lspconfig').qmlls.setup({
 })
 
 require('lspconfig').clangd.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+})
+
+require('lspconfig').zls.setup({
   capabilities = lsp_capabilities,
   on_attach = setup_lsp_keymaps,
 })
