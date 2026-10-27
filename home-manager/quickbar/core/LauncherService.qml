@@ -13,6 +13,7 @@ Singleton {
         ConnectivityService.close();
         MenuService.close();
         NotificationService.close();
+        WallpaperService.close();
         isOpen = true;
     }
 

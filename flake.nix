@@ -58,6 +58,11 @@
     # Hyprland
     hyprland.url = "github:hyprwm/Hyprland";
 
+    nix-matlab = {
+      url = "path:/home/ss-pro/nix-matlab";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # hardware.url = "github:nixos/nixos-hardware";
     # nix-colors.url = "github:misterio77/nix-colors";
   };

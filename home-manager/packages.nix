@@ -46,6 +46,7 @@
     clang-tools
     nil
     nixd
+    matlab-language-server
     kdePackages.qtdeclarative # provides qmlls, qmlformat, qmllint
     qt6.qtlottie
     delve
@@ -110,6 +111,8 @@
   ]) ++ (with inputs; [
     zen-browser.packages."${system}".default
     quickshell.packages."${system}".default
+    nix-matlab.packages.${pkgs.system}.matlab
+    nix-matlab.packages.${pkgs.system}.matlab-mlint
     #grab.packages."${system}".default
   ]);
 }

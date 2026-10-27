@@ -18,6 +18,7 @@ Singleton {
         MenuService.close();
         LauncherService.close();
         NotificationService.close();
+        WallpaperService.close();
         activeTab = tab;
         isOpen = true;
         if (tab === "wifi") {

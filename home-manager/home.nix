@@ -92,6 +92,7 @@
       ".config/starship.toml".source = ./bash/starship.toml;
       ".config/nvim".source = ./nvim;
       ".config/tofi".source = ./tofi;
+      ".config/matlab/nix.sh".text = "INSTALL_DIR=/home/ss-pro/matlab\n";
       ".lib/jdk11".source = pkgs.jdk11;
       ".lib/jdk17".source = pkgs.jdk17;
       ".lib/jdk25".source = pkgs.jdk25;

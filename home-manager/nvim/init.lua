@@ -829,6 +829,21 @@ require('lspconfig').zls.setup({
   on_attach = setup_lsp_keymaps,
 })
 
+require('lspconfig').matlab_ls.setup({
+  capabilities = lsp_capabilities,
+  on_attach = setup_lsp_keymaps,
+  single_file_support = true,
+  settings = {
+    MATLAB = {
+      indexWorkspace = true,
+      installPath = "",
+      matlabConnectionTiming = "onStart",
+      telemetry = false,
+    },
+  },
+})
+
+
 -- (Keep your existing nvim-cmp, Telescope bindings, and autocmds down here)
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -90,6 +90,7 @@ Singleton {
         ConnectivityService.close();
         MenuService.close();
         LauncherService.close();
+        WallpaperService.close();
         isOpen = true;
     }
 

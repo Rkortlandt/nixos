@@ -28,6 +28,7 @@ Singleton {
         ConnectivityService.close();
         LauncherService.close();
         NotificationService.close();
+        WallpaperService.close();
         isOpen = true;
     }
 

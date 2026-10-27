@@ -6,6 +6,7 @@ singleton ConnectivityService 1.0 ConnectivityService.qml
 singleton MenuService 1.0 MenuService.qml
 singleton LauncherService 1.0 LauncherService.qml
 singleton NotificationService 1.0 NotificationService.qml
+singleton WallpaperService 1.0 WallpaperService.qml
 singleton MediaService 1.0 MediaService.qml
 Button 1.0 Button.qml
 TextButton 1.0 TextButton.qml

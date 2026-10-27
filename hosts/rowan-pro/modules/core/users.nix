@@ -23,8 +23,8 @@
         "render"
         "video"
         "i2c" 
-        "input" 
         "uinput"
+        "tty"
       ];
     };
 
@@ -38,4 +38,9 @@
       extraGroups = ["developers"];
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /run/lock 0775 root dialout -"
+    "z /run/lock 0775 root dialout -"
+  ];
 }
